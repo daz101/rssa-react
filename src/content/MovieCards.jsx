@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 class Moviecard extends Component {
     state = {  }
     render() { 
-        return ( <div></div> );
+        return ( <div>
+            
+        </div> );
     }
 }
  
