@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+/*import { Redirect } from 'react-router-dom'
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';*/
 
 class SurveyPage extends Component {
 
@@ -16,7 +16,7 @@ class SurveyPage extends Component {
       currentStep: 1
     };
     const user = this.props.user;
-    user.acceptTerms = true;
+   /* user.acceptTerms = true;*/
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -39,7 +39,7 @@ class SurveyPage extends Component {
       questions.push(newQ);
     }
     const currentStep = this.state.currentStep;
-    const disabled = !((currentStep === 1 && questions.length === 7) || (currentStep === 2 && questions.length === 9) || (currentStep === 3 && questions.length === 13));
+    const disabled = !((currentStep === 1 && questions.length === 6) || (currentStep === 2 && questions.length === 6) || (currentStep === 3 && questions.length === 7) || (currentStep === 4 && questions.length === 5) || (currentStep === 5 && questions.length === 7) || (currentStep === 6 && questions.length === 6)  );
     this.setState({ questions: questions, disabled: disabled });
   }
 
@@ -50,7 +50,7 @@ class SurveyPage extends Component {
 
   _next = () => {
     let currentStep = this.state.currentStep;
-    currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+    currentStep = currentStep >= 2 ? 6 : currentStep + 1;
     this.setState({ currentStep: currentStep, disabled: true });
   }
 
@@ -64,11 +64,11 @@ class SurveyPage extends Component {
     const currentStep = this.state.currentStep;
     if (currentStep !== 1) {
       return (
-        <Button
+        <button
           className="btn btn-secondary"
           type="button" onClick={this._prev}>
           Previous
-        </Button>
+        </button>
       );
     }
     return null;
@@ -76,13 +76,13 @@ class SurveyPage extends Component {
 
   nextButton() {
     const currentStep = this.state.currentStep;
-    if (currentStep < 3) {
+    if (currentStep < 6) {
       return (
-        <Button disabled={this.state.disabled}
+        <button disabled={this.state.disabled}
           className="btn btn-primary float-right"
           type="button" onClick={this._next}>
           Next
-        </Button>
+        </button>
       );
     }
     return null;
@@ -90,13 +90,13 @@ class SurveyPage extends Component {
 
   submitButton() {
     const currentStep = this.state.currentStep;
-    if (currentStep === 3) {
+    if (currentStep === 6) {
       return (
-        <Button disabled={this.state.disabled}
+        <button disabled={this.state.disabled}
           className="btn btn-primary float-right"
           size="lg" type="submit">
           Submit
-        </Button>
+        </button>
       );
     }
     return null;
@@ -105,33 +105,41 @@ class SurveyPage extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-    const user = this.props.user;
-    user.timePreStimulusEnd = Date.now();
-    user.preSurveyResponses = this.state.questions;
+    /* user.postSurveyResponses = this.state.questions;
+    user.timePostStimulusEnd = Date.now();
+    user.timeSessionEnd = Date.now();
+    user.completed = true;
     this.props.updateUser(user);
     this.setState({
-      toInstructions: true
-    });
+      toFinish: true,
+      user: user
+    });*/
   };
 
   render() {
-    if (this.state.toInstructions === true) {
-      return <Redirect to='/instructions' />
+    
+    {/* ###################################################
+      Taking this out for now, reinstate once data is connected
+    
+    const user = this.props.user;
+    if (this.state.toFinish === true) {
+      return <Redirect to='/exit' />
     }
+    }
+    */}
+   
 
     return (
       <React.Fragment>
         <div>
           <div className="survey-page">
             <h2>Post-task survey</h2>
-            <p>Please rate your agreement with the following statements about yourself or your opinions:</p>
-            <Form id="preSurvey" onSubmit={(evt) => this.handleSubmit(evt)} >
+           
+            <form id="postSurvey" onSubmit={(evt) => this.handleSubmit(evt)} >
               <Step1
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
-                age={this.state.age}
-                gender={this.state.gender}
-                stage1={this.state.stage1}
+               
               />
               <Step2
                 currentStep={this.state.currentStep}
@@ -141,11 +149,28 @@ class SurveyPage extends Component {
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
               />
+
+              <Step4
+                currentStep={this.state.currentStep}
+                handleChange={this.handleChange}
+              />
+
+              <Step5
+                currentStep={this.state.currentStep}
+                handleChange={this.handleChange}
+              />
+
+              <Step6
+                currentStep={this.state.currentStep}
+                handleChange={this.handleChange}
+              />
+
+             
               
               {/* {this.previousButton()} */}
               {this.nextButton()}
               {this.submitButton()}
-            </Form>
+            </form>
           </div>
         </div>
       </React.Fragment>
@@ -159,65 +184,53 @@ function Step1(props) {
   }
   return (
     <React.Fragment>
-      <Form.Row>
-        <Form.Group as={Col} controlId="formGridAge">
-          <Form.Label>Age</Form.Label>
-          <Form.Control required as="select" onChange={(evt) => props.handleChange(evt)}>
-            <option>Choose...</option>
-            <option>18 - 24 years old </option>
-            <option>25 - 29 years old </option>
-            <option>30 - 34 years old </option>
-            <option>35 - 39 years old </option>
-            <option>40 - 44 years old </option>
-            <option>45 - 49 years old </option>
-            <option>50 - 54 years old </option>
-            <option>55+ </option>
-          </Form.Control>
-        </Form.Group>
-      </Form.Row>
-      <Form.Row>
-        <Form.Group as={Col} controlId="formGridGender">
-          <Form.Label>Gender</Form.Label>
-          <Form.Control required as="select" onChange={(evt) => props.handleChange(evt)}>
-            <option>Choose...</option>
-            <option>Woman</option>
-            <option>Man</option>
-            <option>Non-binary </option>
-            <option>Prefer not to disclose</option>
-            {/*<option>Prefer to self-describe </option>*/}
-          </Form.Control>
-        </Form.Group>
-      </Form.Row>
-
-      <Card>
-        <Card.Body>
-          <p>Please answer the following questions as accurately as possible. </p>
+          <div className="card bg-light mb-3">
+          <div className="card-body">
+          <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong>movie option:</p>
           {[
-            { 'qId': 'q1', 'text': 'My typical approach is to trust new technology' },
-            { 'qId': 'q2', 'text': 'I generally trust new technology until they give me a reason not to' },
-            { 'qId': 'q3', 'text': 'Even under doubt I will choose to trust new technology' },
-            { 'qId': 'q4', 'text': 'It is easy for me to trust new technology' },
-            { 'qId': 'q5', 'text': 'My tendency to trust new technology is high' }
+            { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.' },
+            { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike' },
+            { 'qId': 'q3', 'text': 'Most movies were from the same genre' },
+            { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes' },
+            { 'qId': 'q5', 'text': 'The recommended movies were from many different genres' },
+            { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety' }
           ].map((likert, i) => (
+            <div className="form-group" controlId={"Diversity_" + i} key={"Diversity_" + i} onChange={(evt) => props.handleChange(evt)}>
+              <div className="form-row">
+                <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+                <div className="col">
+              
+                  <div className="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"Diversity_" + likert.qId} id={"Diversity_" + likert.qId + "-1"} />
+                  <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+                    
+                  <div className="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"Diversity_" + likert.qId} id={"Diversity_" + likert.qId + "-2"} />
+                  <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+                     
+                  <div className="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"Diversity_" + likert.qId} id={"Diversity_" + likert.qId + "-3"} />
+                  <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+                    
+                  <div className="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"Diversity_" + likert.qId} id={"Diversity_" + likert.qId + "-4"} />
+                  <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+                    
 
-            <Form.Group controlId="DispositionToTrust" key={"DispositionToTrust_" + i} onChange={(evt) => props.handleChange(evt)}>
+                  <div className="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"Diversity_" + likert.qId} id={"Diversity_" + likert.qId + "-5"} />
+                  <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+                    
 
-              <Form.Row>
-                <Form.Label as="legend" column sm="3" className="font-weight-bold">{likert.text}</Form.Label>
-                <Col>
-                  <Form.Check type="radio" inline label="Strongly disagree" name={"DispositionToTrust_" + likert.qId} id={"DispositionToTrust_" + likert.qId + "-1"} />
-                  <Form.Check type="radio" inline label="Disagree" name={"DispositionToTrust_" + likert.qId} id={"DispositionToTrust_" + likert.qId + "-2"} />
-                  <Form.Check type="radio" inline label="Neither agree nor disagree" name={"DispositionToTrust_" + likert.qId} id={"DispositionToTrust_" + likert.qId + "-3"} />
-                  <Form.Check type="radio" inline label="Agree" name={"DispositionToTrust_" + likert.qId} id={"DispositionToTrust_" + likert.qId + "-4"} />
-                  <Form.Check type="radio" inline label="Strongly agree" name={"DispositionToTrust_" + likert.qId} id={"DispositionToTrust_" + likert.qId + "-5"} />
-                </Col>
-
-              </Form.Row>
-            </Form.Group>
+                </div>
+              </div>
+            </div>
           ))}
-        </Card.Body>
-      </Card>
+          </div>
+
+          </div>
     </React.Fragment>
+
   );
 }
 
@@ -227,28 +240,52 @@ function Step2(props) {
   }
   return (
     <React.Fragment>
-      <Card>
-        <Card.Body>
-          {[
-            { 'qId': 'q1', 'text': 'I like chatting casually with a chatbot' },
-            { 'qId': 'q2', 'text': 'I think ‘small talk’ with a chatbot is enjoyable.' }
-          ].map((likert, i) => (
-            <Form.Group controlId="SocialPres" key={"SocialPres" + i} onChange={(evt) => props.handleChange(evt)}>
-              <Form.Row>
-                <Form.Label as="legend" column sm="3" className="font-weight-bold">{likert.text}</Form.Label>
-                <Col>
-                  <Form.Check type="radio" inline label="Strongly disagree" name={"SocialPres_" + likert.qId} id={"SocialPres_" + likert.qId + "-1"} />
-                  <Form.Check type="radio" inline label="Disagree" name={"SocialPres_" + likert.qId} id={"SocialPres_" + likert.qId + "-2"} />
-                  <Form.Check type="radio" inline label="Neither agree nor disagree" name={"SocialPres_" + likert.qId} id={"SocialPres_" + likert.qId + "-3"} />
-                  <Form.Check type="radio" inline label="Agree" name={"SocialPres_" + likert.qId} id={"SocialPres_" + likert.qId + "-4"} />
-                  <Form.Check type="radio" inline label="Strongly agree" name={"SocialPres_" + likert.qId} id={"SocialPres_" + likert.qId + "-5"} />
-                </Col>
-              </Form.Row>
-            </Form.Group>
-          ))}
-        </Card.Body>
-      </Card>
-    </React.Fragment>
+    <div className="card">
+    <div className="card-body">
+    <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong>movie option:</p>
+    {[
+      { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender' },
+      { 'qId': 'q2', 'text': 'I found the recommended movies appealing' },
+      { 'qId': 'q3', 'text': 'The recommended movies fit my preference' },
+      { 'qId': 'q4', 'text': 'The recommended movies were relevant' },
+      { 'qId': 'q5', 'text': 'The system recommended too many bad movies.' },
+      { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.' }
+    ].map((likert, i) => (
+      <div className="form-group" controlId={"RecQual_" + i} key={"RecQual_" + i} onChange={(evt) => props.handleChange(evt)}>
+        <div className="form-row">
+          <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+          <div className="col">
+        
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"RecQual_" + likert.qId} id={"RecQual_" + likert.qId + "-1"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"RecQual_" + likert.qId} id={"RecQual_" + likert.qId + "-2"} />
+            <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+               
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"RecQual_" + likert.qId} id={"RecQual_" + likert.qId + "-3"} />
+            <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"RecQual_" + likert.qId} id={"RecQual_" + likert.qId + "-4"} />
+            <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+              
+
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"RecQual_" + likert.qId} id={"RecQual_" + likert.qId + "-5"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+              
+
+          </div>
+        </div>
+      </div>
+    ))}
+    </div>
+
+    </div>
+</React.Fragment>
   );
 }
 
@@ -258,30 +295,219 @@ function Step3(props) {
   }
   return (
     <React.Fragment>
-      <Card>
-        <Card.Body>
-          {[
-            { 'qId': 'q1', 'text': 'I like to occupy myself in greater detail with technical systems.' },
-            { 'qId': 'q2', 'text': 'I like testing the functions of new technical systems.' },
-            { 'qId': 'q4', 'text': 'When I have a new technical system in front of me, I try it out intensively.' },
-            { 'qId': 'q5', 'text': 'I enjoy spending time becoming acquainted with a new technical system.' }
-          ].map((likert, i) => (
-            <Form.Group controlId="TechnologyExperience1" key={"TechnologyExperience1_" + i} onChange={(evt) => props.handleChange(evt)}>
-              <Form.Row>
-                <Form.Label as="legend" column sm="3" className="font-weight-bold">{likert.text}</Form.Label>
-                <Col>
-                  <Form.Check type="radio" inline label="Strongly disagree" name={"TechnologyExperience1_" + likert.qId} id={"TechnologyExperience1_" + likert.qId + "-1"} />
-                  <Form.Check type="radio" inline label="Disagree" name={"TechnologyExperience1_" + likert.qId} id={"TechnologyExperience1_" + likert.qId + "-2"} />
-                  <Form.Check type="radio" inline label="Neither agree nor disagree" name={"TechnologyExperience1_" + likert.qId} id={"TechnologyExperience1_" + likert.qId + "-3"} />
-                  <Form.Check type="radio" inline label="Agree" name={"TechnologyExperience1_" + likert.qId} id={"TechnologyExperience1_" + likert.qId + "-4"} />
-                  <Form.Check type="radio" inline label="Strongly agree" name={"TechnologyExperience1_" + likert.qId} id={"TechnologyExperience1_" + likert.qId + "-5"} />
-                </Col>
-              </Form.Row>
-            </Form.Group>
-          ))}
-        </Card.Body>
-      </Card>
-    </React.Fragment>
+    <div className="card">
+    <div className="card-body">
+    <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong>movie option:</p>
+    {[
+      { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.' },
+      { 'qId': 'q2', 'text': 'The chosen movie fits my preference.' },
+      { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.' },
+      { 'qId': 'q4', 'text': 'I was excited about my chosen movie' },
+      { 'qId': 'q5', 'text': 'I think I chose the best movie from the options' },
+      { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected' },
+      { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected' }
+    ].map((likert, i) => (
+      <div className="form-group" controlId={"choiceSat_" + i} key={"choiceSat_" + i} onChange={(evt) => props.handleChange(evt)}>
+        <div className="form-row">
+          <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+          <div className="col">
+        
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"choiceSat_" + likert.qId} id={"choiceSat_" + likert.qId + "-1"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"choiceSat_" + likert.qId} id={"choiceSat_" + likert.qId + "-2"} />
+            <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+               
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"choiceSat_" + likert.qId} id={"choiceSat_" + likert.qId + "-3"} />
+            <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"choiceSat_" + likert.qId} id={"choiceSat_" + likert.qId + "-4"} />
+            <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+              
+
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"choiceSat_" + likert.qId} id={"choiceSat_" + likert.qId + "-5"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+              
+
+          </div>
+        </div>
+      </div>
+    ))}
+    </div>
+
+    </div>
+</React.Fragment>
+  );
+}
+
+
+function Step4(props) {
+  if (props.currentStep !== 4) {
+    return null
+  }
+  return (
+    <React.Fragment>
+    <div className="card">
+    <div className="card-body">
+    <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong>movie option:</p>
+    {[
+      { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.' },
+      { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.' },
+      { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.' },
+      { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.' },
+      { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.' }
+    ].map((likert, i) => (
+      <div className="form-group" controlId={"recConformity_" + i} key={"recConformity_" + i} onChange={(evt) => props.handleChange(evt)}>
+        <div className="form-row">
+          <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+          <div className="col">
+        
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"recConformity_" + likert.qId} id={"recConformity_" + likert.qId + "-1"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"recConformity_" + likert.qId} id={"recConformity_" + likert.qId + "-2"} />
+            <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+               
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"recConformity_" + likert.qId} id={"recConformity_" + likert.qId + "-3"} />
+            <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"recConformity_" + likert.qId} id={"recConformity_" + likert.qId + "-4"} />
+            <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+              
+
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"recConformity_" + likert.qId} id={"recConformity_" + likert.qId + "-5"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+              
+
+          </div>
+        </div>
+      </div>
+    ))}
+    </div>
+
+    </div>
+</React.Fragment>
+  );
+}
+
+function Step5(props) {
+  if (props.currentStep !== 5) {
+    return null
+  }
+  return (
+    <React.Fragment>
+    <div className="card">
+    <div className="card-body">
+    <p>Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:</p>
+    {[
+      { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests' },
+      { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.' },
+      { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.' },
+      { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.' },
+      { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.' },
+      { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.' },
+      { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.' }
+    ].map((likert, i) => (
+      <div className="form-group" controlId={"tasteCov_" + i} key={"tasteCov_" + i} onChange={(evt) => props.handleChange(evt)}>
+        <div className="form-row">
+          <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+          <div className="col">
+        
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"tasteCov_" + likert.qId} id={"tasteCov_" + likert.qId + "-1"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"tasteCov_" + likert.qId} id={"tasteCov_" + likert.qId + "-2"} />
+            <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+               
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"tasteCov_" + likert.qId} id={"tasteCov_" + likert.qId + "-3"} />
+            <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"tasteCov_" + likert.qId} id={"tasteCov_" + likert.qId + "-4"} />
+            <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+              
+
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"tasteCov_" + likert.qId} id={"tasteCov_" + likert.qId + "-5"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+              
+
+          </div>
+        </div>
+      </div>
+    ))}
+    </div>
+
+    </div>
+</React.Fragment>
+  );
+}
+
+function Step6(props) {
+  if (props.currentStep !== 6) {
+    return null
+  }
+  return (
+    <React.Fragment>
+    <div className="card">
+    <div className="card-body">
+    <p>Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:</p>
+    {[
+      { 'qId': 'q1', 'text': 'I like using the system.' },
+      { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.' },
+      { 'qId': 'q3', 'text': 'I would recommend the system to others.' },
+      { 'qId': 'q4', 'text': 'I can find better movies using the system.' },
+      { 'qId': 'q5', 'text': 'I would quickly abandon using the system.' },
+      { 'qId': 'q6', 'text': 'I would use the system more often if possible.' }
+    ].map((likert, i) => (
+      <div className="form-group" controlId={"sysSat_" + i} key={"sysSat_" + i} onChange={(evt) => props.handleChange(evt)}>
+        <div className="form-row">
+          <label as="legend" column sm="2" className="font-weight-bold">{likert.text}</label>
+          <div className="col">
+        
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"name={"sysSat_" + likert.qId} id={"sysSat_" + likert.qId + "-1"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline2" class="custom-control-input"name={"sysSat_" + likert.qId} id={"sysSat_" + likert.qId + "-2"} />
+            <label class="custom-control-label" for="customRadioInline1">Disagree</label></div>
+               
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input"name={"sysSat_" + likert.qId} id={"sysSat_" + likert.qId + "-3"} />
+            <label class="custom-control-label" for="customRadioInline1">Neither agree nor disagree</label></div>
+              
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline4" name="customRadioInline4" class="custom-control-input"name={"sysSat_" + likert.qId} id={"sysSat_" + likert.qId + "-4"} />
+            <label class="custom-control-label" for="customRadioInline1">Agree</label></div>
+              
+
+            <div className="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline5" name="customRadioInline5" class="custom-control-input"name={"sysSat_" + likert.qId} id={"sysSat_" + likert.qId + "-5"} />
+            <label class="custom-control-label" for="customRadioInline1">Strongly agree</label></div>
+              
+
+          </div>
+        </div>
+      </div>
+    ))}
+    </div>
+
+    </div>
+</React.Fragment>
   );
 }
 

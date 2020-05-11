@@ -7,7 +7,9 @@ import {
 import Welcome from './content/welcome';
 import Instructions from './content/Instructions';
 import Preferences from './content/Preferences/prefPage';
-/*import Survey from "./content/survey";*/
+import Movies from './content/MovieCards'; 
+import MovieInfo from './content/movieInfo'; 
+import Survey from "./content/survey";
 import Exit from './content/ExitPage'; 
 /*import 'bootstrap/dist/js/bootstrap.bundle.min';*/
 import './App.css';
@@ -29,7 +31,9 @@ class App extends Component {
           <Route exact path="/" component={Welcome} />
          <Route path="/inst" component={Instructions} />
           <Route path="/pref" component={Preferences} />
-         {/* <Route path="/survey" component={Survey} />*/}
+          <Route path="/movies" component={Movies} />
+          <Route path="/movieInfo" component={MovieInfo} />
+          <Route path="/survey" component={Survey} />
           <Route path="/exit" component={Exit} />
    </Switch>
 
