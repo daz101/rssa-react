@@ -247,6 +247,9 @@ class Moviecard extends Component {
 </ul>
   </div>
 </div>
+
+<div className="float-right">
+<button type="button" class="btn btn-primary">Next</button></div>
         </div> );
     }
 }

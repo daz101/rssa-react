@@ -16,7 +16,7 @@ class Instructions extends Component {
         <div class="container">
   <div class="row">
     <div class="col-sm">
-    <div class="card">
+    <div class="card ">
   <img src="/Preference-rssa.png" class="card-img-top" alt="..."/>
   <div class="card-body">
     <h5 class="card-title"> Select Preferences</h5>
