@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { MovieGrid } from "./movieGrid";
+import React, { Component, useState } from 'react';
+import MovieGrid  from "./MovieGrid.jsx";
 
 class PrefPage extends Component {
     
@@ -13,13 +13,19 @@ class PrefPage extends Component {
   <div class="container">
   <div class="row">
     <div class="col-sm">
-      <MovieGrid></MovieGrid>
+      <MovieGrid/>
     </div>
     <div class="col-sm">
-      One of three columns
+    <MovieGrid/>
     </div>
     <div class="col-sm">
-      One of three columns
+    <MovieGrid/>
+    </div>
+    <div class="col-sm">
+      <MovieGrid/>
+    </div>
+    <div class="col-sm">
+      <MovieGrid/>
     </div>
   </div>
 </div>

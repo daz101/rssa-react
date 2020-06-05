@@ -11,8 +11,12 @@ class Instructions extends Component {
 
     render() { 
         return ( 
-          
-      <div className="instructions-page">
+       <div>
+         <br></br>
+            <br></br>
+
+      <div className="instructions-page">   
+     
         <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -48,7 +52,7 @@ class Instructions extends Component {
 </div>
       
         </div>
-     
+     </div>
       
          );
     }

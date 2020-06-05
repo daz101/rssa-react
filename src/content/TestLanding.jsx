@@ -6,8 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
 
-class Welcome extends Component {
-
+class TestLanding extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +71,7 @@ class Welcome extends Component {
                 Exit
               </Button>
             </Link>
-            <Link to="/inst">
+            <Link to="/pre-survey">
               <Button variant="primary" disabled={this.state.disabled}>
                 Continue
               </Button>
@@ -84,4 +83,4 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+export default TestLanding;

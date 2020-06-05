@@ -5,6 +5,7 @@ import {
   NavbarBrand
 } from 'reactstrap';
 import Welcome from './content/welcome';
+import TestLanding from './content/Preferences/prefTest'
 import Instructions from './content/Instructions';
 import Preferences from './content/Preferences/prefPage';
 import Movies from './content/MovieCards'; 
@@ -30,6 +31,7 @@ class App extends Component {
   <Switch>
           <Route exact path="/" component={Welcome} />
          <Route path="/inst" component={Instructions} />
+         <Route path="/land" component={TestLanding} />
           <Route path="/pref" component={Preferences} />
           <Route path="/movies" component={Movies} />
           <Route path="/movieInfo" component={MovieInfo} />
