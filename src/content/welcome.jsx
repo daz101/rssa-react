@@ -5,6 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
+import "react-step-progress-bar/styles.css";
+import { ProgressBar, Step } from "react-step-progress-bar";
 
 class Welcome extends Component {
 
@@ -21,12 +23,68 @@ class Welcome extends Component {
 
     return (
       <div>
+<ProgressBar
+percent={5}
+        filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"> 
+
+<Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
+              width="30"
+              src="/one.png"
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/two.png"
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/three.png"
+            />
+          )}
+        </Step>
+
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/four.png"
+            />
+          )}
+        </Step>
+
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/five.png"
+            />
+          )}
+        </Step>
+
+  </ProgressBar>
+
+
+
         <Jumbotron>
           <h1 className="header">Welcome</h1>
           <p>Welcome to the study on movie recommendation</p>
         </Jumbotron>
-        <Card>
-          <Card.Body>
+        <Card bg="light">
+          <Card.Body >
             <Card.Title>What can you expect?</Card.Title>
             <p>Dr. Knijnenburg invites you to take part in a research study. Dr. Knijnenburg is a professor at Clemson University. This is a study that aims to test a new recommender system for movies. Your participation in this study will be valued.</p>
             <p>It will take you about 10-15 minutes to complete the four steps of the study:</p>

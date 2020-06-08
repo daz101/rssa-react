@@ -14,7 +14,7 @@ class PrefTest extends Component {
 
 		this.state = {
 			index: 0,
-			direction: 0,
+			direction: null,
 		};
 	}
         
@@ -78,7 +78,7 @@ class PrefTest extends Component {
     
     </Carousel>
 
-}
+
 
        </div> 
         );

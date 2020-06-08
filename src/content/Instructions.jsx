@@ -3,8 +3,11 @@ import {
   Navbar,
   NavbarBrand
 } from 'reactstrap';
-import { Link } from "react-router-dom";
+import { Link }  from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-step-progress-bar/styles.css";
+import { ProgressBar, Step } from "react-step-progress-bar";
 
 
 class Instructions extends Component {
@@ -12,6 +15,60 @@ class Instructions extends Component {
     render() { 
         return ( 
        <div>
+<ProgressBar
+percent={30}
+        filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"> 
+
+<Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
+              width="30"
+              src="/one.png"
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
+              width="30"
+              src="/two.png"
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
+              width="30"
+              src="/three.png"
+            />
+          )}
+        </Step>
+
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/four.png"
+            />
+          )}
+        </Step>
+
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="30"
+              src="/five.png"
+            />
+          )}
+        </Step>
+
+  </ProgressBar>
+
          <br></br>
             <br></br>
 
@@ -52,6 +109,14 @@ class Instructions extends Component {
 </div>
       
         </div>
+
+        <Link to="/pref">
+              <Button variant="primary"  style={{float: 'right', marginRight: 60}}>
+              
+                Next
+              </Button>
+            </Link>
+
      </div>
       
          );
