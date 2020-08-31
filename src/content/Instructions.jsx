@@ -111,7 +111,7 @@ percent={30}
         </div>
 
         <Link to="/pref">
-              <Button variant="primary"  style={{float: 'right', marginRight: 60}}>
+              <Button variant="primary" size="lg"  style={{float: 'right', marginRight: 90}}>
               
                 Next
               </Button>

@@ -6,6 +6,27 @@ import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 
 class PrefPage extends Component {
+  constructor() {
+    super()
+    this.state = {
+      count: 0,
+      clicked: false
+    }
+
+     const width ={ 
+width: '50%'
+  };
+  }
+
+ 
+
+  getCount() {
+    const clicked = this.state.clicked
+    if(clicked){
+      this.setState({count: this.state.count + 1, clicked: true})
+    } 
+
+  }
     
     render() { 
         return ( 
@@ -68,6 +89,10 @@ percent={50}
 
 		   <br></br>
 		   <br></br> 
+       <br></br>
+       <br></br>
+       <br></br>
+
 	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
   <div class="container">
@@ -85,8 +110,10 @@ percent={50}
       <MovieGrid/>
     </div>
     <div class="col-sm">
-      <MovieGrid/>
+      <div className="image"><MovieGrid /></div>
     </div>
+
+
   </div>
 </div>
   </div>
@@ -101,9 +128,20 @@ percent={50}
  
 </div>
 
+
+<div id="footer-container" >
+			<div class="rankHolder" >
+				<span> Ranked Movies: </span>
+				<span id="NumberOfRankedMovies"> {this.state.count} </span>
+				<span><i>of 15</i></span>
+			</div>
+
 <Link to="/movies">
-<Button variant="primary" style={{float: 'right', marginRight: 60}}>Next</Button>
+<Button variant="primary" style={{float: 'right', marginRight: 90}}>Next</Button>
 </Link>
+		</div>
+
+
 
 </div>
      

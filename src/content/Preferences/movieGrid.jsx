@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
+import StarRatings from 'react-star-ratings';
 
 class MovieGrid extends Component {
-    state = {  }
+	
+	constructor(props) {
+		super(props)
+		this.state = {
+		  rating: 0 
+		}
+	  }
+	
+	changeRating( newRating ) {
+		this.setState({
+		  rating: newRating
+		});
+	  }
+	
+
     render() { 
         return ( 
             <div>
@@ -14,13 +29,15 @@ class MovieGrid extends Component {
 					   			<img id="TN_1" src="/m_1.jpg" class="imageTrans"/>
 					   
 					   			<div class="middle">
-					   				<fieldset class="rating">
-										<input class="prefStar" type="radio" id="star5_10" name="rating_10" value="5" /><label for="star5_10">5 stars</label>
-										<input class="prefStar" type="radio" id="star4_10" name="rating_10" value="4" /><label for="star4_10">4 stars</label>
-										<input class="prefStar" type="radio" id="star3_10" name="rating_10" value="3" /><label for="star3_10">3 stars</label>
-										<input class="prefStar" type="radio" id="star2_10" name="rating_10" value="2" /><label for="star2_10">2 stars</label>
-										<input class="prefStar" type="radio" id="star1_10" name="rating_10" value="1" /><label for="star1_10">1 star</label>
-									</fieldset>
+					   			<StarRatings
+									rating={this.state.rating}
+									starRatedColor="rgb(252,229,65)"
+									starHoverColor="rgb(252,229,65)"
+									starDimension="15px"
+									starSpacing="2px"
+									changeRating={this.changeRating}
+									numberOfStars={5}
+									name='rating'/>
 									<div class="text"> Movie Name</div>
 								</div>
 							</div>										

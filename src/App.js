@@ -5,13 +5,15 @@ import {
   NavbarBrand
 } from 'reactstrap';
 import Welcome from './content/welcome';
-import TestLanding from './content/Preferences/prefTest'
+import TestLanding from './content/Preferences/prefTest'; 
+import Test from './content/carousel'; 
 import Instructions from './content/Instructions';
 import Preferences from './content/Preferences/prefPage';
 import Movies from './content/MovieCards'; 
 import MovieInfo from './content/movieInfo'; 
 import Survey from "./content/survey";
 import Exit from './content/ExitPage'; 
+import MoviesList from "./content/movies-list.component";
 /*import 'bootstrap/dist/js/bootstrap.bundle.min';*/
 import './App.css';
 
@@ -32,11 +34,13 @@ class App extends Component {
           <Route exact path="/" component={Welcome} />
          <Route path="/inst" component={Instructions} />
          <Route path="/land" component={TestLanding} />
+         <Route path="/test" component={Test} />
           <Route path="/pref" component={Preferences} />
           <Route path="/movies" component={Movies} />
           <Route path="/movieInfo" component={MovieInfo} />
           <Route path="/survey" component={Survey} />
           <Route path="/exit" component={Exit} />
+          <Route path="/mern" component={MoviesList} />
    </Switch>
 
 </Router>

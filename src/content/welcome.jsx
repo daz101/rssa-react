@@ -68,7 +68,7 @@ percent={5}
         <Step transition="scale">
           {({ accomplished }) => (
             <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="30"
               src="/five.png"
             />
