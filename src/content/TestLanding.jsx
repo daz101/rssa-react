@@ -1,86 +1,199 @@
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from "react-bootstrap/Card";
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Jumbotron from "react-bootstrap/Jumbotron";
+import React, { Component, useState } from 'react';
+import "react-step-progress-bar/styles.css";
+import { ProgressBar, Step } from "react-step-progress-bar";
 import { Link } from "react-router-dom";
+import '../App.css';
+import { Container, Row, Col } from 'react-bootstrap';
+import test from '../data';
+import Display_Card from './card';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import axios from "axios";
+
+
+const Movie = props => (
+  <tr>
+    <td>{props.movie.rssa_id}</td>
+    <td>{props.movie.movie_id}</td>
+    <td>{props.movie.imdb_id}</td>
+    <td>{props.movie.title}</td>
+    <td>{props.movie.year}</td>
+    <td>{props.movie.runtime}</td>
+    <td>{props.movie.genre}</td>
+    <td>{props.movie.aveRating}</td>
+    <td>{props.movie.director}</td>
+    <td>{props.movie.writer}</td>
+    {/* <td>{props.movie.description}</td> */}
+    <td>{props.movie.cast}</td>
+    <td>
+      <img src={props.movie.poster} alt={props.movie.title} width="100" />
+    </td>
+  </tr>
+);
 
 class TestLanding extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-      disabled: true,
+    
+
+    constructor(props) {
+      super(props);
+  
+      this.onChangeMovieId = this.onChangeMovieId.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+  
+      this.state = {
+        movies: [],
+        mId: "",
+        rate: '',
+        isHovered: false,
+        isActive: false,
+        rate2:'',
+        isShown: '',
+        setIsShown: ''
+      };
+      this.handleHover = this.handleHover.bind(this);
+    }
+  
+    componentDidMount() {
+      var API = "";
+      if (process.env.NODE_ENV === "production") {
+        API = "https://movie-mern.herokuapp.com/api/movies/";
+      } else {
+        API = "http://localhost:5000/api/movies/";
+      }
+      axios
+        .get(API)
+        .then(response => {
+          this.setState({ movies: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+
+    movieList() {
+      return this.state.movies.map(currentmovie => {
+        return (
+          <Movie
+            movie={currentmovie}
+            // deleteMovie={this.deleteMovie}
+            key={currentmovie._id}
+          />
+        );
+      });
+    }
+  
+    onChangeMovieId(e) {
+      this.setState({
+        mId: e.target.value
+      });
+    }
+  
+    onSubmit(e) {
+      e.preventDefault();
+  
+      // const exercise = {
+      //   username: this.state.username,
+      //   description: this.state.description,
+      //   duration: this.state.duration,
+      //   date: this.state.date
+      // };
+  
+      console.log(this.state.mId);
+      var API = "";
+      if (process.env.NODE_ENV === "production") {
+        API = "https://movie-mern.herokuapp.com/api/movies/";
+      } else {
+        API = "http://localhost:5000/api/movies/";
+      }
+      axios
+        .get(API + this.state.mId)
+        .then(response => {
+          this.setState({ movies: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+
+    handleShow = ()=>{
+      this.setState({
+          isActive: true
+      })
+  };
+
+  handleHide = () =>{
+      this.setState({
+          isActive: false
+      })
+  };
+
+    handleHover(){
+      this.setState(prevState => ({
+          isHovered: !prevState.isHovered
+      }));
+     
+  };
+    
+    handleRateChange = evt => {
+      this.setState({ rate: evt.target.value });
     };
-  }
 
-  render() {
-    const show = this.state.show;
+    handleRateChange1 = evt => {
+      this.setState({ rate2: evt.target.value });
+    };
 
-    return (
-      <div>
-        <Jumbotron>
-          <h1 className="header">Welcome</h1>
-          <p>Welcome to the study on movie recommendation</p>
-        </Jumbotron>
-        <Card>
-          <Card.Body>
-            <Card.Title>What can you expect?</Card.Title>
-            <p>Dr. Knijnenburg invites you to take part in a research study. Dr. Knijnenburg is a professor at Clemson University. This is a study that aims to test a new recommender system for movies. Your participation in this study will be valued.</p>
-            <p>It will take you about 10-15 minutes to complete the four steps of the study:</p>
-            <ol>
-              <li>Introduction</li>
-              <li>Instructions for the study</li>
-              <li>Interact with movie recommender</li>
-              <li>Complete survey describing your experience </li>
-            </ol>
-			
-			<p>After completing the study, you will be given a special code at the end of the study to facilitate payment of $2.00. You will need to go back to MTurk to put in that code. You should keep the MTurk page with the HIT open.</p>
-            <br/> 
-				<p>Thanks,<br />
-              Research Team</p>
-            <Button variant="primary" size="lg" onClick={(evt) => this.setState({ "show": true })}>
-              Get started
-            </Button>
-          </Card.Body>
-        </Card>
-        <Modal show={show} dialogClassName="modal-70w" >
-          <Modal.Header>
-            <Modal.Title>Consent: taking part in the study</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p><strong>Risks and discomforts</strong></p>
-            <p>We do not know of any risks or discomforts to you participating in this research study. However, if you feel that you need a break, then you may take one at any time. You may also opt out of the study at any time if you are not comfortable. </p>
+    handleSubmit = evt => {
 
-            <p><strong>Incentives</strong></p>
-            <p>As a result of your completion of this study, you will be compensated $2.00 through Amazon Mechanical Turk. We appreciate your participation and feedback from this study.</p>
+      const { rate } = this.state;
+      const { rate2 } = this.state;
+      alert(`Signed up with rate: ${rate}`);
+    };
 
-            <p><strong>Confidentiality</strong></p>
-            <p>To protect your confidentiality, a randomly-assigned numeric identifier will be used to identify you and your data from this study. Data collected from the study (interaction and questionnaire responses) will only be accessible to the investigator(s) and members of the research team. Data will be analyzed in an anonymous form and you would not be identified by personal information. </p>
-            <p>Your participation in this study is voluntary. You may refuse to take part in this study or end your participation (withdraw consent and discontinue participation) in this study at any time without risk, penalty, or loss of benefits that you are otherwise entitled to receive.
-            If you would like to withdraw the data you provided, you can contact the experimenter by email: clemsonhatlab@gmail.com </p>
+    canBeSubmitted() {
+      const { rate } = this.state;
+      const { rate2 } = this.state;
+      return rate.length, rate2.length;
+    }
 
-            <p><strong>Consent</strong></p>
-            <Form.Check label="I have read and understand this study and my rights above. My participation in this study is voluntary. I voluntarily agree to participate in this research study." onChange={(evt) => this.setState({ disabled: !evt.target.checked })} />
 
-          </Modal.Body>
-          <Modal.Footer>
-            <Link to="/exit">
-              <Button variant="secondary">
-                Exit
-              </Button>
-            </Link>
-            <Link to="/pre-survey">
-              <Button variant="primary" disabled={this.state.disabled}>
-                Continue
-              </Button>
-            </Link>
-          </Modal.Footer>
-        </Modal>
+    render() { 
+      const active = this.state.isActive ? "pulse animated" : "";
+      const isEnabled = this.canBeSubmitted();
+      const { rate } = this.state;
+      const { rate2 } = this.state;
+       const n = 10; 
+       const movieList = this.state.movies; 
+
+        return ( 
+        <div>
+
+
+            <br></br>
+            <br></br>
+          
+            <div class="col-sm-4">
+            <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                  <strong> Movies You May Like</strong>
+                </li>
+            <ul className="list-group">
+          {this.state.movies.slice(0, 10).map((movie) => (
+            <li key={movie.movie_id} className="list-group-item d-flex justify-content-between align-items-center" >
+              
+              <img height="100px" src={movie.poster} /> <b> {movie.title} </b>
+                  <div class="rating">
+                    <input type="radio" id="star2_5" name="rating2" value="5" checked={this.state.rate2 === "5"} onChange={this.handleRateChange1} /><label for="star2_5" > 5 stars</label>
+                    <input type="radio" id="star2_4" name="rating2" value="4" checked={this.state.rate2 === "4"} onChange={this.handleRateChange1} /><label for="star2_4"> 4 stars</label>
+                    <input type="radio" id="star2_3" name="rating2" value="3" checked={this.state.rate2 === "3"} onChange={this.handleRateChange1} /><label for="star2_3"> 3 stars</label>
+                    <input type="radio" id="star2_2" name="rating2" value="2" checked={this.state.rate2 === "2"} onChange={this.handleRateChange1} /><label for="star2_2"> 2 stars</label>
+                    <input type="radio" id="star2_1" name="rating2" value="1" checked={this.state.rate2 === "1"} onChange={this.handleRateChange} /><label for="star2_1"> 1 star</label>
+                    </div>
+            </li>
+          ))}
+        </ul>
+        </div>
       </div>
-    );
-  }
+        );
+    }
 }
-
+ 
 export default TestLanding;

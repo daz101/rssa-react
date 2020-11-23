@@ -1,17 +1,32 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import MovieGrid  from "./MovieGrid.jsx";
 import { Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import Steps from "intro.js-react";
+import "intro.js/introjs.css";
 
 class PrefPage extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(); 
+
     this.state = {
       count: 0,
-      clicked: false
-    }
+      clicked: false, 
+      stepsEnabled: true,
+      initialStep: 0,
+      steps: [
+        {
+          element: ".carousel slide",
+          intro: "Hello step"
+        },
+        {
+          element: ".rankHolder",
+          intro: "World step"
+        }
+      ]
+    };
 
      const width ={ 
 width: '50%'
@@ -29,6 +44,12 @@ width: '50%'
   }
     
     render() { 
+      const {
+        stepsEnabled,
+        steps,
+        initialStep
+      } = this.state;
+
         return ( 
        <div>
 
@@ -93,7 +114,16 @@ percent={50}
        <br></br>
        <br></br>
 
-	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+       <Steps
+          enabled={stepsEnabled}
+          steps={steps}
+          initialStep={initialStep}
+          onExit={this.onExit}
+        />
+       
+
+
+	<div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
   <div class="container">
   <div class="row">
@@ -147,6 +177,10 @@ percent={50}
      
         );
     }
+
+   onExit = () => {
+      this.setState(() => ({ stepsEnabled: false }));
+    };
 }
  
 export default PrefPage;
