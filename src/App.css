@@ -812,8 +812,20 @@ height: 50px;
     }
 }
 
+.custom-control-inline {
+	display: inline !important;
+}
+
+.form-row {
+	display: block !important;
+}
+
 .form-row > .col{
-    padding-top:7px;
+	padding-top:7px;
+}
+
+.radio-margin {
+	margin-right: 1em;
 }
 
 .button-holder{

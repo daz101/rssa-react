@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import MovieGrid  from "./MovieGrid.jsx";
+import MovieGrid  from "./movieGrid.jsx";
 import { Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
