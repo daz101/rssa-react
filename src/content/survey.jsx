@@ -105,8 +105,8 @@ class SurveyPage extends Component {
   }
 
   handleSubmit(evt) {
-    //evt.preventDefault();
-    //evt.stopPropagation();
+    evt.preventDefault();
+    evt.stopPropagation();
     /* user.postSurveyResponses = this.state.questions;
     user.timePostStimulusEnd = Date.now();
     user.timeSessionEnd = Date.now();
