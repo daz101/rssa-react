@@ -118,6 +118,62 @@ class SurveyPage extends Component {
     });*/
   };
 
+  getQuestions(idx) {
+    var qBank = {
+      1: [
+        { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.' },
+        { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike' },
+        { 'qId': 'q3', 'text': 'Most movies were from the same genre' },
+        { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes' },
+        { 'qId': 'q5', 'text': 'The recommended movies were from many different genres' },
+        { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety' }
+      ],
+      2: [
+        { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender' },
+        { 'qId': 'q2', 'text': 'I found the recommended movies appealing' },
+        { 'qId': 'q3', 'text': 'The recommended movies fit my preference' },
+        { 'qId': 'q4', 'text': 'The recommended movies were relevant' },
+        { 'qId': 'q5', 'text': 'The system recommended too many bad movies.' },
+        { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.' }
+      ],
+      3: [
+        { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.' },
+        { 'qId': 'q2', 'text': 'The chosen movie fits my preference.' },
+        { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.' },
+        { 'qId': 'q4', 'text': 'I was excited about my chosen movie' },
+        { 'qId': 'q5', 'text': 'I think I chose the best movie from the options' },
+        { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected' },
+        { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected' }
+      ],
+      4: [
+        { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.' },
+        { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.' },
+        { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.' },
+        { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.' },
+        { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.' }
+      ],
+      5: [
+        { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests' },
+        { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.' },
+        { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.' },
+        { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.' },
+        { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.' },
+        { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.' },
+        { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.' }
+      ],
+      6: [
+        { 'qId': 'q1', 'text': 'I like using the system.' },
+        { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.' },
+        { 'qId': 'q3', 'text': 'I would recommend the system to others.' },
+        { 'qId': 'q4', 'text': 'I can find better movies using the system.' },
+        { 'qId': 'q5', 'text': 'I would quickly abandon using the system.' },
+        { 'qId': 'q6', 'text': 'I would use the system more often if possible.' }
+      ]
+    };
+
+    return qBank[idx];
+  };
+
   render() {
 
     {/* ###################################################
@@ -197,80 +253,37 @@ class SurveyPage extends Component {
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={1}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.' },
-                  { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike' },
-                  { 'qId': 'q3', 'text': 'Most movies were from the same genre' },
-                  { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes' },
-                  { 'qId': 'q5', 'text': 'The recommended movies were from many different genres' },
-                  { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety' }
-                ]}
+                questions_={this.getQuestions(1)}
               />
               <StepThrough
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={2}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender' },
-                  { 'qId': 'q2', 'text': 'I found the recommended movies appealing' },
-                  { 'qId': 'q3', 'text': 'The recommended movies fit my preference' },
-                  { 'qId': 'q4', 'text': 'The recommended movies were relevant' },
-                  { 'qId': 'q5', 'text': 'The system recommended too many bad movies.' },
-                  { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.' }
-                ]}
+                questions_={this.getQuestions(2)}
               />
               <StepThrough
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={3}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.' },
-                  { 'qId': 'q2', 'text': 'The chosen movie fits my preference.' },
-                  { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.' },
-                  { 'qId': 'q4', 'text': 'I was excited about my chosen movie' },
-                  { 'qId': 'q5', 'text': 'I think I chose the best movie from the options' },
-                  { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected' },
-                  { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected' }
-                ]}
+                questions_={this.getQuestions(3)}
               />
               <StepThrough
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={4}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.' },
-                  { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.' },
-                  { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.' },
-                  { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.' },
-                  { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.' }
-                ]}
+                questions_={this.getQuestions(4)}
               />
               <StepThrough
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={5}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests' },
-                  { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.' },
-                  { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.' },
-                  { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.' },
-                  { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.' },
-                  { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.' },
-                  { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.' }
-                ]}
+                questions_={this.getQuestions(5)}
               />
               <StepThrough
                 currentStep={this.state.currentStep}
                 handleChange={this.handleChange}
                 stepFlag={6}
-                questions_={[
-                  { 'qId': 'q1', 'text': 'I like using the system.' },
-                  { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.' },
-                  { 'qId': 'q3', 'text': 'I would recommend the system to others.' },
-                  { 'qId': 'q4', 'text': 'I can find better movies using the system.' },
-                  { 'qId': 'q5', 'text': 'I would quickly abandon using the system.' },
-                  { 'qId': 'q6', 'text': 'I would use the system more often if possible.' }
-                ]}
+                questions_={this.getQuestions(6)}
               />
               {/* {this.previousButton()} */}
               {this.nextButton()}
