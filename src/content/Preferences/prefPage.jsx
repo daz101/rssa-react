@@ -9,7 +9,7 @@ import "intro.js/introjs.css";
 
 class PrefPage extends Component {
   constructor(props) {
-    super(); 
+    super(props);
 
     this.state = {
       count: 0,
@@ -44,132 +44,10 @@ width: '50%'
   }
     
     render() { 
-      const {
-        stepsEnabled,
-        steps,
-        initialStep
-      } = this.state;
+     
 
         return ( 
        <div>
-
-<ProgressBar
-percent={50}
-        filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"> 
-
-<Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/one.png"
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/two.png"
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/three.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/four.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/five.png"
-            />
-          )}
-        </Step>
-
-  </ProgressBar>
-
-
-		   <br></br>
-		   <br></br> 
-       <br></br>
-       <br></br>
-       <br></br>
-
-       <Steps
-          enabled={stepsEnabled}
-          steps={steps}
-          initialStep={initialStep}
-          onExit={this.onExit}
-        />
-       
-
-
-	<div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <MovieGrid/>
-    </div>
-    <div class="col-sm">
-    <MovieGrid/>
-    </div>
-    <div class="col-sm">
-    <MovieGrid/>
-    </div>
-    <div class="col-sm">
-      <MovieGrid/>
-    </div>
-    <div class="col-sm">
-      <div className="image"><MovieGrid /></div>
-    </div>
-
-
-  </div>
-</div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
- 
-</div>
-
-
-<div id="footer-container" >
-			<div class="rankHolder" >
-				<span> Ranked Movies: </span>
-				<span id="NumberOfRankedMovies"> {this.state.count} </span>
-				<span><i>of 15</i></span>
-			</div>
-
-<Link to="/movies">
-<Button variant="primary" style={{float: 'right', marginRight: 90}}>Next</Button>
-</Link>
-		</div>
 
 
 

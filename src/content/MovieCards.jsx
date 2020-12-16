@@ -3,14 +3,14 @@ import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import { Link } from "react-router-dom";
 import '../App.css';
-import { Container, Row, Col } from 'react-bootstrap';
 import test from '../data';
 import Display_Card from './card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css'; 
-import StarRating from 'react-star-rating'; 
+import ReactStars from "react-rating-stars-component";
+
 
 
 const Movie = props => (
@@ -50,7 +50,7 @@ class Moviecard extends Component {
         isActive: false,
         rate2:'',
         isShown: '',
-        setIsShown: ''
+        setIsShown: false
       };
       this.handleHover = this.handleHover.bind(this);
     }
@@ -156,6 +156,8 @@ class Moviecard extends Component {
       alert(`Signed up with rate: ${rate}`);
     };
 
+    
+
     canBeSubmitted() {
       const { rate } = this.state;
       const { rate2 } = this.state;
@@ -168,6 +170,10 @@ class Moviecard extends Component {
       const isEnabled = this.canBeSubmitted();
       const { rate } = this.state;
       const { rate2 } = this.state;
+      const ratingChanged = (newRating) => {
+        console.log(newRating);
+      };
+      
      
 
         return ( 
@@ -244,16 +250,16 @@ percent={75}
                 </li>
             <ul className="list-group">
           {this.state.movies.slice(0, 10).map((movie) => (
-            <li key={movie.movie_id} className="list-group-item d-flex justify-content-between align-items-center" onMouseEnter={this.handleShow} onMouseLeave={this.handleHide}>
+            <li key={movie.movie_id} className="list-group-item d-flex justify-content-between align-items-center" onMouseEnter={() => this.setState({ setIsShown: true })} onMouseLeave={() => this.setState({ setIsShown: false })}>
               
               <img height="100px" src={movie.poster} /> <b> {movie.title} </b>
                   <div class="rating">
-                    <input type="radio" id="star2_5" name="rating2" value="5" checked={this.state.rate2 === "5"} onChange={this.handleRateChange1} /><label for="star2_5" > 5 stars</label>
-                    <input type="radio" id="star2_4" name="rating2" value="4" checked={this.state.rate2 === "4"} onChange={this.handleRateChange1} /><label for="star2_4"> 4 stars</label>
-                    <input type="radio" id="star2_3" name="rating2" value="3" checked={this.state.rate2 === "3"} onChange={this.handleRateChange1} /><label for="star2_3"> 3 stars</label>
-                    <input type="radio" id="star2_2" name="rating2" value="2" checked={this.state.rate2 === "2"} onChange={this.handleRateChange1} /><label for="star2_2"> 2 stars</label>
-                    <input type="radio" id="star2_1" name="rating2" value="1" checked={this.state.rate2 === "1"} onChange={this.handleRateChange} /><label for="star2_1"> 1 star</label>
-                    </div>
+                  <ReactStars
+                    count={5}
+                    onChange={ratingChanged}
+                    size={24}
+                    activeColor="#ffd700" />
+                     </div>
             </li>
           ))}
         </ul>
@@ -262,11 +268,18 @@ percent={75}
               </ul>
             </div>
 
+ { this.state.setIsShown ? (
             <div class="col-sm-3">
-              <Display_Card  className={active} onMouseEnter={this.handleShow}
-        onMouseLeave={this.handleHide}>
+           
+              <Display_Card  className={active} >
+              
               </Display_Card>
             </div>
+            ): (
+              <div class="col-sm-3"></div>
+            )
+          
+          }
 
             <div class="col-sm-4">
             <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
@@ -278,11 +291,11 @@ percent={75}
               
               <img height="100px" src={movie.poster} /> <b> {movie.title} </b>
                   <div class="rating">
-                    <input type="radio" id="star2_5" name="rating2" value="5" checked={this.state.rate2 === "5"} onChange={this.handleRateChange1} /><label for="star2_5" > 5 stars</label>
-                    <input type="radio" id="star2_4" name="rating2" value="4" checked={this.state.rate2 === "4"} onChange={this.handleRateChange1} /><label for="star2_4"> 4 stars</label>
-                    <input type="radio" id="star2_3" name="rating2" value="3" checked={this.state.rate2 === "3"} onChange={this.handleRateChange1} /><label for="star2_3"> 3 stars</label>
-                    <input type="radio" id="star2_2" name="rating2" value="2" checked={this.state.rate2 === "2"} onChange={this.handleRateChange1} /><label for="star2_2"> 2 stars</label>
-                    <input type="radio" id="star2_1" name="rating2" value="1" checked={this.state.rate2 === "1"} onChange={this.handleRateChange} /><label for="star2_1"> 1 star</label>
+                  <ReactStars
+                    count={5}
+                    onChange={ratingChanged}
+                    size={24}
+                    activeColor="#ffd700" />
                     </div>
             </li>
           ))}
