@@ -23,7 +23,7 @@ class PrefPage extends Component {
         initialStep: 0,
         steps: [
           {
-            element: ".row",
+            element: ".carousel-inner",
             intro: "Select a movie that you are familiar with and provide a rating. You can use the slider to the side to find more options."
           },
           {

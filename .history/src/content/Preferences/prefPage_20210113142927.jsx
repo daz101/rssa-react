@@ -23,12 +23,12 @@ class PrefPage extends Component {
         initialStep: 0,
         steps: [
           {
-            element: ".row",
-            intro: "Select a movie that you are familiar with and provide a rating. You can use the slider to the side to find more options."
+            element: ".carousel-inner",
+            intro: "Hello step"
           },
           {
             element: ".rankHolder",
-            intro: "Rate a total of 15 movies to proceed to the next stage. "
+            intro: "World step"
           }
         ],
         hintsEnabled: true,
@@ -68,6 +68,9 @@ class PrefPage extends Component {
   <div className="carousel-inner">
   <div className="container">
   <div class="row">
+    <div class="col-sm">
+      <MovieGrid/>
+    </div>
     
     <div class="col-sm">
       <div className="image"><MovieGrid /></div>

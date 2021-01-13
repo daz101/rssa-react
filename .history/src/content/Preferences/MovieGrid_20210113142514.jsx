@@ -113,7 +113,7 @@ class MovieGrid extends Component {
                 <div class="movie-block" id="movie_10">
 					<div class="container">
 						
-						{this.state.movies.slice(50, 55).map(currentmovie => ( 
+						{this.state.moviesslice(50, 55).map(currentmovie => ( 
 						<div class="wrapper-block"  key={currentmovie._id}>
 						
 
