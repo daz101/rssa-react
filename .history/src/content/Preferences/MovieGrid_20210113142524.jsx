@@ -121,7 +121,7 @@ class MovieGrid extends Component {
 							<div class="img-block" > 
 							
 						
-					   			<img id="TN_1" src={currentmovie.poster} className="imageTrans"/>
+					   			<img id="TN_1" src={currentmovie.poster} class="imageTrans"/>
 					   
 					   			<div class="middle">
 					   			<StarRatings

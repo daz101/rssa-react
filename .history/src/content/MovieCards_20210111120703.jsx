@@ -1,12 +1,12 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import { Link } from "react-router-dom";
 import '../App.css';
 import test from '../data';
+import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
 import Display_Card from './card';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css'; 
 import ReactStars from "react-rating-stars-component";
@@ -243,9 +243,28 @@ percent={75}
               </ul> */}
               <form onSubmit={this.handleSubmit}>
 
-             
+             <div>
+             { this.state.setIsShown ? (
               
-            <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+              <div class="col-sm-3">
+             
+             {this.state.movies.slice(0, 10).map((movie) => (
+                <Card body className={active} inverse style={{ backgroundColor: '#333', borderColor: '#333', width:"100%", height:"100%", marginLeft: "-30px" }}>
+        <CardImg top src={movie.poster} alt="Card image cap" />
+        <CardBody>
+          <CardTitle>{movie.title}</CardTitle>
+          <CardText>{movie.description}</CardText>
+        </CardBody>
+      </Card>
+                ))}
+              </div>
+              ): (
+                <div class="col-sm-3"></div>
+              )
+            
+            }
+
+<li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
                   <strong> Movies You May Like</strong>
                 </li>
             <ul className="list-group">
@@ -264,22 +283,15 @@ percent={75}
           ))}
         </ul>
         
+
+             </div>
+             
+            
               </form>
               </ul>
             </div>
 
- { this.state.setIsShown ? (
-            <div class="col-sm-3">
            
-              <Display_Card  className={active} >
-              
-              </Display_Card>
-            </div>
-            ): (
-              <div class="col-sm-3"></div>
-            )
-          
-          }
 
             <div class="col-sm-4">
             <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
@@ -297,6 +309,8 @@ percent={75}
                     size={24}
                     activeColor="#ffd700" />
                     </div>
+           
+                   
             </li>
           ))}
         </ul>

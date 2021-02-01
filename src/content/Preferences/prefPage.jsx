@@ -1,145 +1,74 @@
- 
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import MovieGrid  from "./movieGrid.jsx";
 import { Link } from "react-router-dom";
+import React, { Component, useState } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import Steps from "intro.js-react";
-import "intro.js/introjs.css";
+import { Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import 'intro.js/introjs.css';
+import { Steps, Hints } from "intro.js-react";
+import MovieGrid  from "./movieGrid";
+
 
 class PrefPage extends Component {
-  constructor(props) {
-    super(); 
-
-    this.state = {
-      count: 0,
-      clicked: false, 
-      stepsEnabled: true,
-      initialStep: 0,
-      steps: [
-        {
-          element: ".carousel slide",
-          intro: "Hello step"
-        },
-        {
-          element: ".rankHolder",
-          intro: "World step"
-        }
-      ]
-    };
-
-     const width ={ 
-width: '50%'
-  };
-  }
-
- 
-
-  getCount() {
-    const clicked = this.state.clicked
-    if(clicked){
-      this.setState({count: this.state.count + 1, clicked: true})
-    } 
-
-  }
     
+
+    constructor(props) {
+      super(props);
+  
+    
+  
+      this.state = {
+        stepsEnabled: true,
+        initialStep: 0,
+        steps: [
+          {
+            element: ".row",
+            intro: "Select a movie that you are familiar with and provide a rating. You can use the slider to the side to find more options."
+          },
+          {
+            element: ".rankHolder",
+            intro: "Rate a total of 15 movies to proceed to the next stage. "
+          }
+        ],
+        hintsEnabled: true,
+        hints: [
+          {
+            element: ".container",
+            hint: "Hello hint",
+            hintPosition: "middle-right"
+          }
+        ]
+      };
+    }
+  
     render() { 
       const {
         stepsEnabled,
         steps,
-        initialStep
+        initialStep,
+        hintsEnabled,
+        hints
       } = this.state;
-
+      
         return ( 
-       <div>
-
-<ProgressBar
-percent={50}
-        filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"> 
-
-<Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/one.png"
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/two.png"
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/three.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/four.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/five.png"
-            />
-          )}
-        </Step>
-
-  </ProgressBar>
+        <div>
 
 
-		   <br></br>
-		   <br></br> 
-       <br></br>
-       <br></br>
-       <br></br>
+            <br></br>
+            <br></br>
 
-       <Steps
+            <Steps
           enabled={stepsEnabled}
           steps={steps}
           initialStep={initialStep}
           onExit={this.onExit}
         />
-       
-
-
-	<div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-  <div class="container">
+          	<div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+  <div className="carousel-inner">
+  <div className="container">
   <div class="row">
-    <div class="col-sm">
-      <MovieGrid/>
-    </div>
-    <div class="col-sm">
-    <MovieGrid/>
-    </div>
-    <div class="col-sm">
-    <MovieGrid/>
-    </div>
-    <div class="col-sm">
-      <MovieGrid/>
-    </div>
+    
     <div class="col-sm">
       <div className="image"><MovieGrid /></div>
     </div>
@@ -161,7 +90,7 @@ percent={50}
 
 
 <div id="footer-container" >
-			<div class="rankHolder" >
+			<div className="rankHolder" >
 				<span> Ranked Movies: </span>
 				<span id="NumberOfRankedMovies"> {this.state.count} </span>
 				<span><i>of 15</i></span>
@@ -171,15 +100,11 @@ percent={50}
 <Button variant="primary" style={{float: 'right', marginRight: 90}}>Next</Button>
 </Link>
 		</div>
-
-
-
-</div>
-     
+            
+      </div>
         );
     }
-
-   onExit = () => {
+    onExit = () => {
       this.setState(() => ({ stepsEnabled: false }));
     };
 }

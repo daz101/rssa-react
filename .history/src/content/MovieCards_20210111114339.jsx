@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import { Link } from "react-router-dom";
+import { Link } from "r eact-router-dom";
 import '../App.css';
 import test from '../data';
 import Display_Card from './card';
@@ -268,18 +268,7 @@ percent={75}
               </ul>
             </div>
 
- { this.state.setIsShown ? (
-            <div class="col-sm-3">
-           
-              <Display_Card  className={active} >
-              
-              </Display_Card>
-            </div>
-            ): (
-              <div class="col-sm-3"></div>
-            )
           
-          }
 
             <div class="col-sm-4">
             <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">

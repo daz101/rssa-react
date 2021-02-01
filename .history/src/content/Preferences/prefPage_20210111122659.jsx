@@ -11,7 +11,7 @@ import { Steps, Hints } from "intro.js-react";
 import MovieGrid  from "./Preferences/MovieGrid";
 
 
-class TestLanding extends Component {
+class prefPage extends Component {
     
 
     constructor(props) {
@@ -121,4 +121,4 @@ class TestLanding extends Component {
     };
 }
  
-export default TestLanding;
+export default prefPage;

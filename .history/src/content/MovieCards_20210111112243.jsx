@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import { Link } from "react-router-dom";
+import { Link } from "r eact-router-dom";
 import '../App.css';
 import test from '../data';
 import Display_Card from './card';

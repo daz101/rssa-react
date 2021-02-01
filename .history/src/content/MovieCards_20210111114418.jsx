@@ -1,12 +1,11 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import { Link } from "react-router-dom";
+import { Link } from "r eact-router-dom";
 import '../App.css';
 import test from '../data';
 import Display_Card from './card';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css'; 
 import ReactStars from "react-rating-stars-component";
@@ -268,7 +267,8 @@ percent={75}
               </ul>
             </div>
 
- { this.state.setIsShown ? (
+            { this.state.setIsShown ? (
+              
             <div class="col-sm-3">
            
               <Display_Card  className={active} >

@@ -112,16 +112,14 @@ class MovieGrid extends Component {
             <div>
                 <div class="movie-block" id="movie_10">
 					<div class="container">
-						
-						{this.state.movies.slice(50, 55).map(currentmovie => ( 
-						<div class="wrapper-block"  key={currentmovie._id}>
+						<div class="wrapper-block">
 						
 
 
 							<div class="img-block" > 
 							
 						
-					   			<img id="TN_1" src={currentmovie.poster} className="imageTrans"/>
+					   			<img id="TN_1" src="/m_1.jpg" class="imageTrans"/>
 					   
 					   			<div class="middle">
 					   			<StarRatings
@@ -133,12 +131,12 @@ class MovieGrid extends Component {
 									changeRating={this.changeRating}
 									numberOfStars={5}
 									name='rating'/>
-									<div class="text"> {currentmovie.title}</div>
+									<div class="text"> Movie Name</div>
 								</div>
 								
 								
 							</div>										
-						</div> ))}
+						</div> 
 						 {/*wrapper ending */}
 					</div>
 				

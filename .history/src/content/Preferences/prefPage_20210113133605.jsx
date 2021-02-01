@@ -2,16 +2,15 @@ import React, { Component, useState } from 'react';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import { Link } from "react-router-dom";
-import '../App.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import 'intro.js/introjs.css';
 import { Steps, Hints } from "intro.js-react";
-import MovieGrid  from "./Preferences/MovieGrid";
+import MovieGrid  from "./MovieGrid";
 
 
-class TestLanding extends Component {
+class PrefPage extends Component {
     
 
     constructor(props) {
@@ -121,4 +120,4 @@ class TestLanding extends Component {
     };
 }
  
-export default TestLanding;
+export default PrefPage;
