@@ -268,23 +268,32 @@ letter-spacing: 5px;
 
 /*image opacity on hover for preference page*/
 .container {
-	position: relative;
-    width: 100%; 
+	width: 270px;
+	margin-right: auto;
+	margin-left: auto;
+	/* position: relative; */
+    /* width: 100%; */
+	/* align-content: center; */
+	/* margin: auto; */
+	/* display: inline-flex;  */
+	/* padding-left: 9px; */
 }
 
 .imageTrans {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
-  overflow:hidden;
-    position: relative;
+	/* margin:3px; */
+	margin-left: auto;
+	margin-right: auto;
+	opacity: 1;
+	display: block;
+	width: 270px;
+	height: 423px;
+	transition: .5s ease;
+	backface-visibility: hidden;
+	overflow:hidden;
+	position: relative;
 }
 
 .imageResize{
-	
 	color: #b43030;
 	position: absolute;
 	left: -50px;
@@ -298,7 +307,7 @@ letter-spacing: 5px;
   position: absolute;
   width: 120px;
   height: auto;
-  top: 70%;
+  /*top: 70%;*/
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%)
@@ -318,8 +327,29 @@ letter-spacing: 5px;
   font-size: 16px;
   padding: 5px 5px;
   text-align: center;
+  vertical-align: middle;
+  min-height: 45px;
+  width: 270px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 /*END image opacity on hover for preference page*/
+
+.carousel-item-custom {
+	padding: 5px 5px!;
+}
+
+.star-div {
+	height: 45px;
+	width: 270px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:18px;
+}
 
 /*progress bar*/ 
 .parent_container .progressbar {
@@ -402,7 +432,7 @@ letter-spacing: 5px;
 
 .parent_container .mainNextbutton
 {
-	    float: right;
+	float: right;
     border-radius: 12px;
     padding-top: 20px;
     padding-left: 200px;
