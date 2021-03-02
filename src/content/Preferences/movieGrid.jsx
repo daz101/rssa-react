@@ -189,6 +189,7 @@ class MovieGrid extends Component {
 
     render() {
 		if (this.state.visited.length > 0){
+			console.log(this.state.visited);
 			// let visited = this.state.movies_;
 			return (
 				<div>
@@ -214,10 +215,10 @@ class MovieGrid extends Component {
 					swipeable
 					itemClass="carousel-item-padding-0-px">
 					{this.state.movies_.map(currentmovie => (
-						<div class="container"  key={currentmovie.movie._id}>
+						<div className="container"  key={currentmovie.movie._id}>
 							{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
 							<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster} className="imageTrans"/>
-								<div class="star-div">
+								<div className="star-div">
 									<StarRatings
 										rating={currentmovie.rating}
 										starRatedColor="rgb(252,229,65)"
@@ -228,7 +229,7 @@ class MovieGrid extends Component {
 										numberOfStars={5}
 										name={currentmovie.movie._id}/>
 								</div>
-								<div class="text">
+								<div className="text">
 									{currentmovie.movie.title}
 								</div>									
 						</div>
