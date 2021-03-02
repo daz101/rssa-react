@@ -24,7 +24,7 @@ const Movie = props => (
 	</tr>
   );
 
-  const responsive = {
+const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
@@ -59,29 +59,47 @@ class MovieGrid extends Component {
 	}
 
 	componentDidMount() {
-		var API = "";
-		var movie_map = [];
+		let API = "";
+		let movie_map = [];
+		// let randomMovies = [];
 		if (process.env.NODE_ENV === "production") {
 		  API = "https://movie-mern.herokuapp.com/api/movies/";
 		} else {
 		  API = "http://localhost:5000/api/movies/";
 		}
 		axios
-		  .get(API)
-		  .then(response => {
-			  response.data.map(movie => {
-				  movie_map.push({
-					  "movie": movie,
-					  "rating": 0
-				  });
-			  },
-			this.setState({movies: response.data,
-							movies_: movie_map})
-			  );
-		  })
-		  .catch(error => {
+		.get(API)
+		.then(response => {
+			response.data.map(movie => {
+				movie_map.push({
+					"movie": movie,
+					"rating": 0
+				});
+			},
+			this.setState({
+				movies: response.data,
+				movies_: movie_map
+			})
+			);
+		})
+		.catch(error => {
 			console.log(error);
-		  });
+		});
+		if (this.state.visited.length <= 5){
+			this.updateVisted();
+			console.log(this.state.visited);
+		}
+	}
+
+	updateVisted = () => {
+		let randomMovies = [];
+		if (this.state.visited.length <= 5){
+			randomMovies = this.getRandomMovies(this.state.movies_);
+				
+			this.setState({
+				visited: randomMovies
+			});
+		}
 	}
   
 	movieList() {
@@ -131,42 +149,29 @@ class MovieGrid extends Component {
 		  });
 	} 
 	
-	// changeRating( newRating ) {
-	// 	console.log(newRating);
-	// 	// console.log(currentmovie);
-	// 	this.setState({
-	// 	  rating: newRating
-	// 	});
-	// }
-	
 	changeRating = (newRating, movieid) =>{
-		console.log(movieid);
-		console.log(this.state.movies_[movieid]);
-		console.log(newRating);
+		let movieLst = [...this.state.movies_];
+		let ratedItm = movieLst.map(movieItm => (
+			movieItm.movie._id === movieid ? {
+				...movieItm, rating: newRating}: movieItm
+		));
 		this.setState({
-		  rating: newRating
+			movies_: ratedItm
 		});
+
 		this.props.handler();
 	}
 
-	getRandomMovies = () => {
-		let allMovies = this.state.movies_;
+	getRandomMovies = (allMovies) => {
+		// let allMovies = this.state.movies_;
 		const randomCount = 5;
 
-		let movieMap = {};
 		const randomMovies = [];
 		for (let i = 0; i < randomCount; i++){
 			const randIdx = Math.floor(Math.random() * allMovies.length);
 			const randItm = allMovies.splice(randIdx, 1)[0];
-			// randomMovies[randItm._id] = randItm;
 			randomMovies.push(randItm);
-			// this.setState({
-			// 	visited: randomMovies
-			// });
-			movieMap[randItm.movie._id] = randItm;
-			console.log(randItm);
 		}
-		console.log(movieMap);
 		return randomMovies;
 	}
 
@@ -183,16 +188,8 @@ class MovieGrid extends Component {
 	}
 
     render() {
-		if (this.state.movies_.length > 0){
-			let randomMovies = [];
-			if (this.state.visited.length <= 5){
-				randomMovies = this.getRandomMovies();
-
-			console.log(randomMovies);
-			} else {
-				randomMovies = this.state.visited;
-			}
-			console.log(randomMovies);
+		if (this.state.visited.length > 0){
+			// let visited = this.state.movies_;
 			return (
 				<div>
 					<Carousel  
@@ -216,16 +213,16 @@ class MovieGrid extends Component {
 					slidesToSlide={1}
 					swipeable
 					itemClass="carousel-item-padding-0-px">
-					{randomMovies.map(currentmovie => (
+					{this.state.movies_.map(currentmovie => (
 						<div class="container"  key={currentmovie.movie._id}>
-							
+							{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
 							<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster} className="imageTrans"/>
 								<div class="star-div">
 									<StarRatings
 										rating={currentmovie.rating}
 										starRatedColor="rgb(252,229,65)"
 										starHoverColor="rgb(252,229,65)"
-										starDimension="27px"
+										starDimension="18px"
 										starSpacing="3px"
 										changeRating={this.changeRating}
 										numberOfStars={5}
