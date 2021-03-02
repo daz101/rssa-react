@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import 'intro.js/introjs.css';
 import { Steps, Hints } from "intro.js-react";
-import MovieGrid  from "./Preferences/MovieGrid";
+import MovieGrid  from "./Preferences/movieGrid";
 
 
 class TestLanding extends Component {

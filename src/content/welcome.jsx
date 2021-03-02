@@ -33,6 +33,7 @@ percent={5}
               style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
               width="30"
               src="/one.png"
+              alt=""
             />
           )}
         </Step>
@@ -42,6 +43,7 @@ percent={5}
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="30"
               src="/two.png"
+              alt=""
             />
           )}
         </Step>
@@ -51,6 +53,7 @@ percent={5}
               style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="30"
               src="/three.png"
+              alt=""
             />
           )}
         </Step>
@@ -61,6 +64,7 @@ percent={5}
               style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="30"
               src="/four.png"
+              alt=""
             />
           )}
         </Step>
@@ -71,6 +75,7 @@ percent={5}
               style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="30"
               src="/five.png"
+              alt=""
             />
           )}
         </Step>
