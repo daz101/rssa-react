@@ -31,10 +31,8 @@
 .header_block
 {
 	width:65%;
-	margin:auto;
 	height:180px;
-	margin-top: 15px;
-	margin-bottom: 20px;
+	margin: 15px auto 20px;
 	box-shadow: 1px 1px 10px #888888;
     background-color: #ffffff;
 	align-content: center;
@@ -54,7 +52,7 @@
 .headerText span
 {
 	width:100%;
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 2em;
 	float: left;
 	text-align: center;
@@ -67,7 +65,7 @@
 
 .vertical-center {
   min-height: 10%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 10vh; 
+  min-height: 10vh;
  /* max-width: 400px; */
   display: flex;
   align-items: center;
@@ -106,25 +104,23 @@ margin: auto;
 
 .parent_container .mainBody span{
 	width: 100%;
-    font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
     font-size: 2em;
     float: left;
     text-align: left;
-    padding: 10px 10px 10px 10px;
-    color: black;
-    padding-top: 2em;
-	display: show; 
+	color: black;
+	padding: 2em 10px 10px;
+	/*display: show; */
 }
 
 .parent_container .mainBody span:last-child{
 	width: 100%;
-    font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
     font-size: 1.3em;
     float: left;
     text-align: left;
-    padding: 10px 10px 10px 10px;
-    color: black;
-    padding-top: 3PX;
+	color: black;
+	padding: 3PX 10px 10px;
 }
 .parent_container .intro
 {
@@ -138,7 +134,7 @@ margin: auto;
 .parent_container .intro span
 {
 	width:100%;
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 1.5em;
 	float: left;
 	text-align: center;
@@ -148,7 +144,7 @@ margin: auto;
 .parent_container .intro span:last-child
 {
 	width:100%;
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 1em;
 	float: left;
 	text-align: center;
@@ -156,10 +152,10 @@ margin: auto;
 	color: #62656b;
 letter-spacing: 5px;	
 }
-.parent_container .intro mainQuestion
+.parent_container .intro .mainQuestion
 {
    width:100%;
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 2em;
 	float: left;
 	text-align: left;
@@ -179,9 +175,8 @@ letter-spacing: 5px;
 }
 .parent_container .block_holder
 {
-
 	width:80em;
-	padding:0px 7px 7px 7px;
+	padding:0 7px 7px 7px;
 	box-shadow: 1px 1px 10px #888888;
     background-color: #ffffff;
 	height:470px;
@@ -191,7 +186,7 @@ letter-spacing: 5px;
 
 .parent_container .survey_block_holder {
 	width:80em;
-	padding:0px 7px 7px 7px;
+	padding:0 7px 7px 7px;
 	box-shadow: 1px 1px 10px #888888;
     background-color: #ffffff;
 	height:550px;
@@ -202,32 +197,27 @@ letter-spacing: 5px;
 {
 	float:left;
 	width:100em;
-	padding:0px 7px 7px 7px;
+	padding:0 7px 7px 7px;
 	box-shadow: 1px 1px 10px #888888;
     background-color: #ffffff;
 	height:630px;
 	margin: auto;
-	
 }
 
 .parent_container .prefHolder
 {
-	
 	width:100em;
-	padding:0px 7px 7px 7px;
+	padding:0 7px 7px 7px;
 	box-shadow: 1px 1px 10px #888888;
     background-color: #ffffff;
 	height:250px;
 	margin: auto;
-	
 }
 
 .parent_container .movie-block
 {	
 	width: 15%;
-	
 	float: left;
-	
 	margin-left: 2.5%;
 	margin-right: 2.5%;
 	margin-top: 30px; 
@@ -236,7 +226,6 @@ letter-spacing: 5px;
     -webkit-justify-content: space-around; /* Safari 6.1+ */
     display: flex;
     justify-content: space-around;
-	
 }
 
 .parent_container .movie-block .wrapper-block
@@ -263,14 +252,16 @@ letter-spacing: 5px;
 	display: block;
 	float:left;
 	width:100%;
-	
 }
 
 /*image opacity on hover for preference page*/
 .container {
-	width: 270px;
+	max-width: 270px;
+	height: 80%;
 	margin-right: auto;
 	margin-left: auto;
+	background-size: cover;
+	padding: 0;
 	/* position: relative; */
     /* width: 100%; */
 	/* align-content: center; */
@@ -279,14 +270,34 @@ letter-spacing: 5px;
 	/* padding-left: 9px; */
 }
 
+.container:hover .overlay{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.8;
+}
+
+.container:hover .star-div{
+	z-index: 2;
+	display: flex;
+}
+/*.container:hover > .overlay {*/
+/*	width:100%;*/
+/*	height:100%;*/
+/*	position:absolute;*/
+/*	background-color:#000;*/
+/*	opacity:0.5;*/
+/*	!*border-radius:30px;*!*/
+/*}*/
+
 .imageTrans {
 	/* margin:3px; */
 	margin-left: auto;
 	margin-right: auto;
 	opacity: 1;
 	display: block;
-	width: 270px;
-	height: 423px;
+	width: 100%;
+	height: auto;
 	transition: .5s ease;
 	backface-visibility: hidden;
 	overflow:hidden;
@@ -297,8 +308,13 @@ letter-spacing: 5px;
 	color: #b43030;
 	position: absolute;
 	left: -50px;
-	top: -50px; 
-	
+	top: -50px;
+}
+
+.movieCardContainer {
+	height: 270px;
+	/*width: 180px;*/
+	/*margin: 0 auto;*/
 }
 
 .middle {
@@ -325,30 +341,34 @@ letter-spacing: 5px;
   background-color: #357df2;
   color: white;
   font-size: 16px;
-  padding: 5px 5px;
+  /*padding: 3px 3px;*/
   text-align: center;
   vertical-align: middle;
-  min-height: 45px;
-  width: 270px;
+  /*height: 10%;*/
+  min-height: 50px;
+  /*width: 100%;*/
   display: flex;
   justify-content: center;
   align-content: center;
+  /*position: absolute;*/
 }
 /*END image opacity on hover for preference page*/
 
 .carousel-item-custom {
-	padding: 5px 5px!;
+	padding: 3px 3px;
 }
 
 .star-div {
-	height: 45px;
-	width: 270px;
-	display: flex;
+	height: 27px;
+	/*width: 270px;*/
+	/*display: flex;*/
 	justify-content: center;
 	align-content: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top:18px;
+	/*margin-left: auto;*/
+	/*margin-right: auto;*/
+	margin: 0 auto;
+	padding-top: 80%;
+	display: none;
 }
 
 /*progress bar*/ 
@@ -471,8 +491,7 @@ letter-spacing: 5px;
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;
-	margin: auto;
-        margin-right: 10px;
+	margin: auto 10px auto auto;
 }
 #progress_circles li.active{
 	background: #18a6f4;
@@ -540,25 +559,28 @@ letter-spacing: 5px;
 {
 	width: 100%;
 	height: 30px;
-	margin-top: 10px;
-	padding-top: 40px;
+	/*margin-top: 10px;*/
+	/*padding-top: 40px;*/
+}
+
+.bghjHX{
+	margin: 0 45px!important;
 }
 
 .rankHolder
 {
-	width: 20%;
-	float: center;
-	display:block;	
-	margin: auto;
+	width: 27%;
+	/*float: center;*/
+	display:block;
 	box-align: center;
-	margin-top: 10px;
+	margin: 10px auto auto;
 	padding-top: 10px;
 	
 }
 
 .rankHolder span
 {
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 1.6em;
 	float: left;
 	text-align: center;
@@ -575,7 +597,7 @@ letter-spacing: 5px;
 }
 .rankHolder span:last-child
 {
-	font-family: "Calibri", Georgia, Serif;
+	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 1.6em;
 	float: left;
 	text-align: center;
@@ -604,9 +626,8 @@ letter-spacing: 5px;
 
 .list-container .card-left
 {
-	width:35%; 
-	padding: 0px;
-	padding-top: 88px;
+	width:35%;
+	padding: 88px 0 0;
 	float:left;
 	display:none
 }
@@ -614,9 +635,7 @@ letter-spacing: 5px;
 .list-container .card-right /* */
 {
 	width: 35%;
-	width:35%; 
-	padding: 0px;
-	padding-top: 88px;
+	padding: 88px 0 0;
 	float:right;
 	display:none
 }
@@ -631,6 +650,10 @@ div.card
 	background-color: #f3ba6a;
 }
 
+.pref-lst {
+	list-style-position: inside;
+	list-style-type: decimal;
+}
 
 #overlay{
 	position: fixed;
@@ -713,21 +736,20 @@ div.card
 	background-color: #ccc;
 }
 .introBorder{
-	border-width: 0px;
-    position: absolute;
+	position: absolute;
     left: -1.5em;
-    top: 0px;
+    top: 0;
     width: 82em;
     height: 53px;
     background: inherit;
     background-color: rgba(25, 158, 216, 1);
-    border: none;
-    border-radius: 0px;
+	border: 0 none;
+	border-radius: 0;
     -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
     -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
 	overflow:visible; 
-	float: center; 
+	/*float: center; */
 }
 
 #survey_section
@@ -743,17 +765,14 @@ div.card
 	width:100%;
 	border-top:1px dotted #000000;
 	border-left:3px solid #bfbfbf;
-	margin: 0px 0px 25px 0px;
+	margin: 0 0 25px 0;
 }
-
-
 
 #survey_section table tr:first-child td
 {
 	text-align:left;
 	font-weight:bold;
 }
-
 
 #survey_section table tr:first-child td span
 {

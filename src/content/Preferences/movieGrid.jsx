@@ -24,6 +24,24 @@ const Movie = props => (
 	</tr>
   );
 
+const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+	const {
+		carouselState: { currentSlide }
+	} = rest;
+	return (
+		<div className="carousel-button-group">
+			<div
+				className={currentSlide === 0 ? "disable" : ""}
+				onClick={() => previous()}
+			>
+				Prev
+			</div>
+			<div onClick={() => next()}>Next</div>
+			<div onClick={() => goToSlide(currentSlide + 1)}> Go to any slide </div>
+		</div>
+	);
+};
+
 const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -187,6 +205,8 @@ class MovieGrid extends Component {
 		console.log(movieID);
 	}
 
+
+
     render() {
 		if (this.state.visited.length > 0){
 			console.log(this.state.visited);
@@ -206,7 +226,7 @@ class MovieGrid extends Component {
 					infinite
 					keyBoardControl
 					minimumTouchDrag={80}
-					renderButtonGroupOutside={false}
+					renderButtonGroupOutside={true}
 					renderDotsOutside={false}
 					responsive={responsive}		
 					showDots={false}
@@ -215,9 +235,14 @@ class MovieGrid extends Component {
 					swipeable
 					itemClass="carousel-item-padding-0-px">
 					{this.state.movies_.map(currentmovie => (
-						<div className="container"  key={currentmovie.movie._id}>
-							{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
-							<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster} className="imageTrans"/>
+
+						<div className="movieCardContainer">
+								<div className="container"  key={currentmovie.movie._id}>
+									{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
+									<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster}
+										 className="imageTrans" alt={currentmovie.movie.title}/>
+								</div>
+
 								<div className="star-div">
 									<StarRatings
 										rating={currentmovie.rating}
@@ -233,15 +258,12 @@ class MovieGrid extends Component {
 									{currentmovie.movie.title}
 								</div>									
 						</div>
-						// <div>
-						// <img src={currentmovie.movie.poster} className="imageTrans"/>
-						// </div>
 					))}
 					</Carousel>
 				</div>
 			);
 		} else {
-			return (<div></div>);
+			return (<div/>);
 		}
     }
 }
