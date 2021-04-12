@@ -24,6 +24,24 @@ const Movie = props => (
 	</tr>
   );
 
+const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+	const {
+		carouselState: { currentSlide }
+	} = rest;
+	return (
+		<div className="carousel-button-group">
+			<div
+				className={currentSlide === 0 ? "disable" : ""}
+				onClick={() => previous()}
+			>
+				Prev
+			</div>
+			<div onClick={() => next()}>Next</div>
+			<div onClick={() => goToSlide(currentSlide + 1)}> Go to any slide </div>
+		</div>
+	);
+};
+
 const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -187,6 +205,8 @@ class MovieGrid extends Component {
 		console.log(movieID);
 	}
 
+
+
     render() {
 		if (this.state.visited.length > 0){
 			// let visited = this.state.movies_;
@@ -205,19 +225,21 @@ class MovieGrid extends Component {
 					infinite
 					keyBoardControl
 					minimumTouchDrag={80}
-					renderButtonGroupOutside={false}
+					renderButtonGroupOutside={true}
 					renderDotsOutside={false}
 					responsive={responsive}		
 					showDots={false}
 					sliderClass=""
 					slidesToSlide={1}
 					swipeable
+					customButtonGroup={<ButtonGroup />}
 					itemClass="carousel-item-padding-0-px">
 					{this.state.movies_.map(currentmovie => (
-						<div class="container"  key={currentmovie.movie._id}>
-							{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
-							<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster} className="imageTrans"/>
-								<div class="star-div">
+						<div className="movieCardContainer">
+							<div id={"TN_"+currentmovie.movie._id} className="container"  
+								key={currentmovie.movie._id} style={{backgroundImage:"url("+ currentmovie.movie.poster +")"}}>
+							</div>
+								<div className="star-div">
 									<StarRatings
 										rating={currentmovie.rating}
 										starRatedColor="rgb(252,229,65)"
@@ -228,14 +250,55 @@ class MovieGrid extends Component {
 										numberOfStars={5}
 										name={currentmovie.movie._id}/>
 								</div>
-								<div class="text">
+								<div className="text">
 									{currentmovie.movie.title}
 								</div>									
 						</div>
-						// <div>
-						// <img src={currentmovie.movie.poster} className="imageTrans"/>
-						// </div>
 					))}
+					</Carousel>
+					<Carousel
+						additionalTransfrom={0}
+						arrows
+						autoPlaySpeed={3000}
+						centerMode={true}
+						className=""
+						containerClass="container-with-dots"
+						dotListClass=""
+						draggable
+						focusOnSelect={false}
+						infinite
+						keyBoardControl
+						minimumTouchDrag={80}
+						renderButtonGroupOutside={true}
+						renderDotsOutside={false}
+						responsive={responsive}
+						showDots={false}
+						sliderClass=""
+						slidesToSlide={1}
+						swipeable
+						customButtonGroup={<ButtonGroup />}
+						itemClass="carousel-item-padding-0-px">
+						{this.state.movies_.map(currentmovie => (
+							<div className="movieCardContainer">
+								<div id={"TN_"+currentmovie.movie._id} className="container"
+									 key={currentmovie.movie._id} style={{backgroundImage:"url("+ currentmovie.movie.poster +")"}}>
+								</div>
+								<div className="star-div">
+									<StarRatings
+										rating={currentmovie.rating}
+										starRatedColor="rgb(252,229,65)"
+										starHoverColor="rgb(252,229,65)"
+										starDimension="18px"
+										starSpacing="3px"
+										changeRating={this.changeRating}
+										numberOfStars={5}
+										name={currentmovie.movie._id}/>
+								</div>
+								<div className="text">
+									{currentmovie.movie.title}
+								</div>
+							</div>
+						))}
 					</Carousel>
 				</div>
 			);
