@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import StarRatings from 'react-star-ratings';
-// import Carousel from "react-multi-carousel";
-// import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-grid-carousel'
 import axios from "axios";
 
@@ -25,7 +23,7 @@ const Movie = props => (
 	</tr>
 );
 
-const MyDot = ({ isActive }) => (
+const customArrowRight = ({ isActive }) => (
 	<span
 	style={{
 		position: 'absolute',
@@ -49,55 +47,13 @@ const MyDot = ({ isActive }) => (
 );
 
 const responsive = [
-	{
-		breakpoint: 4000,
-		cols: 12,
-		rows: 5,
-		gap: 9,
-		loop: true
-	},
-	{
-		breakpoint: 3000,
-		cols: 8,
-		rows: 3,
-		gap: 9,
-		loop: true
-	},
-	{
-		breakpoint: 1200,
-		cols: 7,
-		rows: 3,
-		gap: 9,
-		loop: true
-	},
-	{
-		breakpoint: 1000,
-		cols: 6,
-		rows: 3,
-		gap: 3,
-		loop: true
-	},
-	{
-		breakpoint: 800,
-		cols: 5,
-		rows: 3,
-		gap: 3,
-		loop: true
-	},
-	{
-		breakpoint: 600,
-		cols: 3,
-		rows: 3,
-		gap: 3,
-		loop: true
-	},
-	{
-		breakpoint: 464,
-		cols: 2,
-		rows: 3,
-		gap: 3,
-		loop: true
-	}
+	{ breakpoint: 4000, cols: 12, rows: 5, gap: 9, loop: true },
+	{ breakpoint: 3000, cols: 8, rows: 3, gap: 9, loop: true },
+	{ breakpoint: 1200, cols: 7, rows: 3, gap: 9, loop: true },
+	{ breakpoint: 1000, cols: 6, rows: 3, gap: 3, loop: true },
+	{ breakpoint: 800, cols: 5, rows: 3, gap: 3, loop: true },
+	{ breakpoint: 600, cols: 3, rows: 3, gap: 3, loop: true },
+	{ breakpoint: 464, cols: 2, rows: 3, gap: 3, loop: true }
 ];
 
 class MovieGrid extends Component {
@@ -105,12 +61,10 @@ class MovieGrid extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			movies: [],
 			movies_: [],
 			visited: []
 		}
 	}
-
 	componentDidMount() {
 		let API = "";
 		let movie_map = [];
@@ -130,7 +84,6 @@ class MovieGrid extends Component {
 					});
 				});
 				this.setState({
-					movies: response.data,
 					movies_: movie_map
 				})
 			})
@@ -139,14 +92,14 @@ class MovieGrid extends Component {
 			});
 		if (this.state.visited.length <= 5) {
 			this.updateVisted();
-			console.log(this.state.visited);
 		}
 	}
 
 	updateVisted = () => {
+		const randomCount = 5;
 		let randomMovies = [];
 		if (this.state.visited.length <= 5) {
-			randomMovies = this.getRandomMovies(this.state.movies_);
+			randomMovies = this.getRandomMovies(this.state.movies_, randomCount);
 
 			this.setState({
 				visited: randomMovies
@@ -163,14 +116,6 @@ class MovieGrid extends Component {
 					key={currentmovie._id}
 				/>
 			);
-		});
-	}
-
-	onChangeMovieId(e) {
-		console.log("onChangeMovieId");
-		console.log(e);
-		this.setState({
-			mId: e.target.value
 		});
 	}
 
@@ -210,8 +155,6 @@ class MovieGrid extends Component {
 			} : movieItm
 		));
 		let vstd = vstdLst.includes(movieid);
-		console.log(vstd);
-		console.log(vstdLst);
 		if (!vstd) {
 			vstdLst.push(movieid);
 			this.setState({
@@ -226,10 +169,7 @@ class MovieGrid extends Component {
 		}
 	}
 
-	getRandomMovies = (allMovies) => {
-		// let allMovies = this.state.movies_;
-		const randomCount = 5;
-
+	getRandomMovies = (allMovies, randomCount) => {
 		const randomMovies = [];
 		for (let i = 0; i < randomCount; i++) {
 			const randIdx = Math.floor(Math.random() * allMovies.length);
@@ -239,18 +179,6 @@ class MovieGrid extends Component {
 		return randomMovies;
 	}
 
-	getRandomMovie = () => {
-		let allMovies = this.state.movies_;
-		const randomCount = 5;
-
-		const randIdx = Math.floor(Math.random() * allMovies.length);
-		return allMovies.splice(randIdx, 1)[0];
-	}
-
-	removeItem = (movieID) => {
-		console.log(movieID);
-	}
-
 	render() {
 		if (this.state.visited.length > 0) {
 			// let visited = this.state.movies_;
@@ -258,14 +186,13 @@ class MovieGrid extends Component {
 				<div>
 					<Carousel
 						responsiveLayout={responsive}
-						// arrowRight={MyDot}
+						// arrowRight={customArrowRight}
 						cols={5} rows={3} gap={3} loop>
 						{this.state.movies_.map(currentMovie => (
 							<Carousel.Item>
 								<div id={"TN_" + currentMovie.movie._id}
 									 key={currentMovie.movie._id}
 									 className="movieCardContainer">
-
 									<div  className="container"
 										 style={{backgroundImage: "url(" + currentMovie.movie.poster + ")"}}>
 										<div className={"overlay"}>

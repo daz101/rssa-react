@@ -7,6 +7,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import ProgressBarComponent from "./progressBarComponent";
 
 class Welcome extends Component {
 
@@ -23,64 +24,7 @@ class Welcome extends Component {
 
     return (
       <div>
-<ProgressBar
-percent={5}
-        filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"> 
-
-<Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginLeft:40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/one.png"
-              alt=""
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/two.png"
-              alt=""
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/three.png"
-              alt=""
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/four.png"
-              alt=""
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/five.png"
-              alt=""
-            />
-          )}
-        </Step>
-
-  </ProgressBar>
+<ProgressBarComponent percentComplete={5} />
 
 
 

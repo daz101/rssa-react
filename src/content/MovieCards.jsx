@@ -9,6 +9,7 @@ import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import ReactStars from "react-rating-stars-component";
 import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
+import ProgressBarComponent from "./progressBarComponent";
 
 
 const Movie = props => (
@@ -164,60 +165,7 @@ class Moviecard extends Component {
 
         return (
             <div>
-                <ProgressBar
-                    percent={75}
-                    filledBackground="linear-gradient(to right, #fefb72, #f0bb31)">
-                    <Step transition="scale">
-                        {({accomplished}) => (
-                            <img
-                                style={{marginLeft: 40, filter: `grayscale(${accomplished ? 0 : 100}%)`}}
-                                width="30"
-                                src={"/one.png"}
-                                alt={"1"}
-                            />
-                        )
-                        }
-                    </Step>
-                    <Step transition="scale">
-                        {({accomplished}) => (
-                            <img
-                                style={{filter: `grayscale(${accomplished ? 0 : 100}%)`}}
-                                width="30"
-                                src={"/two.png"}
-                                alt={"1"}
-                            />
-                        )}
-                    </Step>
-                    <Step transition="scale">
-                        {({accomplished}) => (
-                            <img
-              style={{ paddingright:90, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/three.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-              width="30"
-              src="/four.png"
-            />
-          )}
-        </Step>
-
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ marginRight:40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="30"
-              src="/five.png"
-            />
-          )}
-        </Step>
-  </ProgressBar>
+                <ProgressBarComponent percentComplete={75} />
 
             <br/>
             <div className="row padding">
@@ -260,7 +208,7 @@ class Moviecard extends Component {
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333', width:"100%",
                                 height:"100%"}}>
                                 <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
-                                         style={{maxHeight: '270px', width:'auto'}} />
+                                         style={{maxHeight: '270px', width:'auto', height:'auto'}} />
                                 <CardBody style={{maxHeight: '300px'}}>
                                     <CardTitle style={{fontWeight: 'bold', fontSize: '1.2em'}}>
                                         {this.state.activeMovie.title}
