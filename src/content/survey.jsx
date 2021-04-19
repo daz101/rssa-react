@@ -1,12 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
-import { ProgressBar, Step } from "react-step-progress-bar";
 import ProgressBarComponent from "./progressBarComponent";
-/*import { Redirect } from 'react-router-dom'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';*/
 
 class SurveyPage extends Component {
 

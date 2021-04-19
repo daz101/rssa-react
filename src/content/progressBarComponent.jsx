@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {Steps} from "intro.js-react";
 import {ProgressBar, Step} from "react-step-progress-bar";
 
 
