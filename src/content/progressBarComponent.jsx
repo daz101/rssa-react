@@ -8,8 +8,6 @@ class ProgressBarComponent extends Component{
 	render() {
 		return (
 			<>
-
-
 				<ProgressBar
 					percent={this.props.percentComplete}
 					filledBackground="linear-gradient(to right, #fefb72, #f0bb31)">
@@ -66,7 +64,6 @@ class ProgressBarComponent extends Component{
 							/>
 						)}
 					</Step>
-
 				</ProgressBar>
 			</>
 		);

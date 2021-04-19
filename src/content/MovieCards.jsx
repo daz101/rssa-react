@@ -1,36 +1,14 @@
 import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
-import {ProgressBar, Step} from "react-step-progress-bar";
 import {Link} from "react-router-dom";
 import '../App.css';
-import Display_Card from './card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import ReactStars from "react-rating-stars-component";
 import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 import ProgressBarComponent from "./progressBarComponent";
-
-
-const Movie = props => (
-    <tr>
-        <td>{props.movie.rssa_id}</td>
-        <td>{props.movie.movie_id}</td>
-        <td>{props.movie.imdb_id}</td>
-        <td>{props.movie.title}</td>
-        <td>{props.movie.year}</td>
-        <td>{props.movie.runtime}</td>
-        <td>{props.movie.genre}</td>
-        <td>{props.movie.aveRating}</td>
-        <td>{props.movie.director}</td>
-        <td>{props.movie.writer}</td>
-    {/* <td>{props.movie.description}</td> */}
-    <td>{props.movie.cast}</td>
-    <td>
-      <img src={props.movie.poster} alt={props.movie.title} width="100" />
-    </td>
-  </tr>
-);
+import {API, Movie} from "./constants";
 
 class Moviecard extends Component {
     constructor(props) {
@@ -53,12 +31,6 @@ class Moviecard extends Component {
     }
   
     componentDidMount() {
-      var API = "";
-      if (process.env.NODE_ENV === "production") {
-        API = "https://movie-mern.herokuapp.com/api/movies/";
-      } else {
-        API = "http://localhost:5000/api/movies/";
-      }
       axios
         .get(API)
         .then(response => {
@@ -97,12 +69,6 @@ class Moviecard extends Component {
       // };
   
       console.log(this.state.mId);
-      var API = "";
-      if (process.env.NODE_ENV === "production") {
-        API = "https://movie-mern.herokuapp.com/api/movies/";
-      } else {
-        API = "http://localhost:5000/api/movies/";
-      }
       axios
         .get(API + this.state.mId)
         .then(response => {

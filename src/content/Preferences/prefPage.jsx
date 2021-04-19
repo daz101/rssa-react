@@ -1,12 +1,11 @@
 import {Link} from "react-router-dom";
 import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
-import {ProgressBar, Step} from "react-step-progress-bar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from 'reactstrap';
 import 'intro.js/introjs.css';
 import {Steps} from "intro.js-react";
-import MovieGrid from "./movieGrid_test";
+import MovieGrid from "./movieGrid";
 import ProgressBarComponent from "../progressBarComponent";
 
 class PrefPage extends Component {
