@@ -87,7 +87,6 @@ class MovieGrid extends Component {
 		//   duration: this.state.duration,
 		//   date: this.state.date
 		// };
-		console.log(this.state.mId);
 		axios
 			.get(API + this.state.mId)
 			.then(response => {
@@ -133,7 +132,6 @@ class MovieGrid extends Component {
 
 	render() {
 		if (this.state.visited.length > 0) {
-			// let visited = this.state.movies_;
 			return (
 				<div>
 					<Carousel
@@ -143,8 +141,7 @@ class MovieGrid extends Component {
 						{this.state.movies_.map(currentMovie => (
 							<Carousel.Item>
 								<div id={"TN_" + currentMovie.movie._id}
-									 key={currentMovie.movie._id}
-									 className="movieCardContainer">
+									 key={currentMovie.movie._id} className="movieCardContainer">
 									<div  className="container"
 										 style={{backgroundImage: "url(" + currentMovie.movie.poster + ")"}}>
 										<div className={"overlay"}>

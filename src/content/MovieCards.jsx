@@ -9,6 +9,7 @@ import ReactStars from "react-rating-stars-component";
 import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 import ProgressBarComponent from "./progressBarComponent";
 import {API, Movie} from "./constants";
+import MovieSidePanel from "./Preferences/movieSidePanel";
 
 class Moviecard extends Component {
     constructor(props) {
@@ -31,14 +32,14 @@ class Moviecard extends Component {
     }
   
     componentDidMount() {
-      axios
-        .get(API)
-        .then(response => {
-          this.setState({ movies: response.data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        axios
+            .get(API)
+            .then(response => {
+                this.setState({ movies: response.data });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     movieList() {
@@ -46,73 +47,70 @@ class Moviecard extends Component {
             return (
                 <Movie movie={currentmovie}
                     // deleteMovie={this.deleteMovie}
-                       key={currentmovie._id}
+                    key={currentmovie._id}
                 />
             );
         });
     }
   
     onChangeMovieId(e) {
-      this.setState({
-        mId: e.target.value
-      });
+        this.setState({
+            mId: e.target.value
+        });
     }
   
     onSubmit(e) {
-      e.preventDefault();
-  
+        e.preventDefault();
+
       // const exercise = {
       //   username: this.state.username,
       //   description: this.state.description,
       //   duration: this.state.duration,
       //   date: this.state.date
       // };
-  
-      console.log(this.state.mId);
-      axios
-        .get(API + this.state.mId)
-        .then(response => {
-          this.setState({ movies: response.data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        axios
+            .get(API + this.state.mId)
+            .then(response => {
+                this.setState({ movies: response.data });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     handleShow = ()=>{
-      this.setState({
-          isActive: true
-      })
-  };
+        this.setState({
+            isActive: true
+        })
+    };
 
-  handleHide = () =>{
-      this.setState({
-          isActive: false
-      })
-  };
+    handleHide = () =>{
+        this.setState({
+            isActive: false
+        })
+    };
 
-    handleHover(){
-      this.setState(prevState => ({
-          isHovered: !prevState.isHovered
-      }));
-     
-  };
+    handleHover(isShown, activeMovie){
+        this.setState(prevState => ({
+            setIsShown: isShown,
+            activeMovie: activeMovie,
+            isHovered: !prevState.isHovered
+        }));
+    };
     
     handleRateChange = evt => {
-      this.setState({ rate: evt.target.value });
+        this.setState({ rate: evt.target.value });
     };
 
     handleRateChange1 = evt => {
-      this.setState({ rate2: evt.target.value });
+        this.setState({ rate2: evt.target.value });
     };
 
     handleSubmit = evt => {
-
-      const { rate } = this.state;
-      const { rate2 } = this.state;
-      alert(`Signed up with rate: ${rate}`);
+        const { rate } = this.state;
+        const { rate2 } = this.state;
+        alert(`Signed up with rate: ${rate}`);
     };
-
 
     canBeSubmitted() {
         const {rate} = this.state;
@@ -125,6 +123,7 @@ class Moviecard extends Component {
         const isEnabled = this.canBeSubmitted();
         const {rate} = this.state;
         const {rate2} = this.state;
+
         const ratingChanged = (newRating) => {
             console.log(newRating);
         };
@@ -132,45 +131,12 @@ class Moviecard extends Component {
         return (
             <div>
                 <ProgressBarComponent percentComplete={75} />
-
-            <br/>
-            <div className="row padding">
-            <div className="col-sm-4">
-              <ul className="list-group">
-              {/*<ul>
-        { this.state.movies.map(movies => <li>{movies.title}</li>)}
-              </ul> */}
-                  <form onSubmit={this.handleSubmit}>
-
-                      <li className="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-                          <strong> Movies You May Like</strong>
-                      </li>
-                      <ol className="list-group">
-                          {this.state.movies.slice(0, 10).map((movie) => (
-                              <li key={movie.movie_id}
-                                  className="list-group-item d-flex justify-content-between align-items-center"
-                                  onMouseEnter={() => this.setState({setIsShown: true, activeMovie: movie})}
-                                  onMouseLeave={() => this.setState({setIsShown: false, activeMovie: null})}>
-                                  {/*<img height="100px" src={movie.poster} alt={""}/> */}
-                                  <b> {movie.title} </b>
-                                  <div className="rating">
-                                      <ReactStars
-                                          count={5}
-                                          onChange={ratingChanged}
-                                          size={24}
-                                          activeColor="#ffd700"/>
-                                  </div>
-                              </li>
-                          ))}
-                      </ol>
-
-                  </form>
-              </ul>
-            </div>
-                {this.state.setIsShown && (this.state.activeMovie!= null) ? (
-                    <div className="col-sm-4">
-                        {console.log(this.state.activeMovie)}
-                        {/*<div>*/}
+                <br/>
+                <div className="row padding">
+                    <MovieSidePanel movieList={this.state.movies.slice(0, 10)} handler={this.handleHover}
+                                    panelTitle={"Movies You May Like"}/>
+                    {this.state.setIsShown && (this.state.activeMovie!= null) ? (
+                        <div className="col-sm-4">
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333', width:"100%",
                                 height:"100%"}}>
                                 <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
@@ -188,57 +154,22 @@ class Moviecard extends Component {
                                     </CardText>
                                 </CardBody>
                             </Card>
-                        {/*</div>*/}
-                    </div>
-                ) : (
-                    <div className="col-sm-4">
-
-                    </div>
-                )
-
-                }
-
-                <div className="col-sm-4">
-                    <li className="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-                        <strong> Movies You May Hate</strong>
-                    </li>
-                    <ul className="list-group">
-                        {this.state.movies.slice(30, 40).map((movie) => (
-                            <li key={movie.movie_id}
-                                className="list-group-item d-flex justify-content-between align-items-center"
-                                onMouseEnter={() => this.setState({setIsShown: true, activeMovie: movie})}
-                                onMouseLeave={() => this.setState({setIsShown: false, activeMovie: null})}>
-
-                                {/*<img height="54x" src={movie.poster} alt={"movie.title"}/>*/}
-                                <b> {movie.title} </b>
-                                <div className="rating">
-                                    <ReactStars
-                                        count={5}
-                                        onChange={ratingChanged}
-                                        size={24}
-                                        activeColor="#ffd700"/>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                        </div>
+                    ) : (<div className="col-sm-4" />)
+                    }
+                    <MovieSidePanel movieList={this.state.movies.slice(10, 20)} handler={this.handleHover}
+                                    panelTitle={"Movies You May Hate"}/>
                 </div>
-            </div>
-
                 <div align="right" className="padding">
                     <Link to="/survey">
                         <button id="register" type="button" className="btn btn-sm btn-primary"
                                 onClick="window.location.href='/'">Next
                         </button>
-
-                        {/*<button disabled={!isEnabled}>Submit</button>*/}
                     </Link>
                 </div>
-
-
             </div>
         );
     }
-   
 }
- 
+
 export default Moviecard;
