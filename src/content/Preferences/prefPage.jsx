@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from 'reactstrap';
+import Button from 'react-bootstrap/Button';
 import 'intro.js/introjs.css';
 import {Steps} from "intro.js-react";
 import MovieGrid from "./movieGrid";
@@ -12,9 +12,10 @@ class PrefPage extends Component {
     constructor(props) {
         super(props);
         this.handler = this.handler.bind(this);
+        this.testCheat = this.testCheat.bind(this);
 
         this.state = {
-            stepsEnabled: true,
+            stepsEnabled: false,
             initialStep: 0,
             steps: [
                 {
@@ -44,6 +45,12 @@ class PrefPage extends Component {
             count: currentCount
         });
   }
+
+  testCheat(){
+        this.setState({
+            count: 15
+        });
+  }
   
   render() {
         const {
@@ -59,7 +66,7 @@ class PrefPage extends Component {
     }
 
     return (
-        <div>
+        <div className="contentWrapper">
             <br/>
             <Steps
                 enabled={stepsEnabled}
@@ -74,16 +81,23 @@ class PrefPage extends Component {
                     <MovieGrid handler={this.handler}/>
                 </div>
             </div>
-
+            <div style={{marginTop: "1em"}}>
+                <Button variant="primary" style={{float:'left'}} onClick={this.testCheat}>Cheat</Button>
+            </div>
             <div id="footer-container">
                 <div className="rankHolder">
                     <span> Ranked Movies: </span>
                     <span id="NumberOfRankedMovies"><i>{this.state.count}</i></span>
                     <span><i>of 15</i></span>
                 </div>
-                <Link to="/movies">
-                    <Button disabled={disabled} variant="primary" style={{float:'right', marginRight: 90}}>Next</Button>
-                </Link>
+                <div style={{marginTop: "1em"}}>
+                    <Link to="/movies">
+                        <Button disabled={disabled}
+                                variant="primary" style={{float:'right'}}>
+                            Next
+                        </Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );

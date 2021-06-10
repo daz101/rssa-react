@@ -424,7 +424,10 @@ letter-spacing: 5px;
 	color: white;
 }
 
-
+.contentWrapper {
+	align-content: center;
+	margin: 1em;
+}
 
 
 .parent_container .next-button
@@ -682,6 +685,7 @@ div.card
     float:left;
 	align-content: center;
 	opacity:1;
+	min-width: 108px;
 }
 
 

@@ -22,7 +22,7 @@ class Welcome extends Component {
     const show = this.state.show;
 
     return (
-      <div>
+      <div className="contentWrapper">
         <ProgressBarComponent percentComplete={5}/>
         <Jumbotron>
           <h1 className="header">Welcome</h1>

@@ -168,7 +168,7 @@ class MovieGrid extends Component {
 				</div>
 			);
 		} else {
-			return (<div/>);
+			return (<div />);
 		}
 	}
 }

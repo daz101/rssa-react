@@ -5,11 +5,12 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
-import ReactStars from "react-rating-stars-component";
+import Button from 'react-bootstrap/Button';
 import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 import ProgressBarComponent from "./progressBarComponent";
 import {API, Movie} from "./constants";
 import MovieSidePanel from "./Preferences/movieSidePanel";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 class Moviecard extends Component {
     constructor(props) {
@@ -129,9 +130,12 @@ class Moviecard extends Component {
         };
 
         return (
-            <div>
+            <div className="contentWrapper">
                 <ProgressBarComponent percentComplete={75} />
                 <br/>
+                <Jumbotron>
+                    <p style={{textAlign: "center"}}>Please rate the following movies.</p>
+                </Jumbotron>
                 <div className="row padding">
                     <MovieSidePanel movieList={this.state.movies.slice(0, 10)} handler={this.handleHover}
                                     panelTitle={"Movies You May Like"}/>
@@ -145,12 +149,8 @@ class Moviecard extends Component {
                                     <CardTitle style={{fontWeight: 'bold', fontSize: '1.2em'}}>
                                         {this.state.activeMovie.title}
                                     </CardTitle>
-                                    <CardText> Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter
-                                        people's dreams and steal their secrets from their subconscious. His skill has
-                                        made him a hot commodity in the world of corporate espionage but has also cost
-                                        him everything he loves. Cobb gets a chance at redemption when he is offered a
-                                        seemingly impossible task: Plant an idea in someone's mind. If he succeeds, it
-                                        will be the perfect crime, but a dangerous enemy anticipates Cobb's every move.
+                                    <CardText>
+                                        {this.state.activeMovie.description}
                                     </CardText>
                                 </CardBody>
                             </Card>
@@ -160,11 +160,11 @@ class Moviecard extends Component {
                     <MovieSidePanel movieList={this.state.movies.slice(10, 20)} handler={this.handleHover}
                                     panelTitle={"Movies You May Hate"}/>
                 </div>
-                <div align="right" className="padding">
-                    <Link to="/survey">
-                        <button id="register" type="button" className="btn btn-sm btn-primary"
-                                onClick="window.location.href='/'">Next
-                        </button>
+                <div style={{marginTop: "1em"}}>
+                    <Link to="/movieInfo">
+                        <Button variant="primary" style={{float:'right'}}>
+                            Next
+                        </Button>
                     </Link>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
 import ProgressBarComponent from "./progressBarComponent";
+import Button from 'react-bootstrap/Button';
 
 class SurveyPage extends Component {
 
@@ -16,6 +17,26 @@ class SurveyPage extends Component {
     /* user.acceptTerms = true;*/
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+    this.testcheat = this.testcheat.bind(this);
+  }
+
+  testcheat(){
+    this.setState({
+      disabled: false
+    })
+  }
+
+  cheatButton(){
+    const currentStep = this.state.currentStep;
+    if (currentStep < 6) {
+      return (
+          <Button style={{float: "left"}} type="primary" onClick={this.testcheat}>
+            Cheat
+          </Button>
+      );
+    }
+    return null;
   }
 
   handleChange(evt) {
@@ -67,11 +88,10 @@ class SurveyPage extends Component {
     const currentStep = this.state.currentStep;
     if (currentStep !== 1) {
       return (
-        <button
-          className="btn btn-secondary"
-          type="button" onClick={this._prev}>
+        <Button
+            type="secondary" style={{float: "right"}} onClick={this._prev}>
           Previous
-        </button>
+        </Button>
       );
     }
     return null;
@@ -81,11 +101,10 @@ class SurveyPage extends Component {
     const currentStep = this.state.currentStep;
     if (currentStep < 6) {
       return (
-        <button disabled={this.state.disabled}
-          className="btn btn-primary float-right"
-          type="button" onClick={this._next}>
+        <Button disabled={this.state.disabled}
+                style={{float: "right"}} type="primary" onClick={this._next}>
           Next
-        </button>
+        </Button>
       );
     }
     return null;
@@ -208,7 +227,7 @@ class SurveyPage extends Component {
 
     return (
       <React.Fragment>
-        <div>
+        <div className="contentWrapper">
           <ProgressBarComponent percentComplete={90} />
 
           <div className="survey-page">
@@ -228,6 +247,7 @@ class SurveyPage extends Component {
               {/* {this.previousButton()} */}
               {this.nextButton()}
               {this.submitButton()}
+              {this.cheatButton()}
             </form>
           </div>
         </div>
@@ -240,7 +260,7 @@ function StepThrough(props) {
   if (props.currentStep !== props.stepFlag) {
     return null
   }
-  var qType = props.questions_.qType;
+  let qType = props.questions_.qType;
   return (
     <React.Fragment>
       <div className="card bg-light mb-3">
@@ -249,7 +269,7 @@ function StepThrough(props) {
           {props.questions_.qData.map((likert, i) => (
             <div className="form-group" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
               <div className="form-row">  
-                <label as="legend" className="font-weight-bold">{likert.text}</label>
+                <label is="legend" className="font-weight-bold">{likert.text}</label>
  
                 <div className="col">
 

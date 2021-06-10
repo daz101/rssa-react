@@ -14,7 +14,7 @@ class ProgressBarComponent extends Component{
 					<Step transition="scale">
 						{({accomplished}) => (
 							<img
-								style={{marginLeft: 40, filter: `grayscale(${accomplished ? 0 : 100}%)`}}
+								style={{filter: `grayscale(${accomplished ? 0 : 100}%)`}}
 								width="30"
 								src="/one.png"
 								alt={1}
