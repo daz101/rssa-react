@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
 import ProgressBarComponent from "./progressBarComponent";
 import Button from 'react-bootstrap/Button';
+import ReactHtmlParser from 'react-html-parser';
 
 class SurveyPage extends Component {
 
@@ -143,12 +144,12 @@ class SurveyPage extends Component {
       1: {
         qType: 'Diversity',
         qData: [
-          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.' },
-          { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike' },
-          { 'qId': 'q3', 'text': 'Most movies were from the same genre' },
-          { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes' },
-          { 'qId': 'q5', 'text': 'The recommended movies were from many different genres' },
-          { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety' }
+          { 'qId': 'q1', 'text': 'All the <span  class="survey-highlight">recommended movies</span> in the final list were <span class="survey-highlight">similar</span> to each other.' },
+          { 'qId': 'q2', 'text': '<span  class="survey-highlight">None</span> of the movies in the recommended list were <span  class="survey-highlight">alike</span>' },
+          { 'qId': 'q3', 'text': '<span  class="survey-highlight">Most movies</span> were from the <span  class="survey-highlight">same genre</span>' },
+          { 'qId': 'q4', 'text': 'The recommended list of movies suits a <span  class="survey-highlight">broad set of tastes</span>' },
+          { 'qId': 'q5', 'text': 'The recommended movies were from many <span  class="survey-highlight">different genres</span>' },
+          { 'qId': 'q6', 'text': 'The recommendations contained <span  class="survey-highlight">a lot of variety</span>' }
         ] 
       },
       2: {
@@ -256,6 +257,14 @@ class SurveyPage extends Component {
   }
 }
 
+
+function htmlDecode(input){
+  let e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
+
 function StepThrough(props) {
   if (props.currentStep !== props.stepFlag) {
     return null
@@ -267,35 +276,35 @@ function StepThrough(props) {
         <div className="card-body">
           <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:</p>
           {props.questions_.qData.map((likert, i) => (
-            <div className="form-group" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
+            <div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
               <div className="form-row">  
-                <label is="legend" className="font-weight-bold">{likert.text}</label>
+                <label is="legend" className="font-weight-bold"><strong>{ReactHtmlParser(likert.text)}</strong></label>
  
                 <div className="col">
 
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
+                <div className="checkboxgroup custom-control custom-radio">
                   <label htmlFor={qType + "_" + likert.qId + "-1"}>Strongly disagree</label>
+                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
                 </div>
 
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
+                <div className="checkboxgroup custom-control custom-radio">
                   <label htmlFor={qType + "_" + likert.qId + "-2"}>Disagree</label>
+                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
                 </div>
 
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
+                <div className="checkboxgroup custom-control custom-radio">
                   <label htmlFor={qType + "_" + likert.qId + "-3"}>Neither agree nor disagree</label>
+                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
                 </div>
 
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
+                <div className="checkboxgroup custom-control custom-radio">
                   <label htmlFor={qType + "_" + likert.qId + "4"}>Agree</label>
+                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
                 </div>
 
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
+                <div className="checkboxgroup custom-control custom-radio">
                   <label htmlFor={qType + "_" + likert.qId + "5"}>Strongly agree</label>
+                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
                 </div>
 
                 </div>

@@ -41,4 +41,3 @@ class MovieSidePanel extends Component {
 }
 
 export default MovieSidePanel
-

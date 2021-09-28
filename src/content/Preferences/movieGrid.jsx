@@ -3,6 +3,7 @@ import StarRatings from 'react-star-ratings';
 import Carousel from 'react-grid-carousel'
 import axios from "axios";
 import {API, Movie} from "../constants";
+import Spinner from 'react-bootstrap/Spinner'
 
 const carouselArrowRight = ({ isActive }) => (
 	<span className={"carouselArrowRight"} />
@@ -25,7 +26,7 @@ const responsive = [
 class MovieGrid extends Component {
 
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			movies_: [],
 			visited: []
@@ -80,7 +81,6 @@ class MovieGrid extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-
 		// const exercise = {
 		//   username: this.state.username,
 		//   description: this.state.description,
@@ -143,7 +143,7 @@ class MovieGrid extends Component {
 								<div id={"TN_" + currentMovie.movie._id}
 									 key={currentMovie.movie._id} className="movieCardContainer">
 									<div  className="container"
-										 style={{backgroundImage: "url(" + currentMovie.movie.poster + ")"}}>
+										 style={{backgroundImage: "url(' + currentMovie.movie.poster + '), url('')"}}>
 										<div className={"overlay"}>
 											<div className="star-div">
 												<StarRatings
@@ -159,7 +159,7 @@ class MovieGrid extends Component {
 										</div>
 									</div>
 									<div className="text">
-										{currentMovie.movie.title}
+										{currentMovie.movie.title + " (" + currentMovie.movie.year + ")"}
 									</div>
 								</div>
 							</Carousel.Item>
@@ -168,7 +168,11 @@ class MovieGrid extends Component {
 				</div>
 			);
 		} else {
-			return (<div />);
+			return (
+				// <div style={{minWidth: "300px", minHeight: "300px"}}>
+					<Spinner animation="border" role="status" style={{margin: "3em 50%", width: "54px", height: "54px"}}/>
+				// </div>
+				);
 		}
 	}
 }

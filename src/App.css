@@ -992,3 +992,26 @@ div.box.sample:after
     text-shadow: 0 0 2px #c00;
     box-shadow: 0 0 2px #c00;
 }
+
+.survey-highlight {
+	color: red;
+	font-weight: bold;
+}
+
+.survey-question {
+	padding: 18px;
+	border-top-width: 1px;
+	border-top-style: dotted;
+	border-left: black;
+	border-left-width: 3px;
+	border-left-color: darkgray;
+	border-left-style: solid;
+}
+
+.checkboxgroup {
+	display: inline-block;
+	text-align: center;
+}
+.checkboxgroup label {
+	display: block;
+}
