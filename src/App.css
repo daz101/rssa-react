@@ -999,7 +999,7 @@ div.box.sample:after
 }
 
 .survey-question {
-	padding: 18px;
+	padding: 9px 18px 9px 18px;
 	border-top-width: 1px;
 	border-top-style: dotted;
 	border-left: black;
@@ -1014,4 +1014,5 @@ div.box.sample:after
 }
 .checkboxgroup label {
 	display: block;
+	font-size: small;
 }
