@@ -12,7 +12,8 @@ class SurveyPage extends Component {
       toInstructions: false,
       questions: [],
       disabled: true,
-      currentStep: 1
+      currentStep: 1,
+      seen_set: []
     };
     const user = this.props.user;
     /* user.acceptTerms = true;*/
@@ -65,6 +66,8 @@ class SurveyPage extends Component {
                         (currentStep === 5 && questions.length === 31) || 
                         (currentStep === 6 && questions.length === 37));
     this.setState({ questions: questions, disabled: disabled });
+    // console.log(newQ);
+    // console.log(questions);
   }
 
 
@@ -144,35 +147,35 @@ class SurveyPage extends Component {
       1: {
         qType: 'Diversity',
         qData: [
-          { 'qId': 'q1', 'text': 'All the <span  class="survey-highlight">recommended movies</span> in the final list were <span class="survey-highlight">similar</span> to each other.' },
-          { 'qId': 'q2', 'text': '<span  class="survey-highlight">None</span> of the movies in the recommended list were <span  class="survey-highlight">alike</span>' },
-          { 'qId': 'q3', 'text': '<span  class="survey-highlight">Most movies</span> were from the <span  class="survey-highlight">same genre</span>' },
-          { 'qId': 'q4', 'text': 'The recommended list of movies suits a <span  class="survey-highlight">broad set of tastes</span>' },
-          { 'qId': 'q5', 'text': 'The recommended movies were from many <span  class="survey-highlight">different genres</span>' },
-          { 'qId': 'q6', 'text': 'The recommendations contained <span  class="survey-highlight">a lot of variety</span>' }
+          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were <span class="survey-highlight">similar to each other.', 'flag': false },
+          { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike', 'flag': false },
+          { 'qId': 'q3', 'text': 'Most movies were from the same genre', 'flag': false },
+          { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes', 'flag': false },
+          { 'qId': 'q5', 'text': 'The recommended movies were from many different genres', 'flag': false },
+          { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety', 'flag': false }
         ] 
       },
       2: {
         qType: 'RecQual',
         qData: [
-          { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender' },
-          { 'qId': 'q2', 'text': 'I found the recommended movies appealing' },
-          { 'qId': 'q3', 'text': 'The recommended movies fit my preference' },
-          { 'qId': 'q4', 'text': 'The recommended movies were relevant' },
-          { 'qId': 'q5', 'text': 'The system recommended too many bad movies.' },
-          { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.' }
+          { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender', 'flag': false },
+          { 'qId': 'q2', 'text': 'I found the recommended movies appealing', 'flag': false },
+          { 'qId': 'q3', 'text': 'The recommended movies fit my preference', 'flag': false },
+          { 'qId': 'q4', 'text': 'The recommended movies were relevant', 'flag': false },
+          { 'qId': 'q5', 'text': 'The system recommended too many bad movies.', 'flag': false },
+          { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.', 'flag': false }
         ]
       },
       3: {
         qType: 'choiceSat',
         qData: [
-          { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.' },
-          { 'qId': 'q2', 'text': 'The chosen movie fits my preference.' },
-          { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.' },
-          { 'qId': 'q4', 'text': 'I was excited about my chosen movie' },
-          { 'qId': 'q5', 'text': 'I think I chose the best movie from the options' },
-          { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected' },
-          { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected' }
+          { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.', 'flag': false },
+          { 'qId': 'q2', 'text': 'The chosen movie fits my preference.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I was excited about my chosen movie', 'flag': false },
+          { 'qId': 'q5', 'text': 'I think I chose the best movie from the options', 'flag': false },
+          { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected', 'flag': false },
+          { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected', 'flag': false }
         ] 
       },
       4: {
@@ -274,6 +277,8 @@ function StepThrough(props) {
     <React.Fragment>
       <div className="card bg-light mb-3">
         <div className="card-body">
+          <h3>Scenario {props.currentStep} out of 6:</h3>
+          <p>Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:</p>
           <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:</p>
           {props.questions_.qData.map((likert, i) => (
             <div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>

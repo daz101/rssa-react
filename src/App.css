@@ -257,9 +257,10 @@ letter-spacing: 5px;
 /*image opacity on hover for preference page*/
 .container {
 	max-width: 270px;
-	height: 80%;
-	margin-right: auto;
-	margin-left: auto;
+	height: 100%;
+	/* margin-right: auto; */
+	/* margin-left: auto; */
+	/* margin: 9px; */
 	background-size: cover;
 	padding: 0;
 	/* position: relative; */
@@ -313,8 +314,10 @@ letter-spacing: 5px;
 
 .movieCardContainer {
 	height: 270px;
-	/*width: 180px;*/
+	margin: 9px 0 0 9px;
+	/* width: 180px; */
 	/*margin: 0 auto;*/
+	/* position: relative; */
 }
 
 .middle {
@@ -340,18 +343,20 @@ letter-spacing: 5px;
 .text {
 	background-color: #357df2;
 	color: white;
-  font-size: 16px;
-  /*padding: 3px 3px;*/
-  text-align: center;
-  vertical-align: middle;
-  /*height: 10%;*/
-  min-height: 50px;
-  /*width: 100%;*/
-  display: flex;
-  justify-content: center;
-  align-content: center;
+	font-size: 16px;
+	bottom: 0;
+	/* position: absolute; */
+	text-align: center;
+	vertical-align: middle;
+	/*padding: 3px 3px;*/
+	/*height: 10%;*/
+	width: 100%;
+	min-height: 50px;
+	display: flex;
+	z-index: 10;
+	justify-content: center;
+	align-content: center;
 	align-items: center;
-  /*position: absolute;*/
 }
 /*END image opacity on hover for preference page*/
 
@@ -879,7 +884,9 @@ height: 50px;
 }
 
 .radio-margin {
-	margin-right: 1em;
+	/* margin-right: 1em; */
+	margin: auto;
+	margin-bottom: 9px;
 }
 
 .button-holder{
@@ -999,13 +1006,13 @@ div.box.sample:after
 }
 
 .survey-question {
-	padding: 9px 18px 9px 18px;
-	border-top-width: 1px;
-	border-top-style: dotted;
-	border-left: black;
-	border-left-width: 3px;
-	border-left-color: darkgray;
-	border-left-style: solid;
+	padding: 3px 9px 0 9px;
+    border-top-width: 1px;
+    border-top-style: dotted;
+    border-left: black;
+    border-left-width: 3px;
+    border-left-color: darkgray;
+    border-left-style: solid;
 }
 
 .checkboxgroup {
@@ -1016,3 +1023,51 @@ div.box.sample:after
 	display: block;
 	font-size: small;
 }
+
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto;
+	grid-template-rows: auto auto auto;
+	justify-items: stretch;
+	/* background-color: #2196F3; */
+	/* padding: 10px; */
+  }
+  .grid-item {
+	background-color: rgba(255, 255, 255, 0.8);
+	/* height: 270px; */
+	width: 180px;
+	/* border: 1px solid rgba(0, 0, 0, 0.8); */
+	/* padding: 9px; */
+	/* font-size: 30px; */
+	text-align: center;
+  }
+
+.checkboxBtn {
+	cursor: pointer;
+    display: inline-grid;
+    margin: 3px;
+    padding: 3px;
+	background-color: silver;
+	margin: 3px 3px 9px 3px;
+	
+  }
+
+.checkboxBtn input[type="radio"] {
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Chrome, Safari, Opera */
+    transform: scale(1.2);
+}
+
+.checkboxBtn:hover {
+	background-color: rgb(50, 185, 50);
+}
+
+/* input[type="radio"]:checked {
+	background-color: green;
+} */
+
+.checkboxLbl {
+    height: 45px;
+    width: 90px;
+    text-align: center;
+  }
