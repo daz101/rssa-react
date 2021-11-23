@@ -66,8 +66,6 @@ class SurveyPage extends Component {
                         (currentStep === 5 && questions.length === 31) || 
                         (currentStep === 6 && questions.length === 37));
     this.setState({ questions: questions, disabled: disabled });
-    // console.log(newQ);
-    // console.log(questions);
   }
 
 
@@ -145,9 +143,10 @@ class SurveyPage extends Component {
   getQuestions(idx) {
     var qBank = {
       1: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'Diversity',
         qData: [
-          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were <span class="survey-highlight">similar to each other.', 'flag': false },
+          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
           { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike', 'flag': false },
           { 'qId': 'q3', 'text': 'Most movies were from the same genre', 'flag': false },
           { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes', 'flag': false },
@@ -156,6 +155,7 @@ class SurveyPage extends Component {
         ] 
       },
       2: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'RecQual',
         qData: [
           { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender', 'flag': false },
@@ -167,6 +167,7 @@ class SurveyPage extends Component {
         ]
       },
       3: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'choiceSat',
         qData: [
           { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.', 'flag': false },
@@ -179,36 +180,39 @@ class SurveyPage extends Component {
         ] 
       },
       4: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'recConformity',
         qData: [
-          { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.' },
-          { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.' },
-          { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.' },
-          { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.' },
-          { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.' }
+          { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
+          { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.', 'flag': false },
+          { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.', 'flag': false }
         ]
       },
       5: {
+        instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
         qType: 'tasteCov',
         qData: [
-            { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests' },
-            { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.' },
-            { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.' },
-            { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.' },
-            { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.' },
-            { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.' },
-            { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.' }
+            { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests', 'flag': false },
+            { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.', 'flag': false },
+            { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.', 'flag': false },
+            { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.', 'flag': false },
+            { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.', 'flag': false },
+            { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.', 'flag': false },
+            { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.', 'flag': false }
           ]
       },
       6: {
+        instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
         qType: 'sysSat',
         qData: [
-          { 'qId': 'q1', 'text': 'I like using the system.' },
-          { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.' },
-          { 'qId': 'q3', 'text': 'I would recommend the system to others.' },
-          { 'qId': 'q4', 'text': 'I can find better movies using the system.' },
-          { 'qId': 'q5', 'text': 'I would quickly abandon using the system.' },
-          { 'qId': 'q6', 'text': 'I would use the system more often if possible.' }
+          { 'qId': 'q1', 'text': 'I like using the system.', 'flag': false },
+          { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I would recommend the system to others.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I can find better movies using the system.', 'flag': false },
+          { 'qId': 'q5', 'text': 'I would quickly abandon using the system.', 'flag': false },
+          { 'qId': 'q6', 'text': 'I would use the system more often if possible.', 'flag': false }
         ]
       }
     };
@@ -267,52 +271,68 @@ function htmlDecode(input){
   return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
 }
 
+const likertVals = ['Strongly<br>Disagree', 'Disagree', 'No<br>Opinion', 'Agree', 'Strongly<br>Disagree'];
 
 function StepThrough(props) {
   if (props.currentStep !== props.stepFlag) {
     return null
   }
   let qType = props.questions_.qType;
+  let qInstruct = props.questions_.instruction;
   return (
     <React.Fragment>
       <div className="card bg-light mb-3">
         <div className="card-body">
-          <h3>Scenario {props.currentStep} out of 6:</h3>
-          <p>Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:</p>
-          <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:</p>
+          <h4>Scenario {props.currentStep} out of 6:</h4>
+          <p>{ReactHtmlParser(qInstruct)}</p>
           {props.questions_.qData.map((likert, i) => (
             <div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
               <div className="form-row">  
                 <label is="legend" className="font-weight-bold"><strong>{ReactHtmlParser(likert.text)}</strong></label>
- 
-                <div className="col">
+				<div className="col">
+					{likertVals.map((strVal, j) =>
+						<label htmlFor={qType + "_" + likert.qId + "-" + j} class="checkboxBtn">
+							<p className="checkboxLbl">{ReactHtmlParser(strVal)}</p>
+							<input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-" + j} />
+						</label>
+					)}
+				</div>
+                {/* <div className="col"> */}
+                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
+                    {/* <label htmlFor={qType + "_" + likert.qId + "-1"} class="checkboxBtn">
+                      Strongly disagree
+                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
+                    </label> */}
+                  {/* </div> */}
 
-                <div className="checkboxgroup custom-control custom-radio">
-                  <label htmlFor={qType + "_" + likert.qId + "-1"}>Strongly disagree</label>
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
-                </div>
+                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
+                    {/* <label htmlFor={qType + "_" + likert.qId + "-2"}>
+                      Disagree
+                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
+                    </label> */}
+                  {/* </div> */}
 
-                <div className="checkboxgroup custom-control custom-radio">
-                  <label htmlFor={qType + "_" + likert.qId + "-2"}>Disagree</label>
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
-                </div>
+                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
+                    {/* <label htmlFor={qType + "_" + likert.qId + "-3"}>
+                      No Opinion
+                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
+                    </label> */}
+                  {/* </div> */}
 
-                <div className="checkboxgroup custom-control custom-radio">
-                  <label htmlFor={qType + "_" + likert.qId + "-3"}>Neither agree nor disagree</label>
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
-                </div>
+                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
+                    {/* <label htmlFor={qType + "_" + likert.qId + "-4"}>
+                      Agree
+                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
+                    </label> */}
+                  {/* </div> */}
 
-                <div className="checkboxgroup custom-control custom-radio">
-                  <label htmlFor={qType + "_" + likert.qId + "4"}>Agree</label>
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
-                </div>
-
-                <div className="checkboxgroup custom-control custom-radio">
-                  <label htmlFor={qType + "_" + likert.qId + "5"}>Strongly agree</label>
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
-                </div>
-
-                </div>
+                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
+                    {/* <label htmlFor={qType + "_" + likert.qId + "-5"}>
+                      Strongly agree
+                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
+                    </label> */}
+                  {/* </div> */}
+                {/* </div> */}
               </div>
             </div>
           ))}
