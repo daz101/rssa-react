@@ -12,10 +12,10 @@ class PrefPage extends Component {
     constructor(props) {
         super(props);
         this.handler = this.handler.bind(this);
-        this.testCheat = this.testCheat.bind(this);
+        // this.testCheat = this.testCheat.bind(this);
 
         this.state = {
-            stepsEnabled: false,
+            stepsEnabled: true,
             initialStep: 0,
             steps: [
                 {
@@ -46,11 +46,11 @@ class PrefPage extends Component {
         });
   }
 
-  testCheat(){
-        this.setState({
-            count: 15
-        });
-  }
+//   testCheat(){
+//         this.setState({
+//             count: 15
+//         });
+//   }
   
   render() {
         const {
@@ -81,9 +81,9 @@ class PrefPage extends Component {
                     <MovieGrid handler={this.handler}/>
                 </div>
             </div>
-            <div style={{marginTop: "1em"}}>
+            {/* <div style={{marginTop: "1em"}}>
                 <Button variant="primary" style={{float:'left'}} onClick={this.testCheat}>Cheat</Button>
-            </div>
+            </div> */}
             <div id="footer-container">
                 <div className="rankHolder">
                     <span> Ranked Movies: </span>
