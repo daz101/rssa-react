@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Welcome from './content/welcome';
-import Instructions from './content/Instructions';
-import Preferences from './content/Preferences/prefPage';
-import Movies from './content/movieRecRating';
-import MovieInfo from './content/movieRecPick';
-import Survey from "./content/survey";
-import Exit from './content/ExitPage';
-import MoviesList from "./content/movies-list.component";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
+import Exit from './content/ExitPage';
+import Instructions from './content/Instructions';
+import MovieInfo from './content/movieRecPick';
+import Movies from './content/movieRecRating';
+import MoviesList from "./content/movies-list.component";
+import Preferences from './content/Preferences/prefPage';
+import Survey from "./content/survey";
+import Welcome from './content/welcome';
 
 class App extends Component {
 

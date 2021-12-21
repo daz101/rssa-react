@@ -264,7 +264,6 @@ class SurveyPage extends Component {
   }
 }
 
-
 function htmlDecode(input){
   let e = document.createElement('div');
   e.innerHTML = input;
@@ -297,42 +296,6 @@ function StepThrough(props) {
 						</label>
 					)}
 				</div>
-                {/* <div className="col"> */}
-                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
-                    {/* <label htmlFor={qType + "_" + likert.qId + "-1"} class="checkboxBtn">
-                      Strongly disagree
-                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
-                    </label> */}
-                  {/* </div> */}
-
-                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
-                    {/* <label htmlFor={qType + "_" + likert.qId + "-2"}>
-                      Disagree
-                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
-                    </label> */}
-                  {/* </div> */}
-
-                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
-                    {/* <label htmlFor={qType + "_" + likert.qId + "-3"}>
-                      No Opinion
-                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
-                    </label> */}
-                  {/* </div> */}
-
-                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
-                    {/* <label htmlFor={qType + "_" + likert.qId + "-4"}>
-                      Agree
-                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
-                    </label> */}
-                  {/* </div> */}
-
-                  {/* <div className="checkboxgroup custom-control custom-radio"> */}
-                    {/* <label htmlFor={qType + "_" + likert.qId + "-5"}>
-                      Strongly agree
-                      <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
-                    </label> */}
-                  {/* </div> */}
-                {/* </div> */}
               </div>
             </div>
           ))}

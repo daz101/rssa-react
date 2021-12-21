@@ -33,14 +33,14 @@ class Moviecard extends Component {
     }
   
     componentDidMount() {
-        axios
-            .get(API)
-            .then(response => {
-                this.setState({ movies: response.data });
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        // axios
+        //     .get(API)
+        //     .then(response => {
+        //         this.setState({ movies: response.data });
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     }
 
     movieList() {
