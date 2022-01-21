@@ -1,7 +1,7 @@
 import React from "react";
 
 export const API = process.env.NODE_ENV === "production" ? "https://movie-mern.herokuapp.com/api/movies/"
-	: "http://localhost:5000/api/movies/";
+	: "http://localhost:5001/";
 
 
 export const Movie = props => (

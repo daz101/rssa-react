@@ -7,6 +7,9 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import ProgressBarComponent from "./progressBarComponent";
+import axios from 'axios';
+import { API } from './constants';
+import { Redirect } from 'react-router-dom';
 
 class Welcome extends Component {
 
@@ -16,7 +19,9 @@ class Welcome extends Component {
 			show: false,
 			disabled: true,
 			welcomeDateTime: undefined,
-			consentStartTime: undefined
+			consentStartTime: undefined,
+			userid: undefined,
+			userCreated: false
 		};
 		this.displaySurvey = this.showSurvey.bind(this);
 		this.createNewUser = this.createUser.bind(this);
@@ -40,32 +45,51 @@ class Welcome extends Component {
 		let welcomeDateTime = this.state.welcomeDateTime;
 		let consentStartTime = this.state.consentStartTime;
 
-		console.log(consentEndTime);
 		console.log(welcomeDateTime);
-		console.log(consentStartTime);
-	}
+		console.log(welcomeDateTime.toUTCString());
 
-	//   createUser() {
-	// 	axios
-	// 	.post(API+'/newUser', {params: {limit: itemsPerPage * 2, page: curr+1}})
-	// 	.then(response => {
-	// 		response.data.map(movie => {
-	// 			movie_map.push({
-	// 				"movie": movie,
-	// 				"rating": 0
-	// 			});
-	// 		});
-	// 		this.setState({
-	// 			movies_: movie_map
-	// 		})
-	// 	})
-	// 	.catch(error => {
-	// 		console.log(error);
-	// 	});
-	//   }
+		console.log(consentStartTime);
+		console.log(consentStartTime.toUTCString());
+
+		console.log(consentEndTime);
+		console.log(consentEndTime.toUTCString());
+
+		axios.post(API+'new_user', {
+			welcomeTime: welcomeDateTime.toUTCString(),
+			consentStartTime: consentStartTime.toUTCString(),
+			consentEndTime: consentEndTime.toUTCString()
+		},
+		{
+			headers: {
+				'Access-Control-Allow-Credentials': true,
+				'Access-Control-Allow-Origin': '*'
+			}
+		})
+		.then(response => {
+			console.log(response);
+			if (response.status === 200){
+				this.setState({
+					userCreated: true,
+					userid: response.data['user_id']
+				});
+			}
+		})
+	}
 
 	render() {
 		const show = this.state.show;
+		let userid = this.state.userid;
+		let userCreated = this.state.userCreated
+		if (userCreated){
+			return (
+				<Redirect to = {{
+					pathname: "/inst",
+					state: {
+						userid: userid
+					}
+				}}/>
+			);
+		}
 
 		return (
 			<div className="contentWrapper">
@@ -155,12 +179,10 @@ class Welcome extends Component {
 								Exit
 							</Button>
 						</Link>
-						<Link to="/inst">
-							<Button variant="primary" disabled={this.state.disabled} 
-								onClick={this.createNewUser}>
-								Continue
-							</Button>
-						</Link>
+						<Button variant="primary" disabled={this.state.disabled} 
+							onClick={this.createNewUser}>
+							Continue
+						</Button>
 					</Modal.Footer>
 				</Modal>
 			</div>

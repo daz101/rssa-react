@@ -9,6 +9,9 @@ import ProgressBarComponent from "./progressBarComponent";
 class Instructions extends Component {
 
 	render() {
+		let userid = this.props.location.state.userid;
+		console.log(userid);
+
 		return (
 			<div className="contentWrapper">
 				<ProgressBarComponent percentComplete={30}/>
@@ -54,7 +57,12 @@ class Instructions extends Component {
 					</div>
 				</div>
 				<div style={{marginTop: "1em"}}>
-					<Link to="/pref">
+					<Link to= {{
+						pathname: "/pref",
+						state: {
+							userid: userid
+						}
+					}}>
 						<Button variant="primary" size="lg" style={{float: 'right'}}>
 							Next
 						</Button>

@@ -30,7 +30,7 @@ class MovieGrid extends Component {
 		console.log(this.itemsPerPage);
 		// We prefetch the next page; every query is two pages of items
 		axios
-			.get(API, { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
+			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
 			.then(response => {
 				response.data.map(movie => {
 					movie_map.push({
@@ -92,6 +92,7 @@ class MovieGrid extends Component {
 			movies_: ratedItm,
 			visited: vstdLst
 		});
+		console.log(vstdLst);
 		this.props.handler(vstdLst, isNew);
 	}
 

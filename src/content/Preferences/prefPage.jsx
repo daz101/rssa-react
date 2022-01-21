@@ -7,12 +7,12 @@ import 'intro.js/introjs.css';
 import { Steps } from "intro.js-react";
 import MovieGrid from "./movieGrid";
 import ProgressBarComponent from "../progressBarComponent";
+import axios from "axios";
 
 class PrefPage extends Component {
     constructor(props) {
         super(props);
         this.rateMoviesHandler = this.rateMovies.bind(this);
-        // this.testCheat = this.testCheat.bind(this);
 
         this.state = {
             stepsEnabled: true,
@@ -45,25 +45,13 @@ class PrefPage extends Component {
     }
 
     rateMovies(ratedLst, isNew) {
+        console.log(ratedLst);
+        console.log(this.state.ratedLst);
         this.setState({
             count: isNew ? this.state.count + 1 : this.state.count,
             ratedLst: ratedLst
         });
     }
-
-    // componentDidUpdate() {
-    //     console.log(this.state);
-    // }
-
-    getRecommendations() {
-
-    }
-
-    //   testCheat(){
-    //         this.setState({
-    //             count: 15
-    //         });
-    //   }
 
     render() {
         const {
@@ -78,6 +66,11 @@ class PrefPage extends Component {
             disabled = false;
         }
 
+        let userid = this.props.location.state.userid;
+        console.log(userid);
+
+        let ratings = this.state.ratedLst;
+
         return (
             <div className="contentWrapper">
                 <br />
@@ -90,7 +83,7 @@ class PrefPage extends Component {
                 <ProgressBarComponent percentComplete={50} />
                 <br />
                 <div className="test">
-                    <p> SOME INSTRUCTIONs</p>
+                    <p> Rate 15 movies from the gallery below.</p>
                 </div>
                 <div className="row padding">
                     <div className="col-sm movieGrid">
@@ -100,16 +93,22 @@ class PrefPage extends Component {
                 {/* <div style={{marginTop: "1em"}}>
                 <Button variant="primary" style={{float:'left'}} onClick={this.testCheat}>Cheat</Button>
             </div> */}
-                <div id="footer-container">
+                <div id="footer-container" style={{ display: "flex"}}>
                     <div className="rankHolder">
                         <span> Ranked Movies: </span>
                         <span><i>{this.state.count}</i></span>
                         <span><i>of 15</i></span>
                     </div>
-                    <div style={{ marginTop: "1em" }}>
-                        <Link to="/movies">
+                    <div style={{ marginTop: "18px" }}>
+                        <Link to={{
+                            pathname: "/movies",
+                            state: {
+                                userid: userid,
+                                ratings: ratings
+                            }
+                        }}>
                             <Button className="next-button" disabled={disabled}
-                                variant="primary" style={{ float: 'right' }}>
+                                variant="primary">
                                 Next
                             </Button>
                         </Link>

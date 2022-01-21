@@ -33,6 +33,7 @@ class Moviecard extends Component {
     }
   
     componentDidMount() {
+        this.getRecommendations();
         // axios
         //     .get(API)
         //     .then(response => {
@@ -41,6 +42,25 @@ class Moviecard extends Component {
         //     .catch(error => {
         //         console.log(error);
         //     });
+    }
+
+    getRecommendations() {
+        // axios.post(API+preferences, {
+        //     userid: userid,
+        //     ratings: ratedLst
+        // }, 
+        // {
+        //     headers: {
+        //         'Access-Control-Allow-Credentials': true,
+		// 		'Access-Control-Allow-Origin': '*'
+        //     }
+
+        // })
+        let userid = this.props.location.state.userid;
+        let ratings = this.props.location.state.ratings;
+        
+        console.log(userid);
+        console.log(ratings);
     }
 
     movieList() {
