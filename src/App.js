@@ -16,7 +16,6 @@ class App extends Component {
         return (
             <div>
                 <div className="App">
-
                     <nav className="navbar navbar-light bg-light">
                         <span className="navbar-brand mb-0 h1">Movie Recommender Study</span>
                     </nav>

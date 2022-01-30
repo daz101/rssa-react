@@ -45,15 +45,6 @@ class Welcome extends Component {
 		let welcomeDateTime = this.state.welcomeDateTime;
 		let consentStartTime = this.state.consentStartTime;
 
-		console.log(welcomeDateTime);
-		console.log(welcomeDateTime.toUTCString());
-
-		console.log(consentStartTime);
-		console.log(consentStartTime.toUTCString());
-
-		console.log(consentEndTime);
-		console.log(consentEndTime.toUTCString());
-
 		axios.post(API+'new_user', {
 			welcomeTime: welcomeDateTime.toUTCString(),
 			consentStartTime: consentStartTime.toUTCString(),

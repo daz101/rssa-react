@@ -482,7 +482,6 @@ letter-spacing: 5px;
     border: 2px solid #2e3033;
     width: 18px;
     height: 18px;
-         
 }
 
 #pageno {
@@ -579,9 +578,14 @@ letter-spacing: 5px;
 	display:none
 }
 
+.list-group-item {
+	padding: 2.0em 1.75em;
+}
+
 /*background color change on hover for movie item */
-button.list-group-item-action:hover {
-	background-color: #f3ba6a; /* !important; */
+.list-group-item:hover {
+	cursor: pointer;
+	background-color: #f3ba6a;
 }
 
 div.card {
@@ -984,3 +988,19 @@ div.box.sample:after {
     width: 90px;
     text-align: center;
 }
+
+/* .scroll-bar-style::-webkit-scrollbar {
+	width: 10px;
+}
+
+.scroll-bar-style::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+.scroll-bar-style::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+.scroll-bar-style::-webkit-scrollbar-thuumb:hover {
+	background: #555;
+} */

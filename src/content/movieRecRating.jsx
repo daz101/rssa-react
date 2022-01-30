@@ -1,24 +1,28 @@
-import React, {Component} from 'react';
-import "react-step-progress-bar/styles.css";
-import {Link} from "react-router-dom";
 import '../App.css';
+import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
+import axios from "axios";
+import { API, Movie } from "./constants";
+import { Link } from "react-router-dom";
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
-import ProgressBarComponent from "./progressBarComponent";
-import {API, Movie} from "./constants";
-import MovieSidePanel from "./Preferences/movieSidePanel";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import MovieSidePanel from "./Preferences/movieSidePanel";
+import ProgressBarComponent from "./progressBarComponent";
+import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 
 class Moviecard extends Component {
     constructor(props) {
         super(props);
         this.onChangeMovieId = this.onChangeMovieId.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        // this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            leftItems: [],
+            rightItems: [],
+            leftCondition: '',
+            rightCondition: '',
             movies: [],
             mId: "",
             rate: '',
@@ -31,94 +35,98 @@ class Moviecard extends Component {
         };
         this.handleHover = this.handleHover.bind(this);
     }
-  
+
     componentDidMount() {
         this.getRecommendations();
-        // axios
-        //     .get(API)
-        //     .then(response => {
-        //         this.setState({ movies: response.data });
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
     }
 
     getRecommendations() {
-        // axios.post(API+preferences, {
-        //     userid: userid,
-        //     ratings: ratedLst
-        // }, 
-        // {
-        //     headers: {
-        //         'Access-Control-Allow-Credentials': true,
-		// 		'Access-Control-Allow-Origin': '*'
-        //     }
-
-        // })
         let userid = this.props.location.state.userid;
         let ratings = this.props.location.state.ratings;
-        
         console.log(userid);
         console.log(ratings);
+
+        axios.post(API + 'recommendations', {
+            userid: userid,
+            ratings: ratings
+        },
+            {
+                headers: {
+                    'Access-Control-Allow-Credentials': true,
+                    'Access-Control-Allow-Origin': '*'
+                }
+
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    this.setState({
+                        leftItems: response.data['recommendations']['left']['items'],
+                        rightItems: response.data['recommendations']['right']['items'],
+                        leftCondition: response.data['recommendations']['left']['label'],
+                        rightCondition: response.data['recommendations']['right']['label']
+                    });
+                }
+            });
     }
 
-    movieList() {
-        return this.state.movies.map(currentmovie => {
-            return (
-                <Movie movie={currentmovie}
-                    // deleteMovie={this.deleteMovie}
-                    key={currentmovie._id}
-                />
-            );
-        });
-    }
-  
+    // movieList() {
+    //     return this.state.movies.map(currentmovie => {
+    //         return (
+    //             <Movie movie={currentmovie}
+    //                 // deleteMovie={this.deleteMovie}
+    //                 key={currentmovie._id}
+    //             />
+    //         );
+    //     });
+    // }
+
     onChangeMovieId(e) {
         this.setState({
             mId: e.target.value
         });
     }
-  
-    onSubmit(e) {
-        e.preventDefault();
 
-      // const exercise = {
-      //   username: this.state.username,
-      //   description: this.state.description,
-      //   duration: this.state.duration,
-      //   date: this.state.date
-      // };
-        axios
-            .get(API + this.state.mId)
-            .then(response => {
-                this.setState({ movies: response.data });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+    // onSubmit(e) {
+    //     e.preventDefault();
 
-    handleShow = ()=>{
-        this.setState({
-            isActive: true
-        })
-    };
+    //     // const exercise = {
+    //     //   username: this.state.username,
+    //     //   description: this.state.description,
+    //     //   duration: this.state.duration,
+    //     //   date: this.state.date
+    //     // };
+    //     axios
+    //         .get(API + this.state.mId)
+    //         .then(response => {
+    //             this.setState({ movies: response.data });
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }
 
-    handleHide = () =>{
-        this.setState({
-            isActive: false
-        })
-    };
+    // handleShow = () => {
+    //     console.log('hello');
+    //     this.setState({
+    //         isActive: true
+    //     })
+    // };
 
-    handleHover(isShown, activeMovie){
+    // handleHide = () => {
+    //     this.setState({
+    //         isActive: false
+    //     })
+    // };
+
+    handleHover(isShown, activeMovie) {
         this.setState(prevState => ({
             setIsShown: isShown,
             activeMovie: activeMovie,
             isHovered: !prevState.isHovered
         }));
     };
-    
+
     handleRateChange = evt => {
         this.setState({ rate: evt.target.value });
     };
@@ -127,46 +135,72 @@ class Moviecard extends Component {
         this.setState({ rate2: evt.target.value });
     };
 
-    handleSubmit = evt => {
-        const { rate } = this.state;
-        const { rate2 } = this.state;
-        alert(`Signed up with rate: ${rate}`);
-    };
+    // handleSubmit = evt => {
+    //     const { rate } = this.state;
+    //     const { rate2 } = this.state;
+    //     alert(`Signed up with rate: ${rate}`);
+    // };
 
-    canBeSubmitted() {
-        const {rate} = this.state;
-        const {rate2} = this.state;
-        return rate.length, rate2.length;
-    }
+    // canBeSubmitted() {
+    //     const { rate } = this.state;
+    //     const { rate2 } = this.state;
+    //     return rate.length, rate2.length;
+    // }
 
     render() {
-        const active = this.state.isActive ? "pulse animated" : "";
-        const isEnabled = this.canBeSubmitted();
-        const {rate} = this.state;
-        const {rate2} = this.state;
+        let leftItems = this.state.leftItems;
+        let leftCondition = this.state.leftCondition;
 
-        const ratingChanged = (newRating) => {
-            console.log(newRating);
-        };
+        let rightItems = this.state.rightItems;
+        let rightCondition = this.state.rightCondition;
+
+        let userid = this.props.location.state.userid;
+        // TODO let this be the newrating made on this page
+        let ratings = [];
+
+        console.log(userid);
+        console.log(leftCondition);
+        console.log(leftItems);
+        
+        console.log(rightCondition);
+        console.log(rightItems);
+
+        // const active = this.state.isActive ? "pulse animated" : "";
+        // const isEnabled = this.canBeSubmitted();
+        // const { rate } = this.state;
+        // const { rate2 } = this.state;
+
+        // const ratingChanged = (newRating) => {
+        //     console.log(newRating);
+        // };
 
         return (
             <div className="contentWrapper">
                 <ProgressBarComponent percentComplete={75} />
-                <br/>
+                <br />
                 <Jumbotron>
-                    <p style={{textAlign: "center"}}>Please rate the following movies.</p>
+                    <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
                 </Jumbotron>
+
+                {/* 
+                <div style={{ minWidth: "300px", minHeight: "300px" }}>
+                <Spinner animation="border" role="status" style={{ margin: "3em 50%", width: "54px", height: "54px" }} />
+                </div> */}
+
                 <div className="row padding">
-                    <MovieSidePanel movieList={this.state.movies.slice(0, 10)} handler={this.handleHover}
-                                    panelTitle={"Movies You May Like"}/>
-                    {this.state.setIsShown && (this.state.activeMovie!= null) ? (
-                        <div className="col-sm-4">
-                            <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333', width:"100%",
-                                height:"100%"}}>
-                                <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
-                                         style={{maxHeight: '270px', width:'auto', height:'auto'}} />
-                                <CardBody style={{maxHeight: '300px'}}>
-                                    <CardTitle style={{fontWeight: 'bold', fontSize: '1.2em'}}>
+                    <MovieSidePanel movieList={leftItems} handler={this.handleHover}
+                        panelTitle={leftCondition} />
+                    {this.state.setIsShown && (this.state.activeMovie != null) ? (
+                        <div className="col-sm-4 no-gutter">
+                            <Card inverse style={{
+                                backgroundColor: '#333', borderColor: '#333', maxHeight: '810px'
+                            }}>
+                                <CardHeader style={{ height: '594px', alignSelf: 'center' }}>
+                                    <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
+                                        style={{ maxWidth: '100%', maxHeight: '100%', width: 'initial' }} />
+                                </CardHeader>
+                                <CardBody style={{ height: '216px' }}>
+                                    <CardTitle style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
                                         {this.state.activeMovie.title}
                                     </CardTitle>
                                     <CardText>
@@ -177,12 +211,18 @@ class Moviecard extends Component {
                         </div>
                     ) : (<div className="col-sm-4" />)
                     }
-                    <MovieSidePanel movieList={this.state.movies.slice(10, 20)} handler={this.handleHover}
-                                    panelTitle={"Movies You May Hate"}/>
+                    <MovieSidePanel movieList={rightItems} handler={this.handleHover}
+                        panelTitle={rightCondition} />
                 </div>
-                <div style={{marginTop: "1em"}}>
-                    <Link to="/movieInfo">
-                        <Button variant="primary" style={{float:'right'}}>
+                <div style={{ marginTop: "1em" }}>
+                    <Link to={{
+                            pathname: "/movieInfo",
+                            state: {
+                                userid: userid,
+                                ratings: ratings
+                            }
+                        }}>
+                        <Button variant="primary" style={{ float: 'right' }}>
                             Next
                         </Button>
                     </Link>
