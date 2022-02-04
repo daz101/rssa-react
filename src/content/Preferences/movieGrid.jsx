@@ -41,19 +41,19 @@ class MovieGrid extends Component {
 	}
 
 	renderNextSet() {
-		console.log("Next Button Clicked");
+		// console.log("Next Button Clicked");
 		let curr = this.state.currentPage;
 		curr += 1;
 		this.setState({
 			currentPage: curr
 		});
-		if (curr % 2 != 0) {
+		if (curr % 2 !== 0) {
 			this.getMovies();
 		}
 	}
 
 	renderPrevSet() {
-		console.log("Previous Button Clicked");
+		// console.log("Previous Button Clicked");
 		let curr = this.state.currentPage;
 		if (curr > 0) {
 			curr -= 1;
@@ -71,7 +71,7 @@ class MovieGrid extends Component {
 				...movie, rating: newRating
 			} : movie
 		));
-		let isNew = !vstdLst.some(item => item.item_id == movieid);
+		let isNew = !vstdLst.some(item => item.item_id === movieid);
 		if (isNew) {
 			vstdLst.push({ "item_id": movieid, "rating": newRating });
 		} else {
@@ -94,7 +94,7 @@ class MovieGrid extends Component {
 			return (
 				<div className="grid-layout" style={{ minWidth: "500px", maxWidth: "1200px", margin: "auto", display: "flex" }}>
 					<div style={{ paddingTop: "270px", marginRight: "18px" }}>
-						<Button disabled={startIdx == 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
+						<Button disabled={startIdx === 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
 							&lt;
 						</Button>
 					</div>

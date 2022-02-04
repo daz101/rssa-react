@@ -1,12 +1,14 @@
-import ReactStars from "react-rating-stars-component";
+import StarRatings from 'react-star-ratings';
 import React, { Component } from "react";
 
 class MovieSidePanel extends Component {
 
+	changeRating = (newRating, movieid) => {
+		let panelid = this.props.id;
+		this.props.ratingHandler(panelid, newRating, movieid);
+	}
+
 	render() {
-		const ratingChanged = (newRating) => {
-			console.log(newRating);
-		};
 		return (
 			<div className="col-sm-4">
 				<div style={{ minHeight: "102px", maxHeight: "102px", textAlign: "center", 
@@ -14,32 +16,28 @@ class MovieSidePanel extends Component {
 				}}>
 					<strong>{this.props.panelTitle}</strong>
 				</div>
-				{/* <ul className="list-group"> */}
-					{/* <form onSubmit={this.handleSubmit}> */}
-						{/* <li className="list-group-item list-group-item-dark d-flex justify-content-between
-                                align-items-center" style={{ padding: '2.0em 1.25em !important'}}>
-							<strong>{this.props.panelTitle}</strong>
-						</li> */}
-						<ol className="list-group">
-							{this.props.movieList.map((movie) => (
-								<li key={movie.movie_id}
-									className="list-group-item d-flex justify-content-between align-items-center"
-									onMouseEnter={() => this.props.handler(true, movie)}
-								// onMouseLeave={() => this.props.handler(false, null)}
-								>
-									<b> {movie.title} </b>
-									<div className="rating">
-										<ReactStars
-											count={5}
-											onChange={ratingChanged}
-											size={24}
-											activeColor="#ffd700" />
-									</div>
-								</li>
-							))}
-						</ol>
-					{/* </form> */}
-				{/* </ul> */}
+					<ol className="list-group">
+						{this.props.movieList.map((movie) => (
+							<li key={movie.movie_id}
+								className="list-group-item d-flex justify-content-between align-items-center"
+								onMouseEnter={() => this.props.hoverHandler(true, movie)}
+							// onMouseLeave={() => this.props.handler(false, null)}
+							>
+								<b> {movie.title} </b>
+								<div className="rating">
+									<StarRatings
+										starRatedColor="rgb(252,229,65)"
+										rating={movie.rating}
+										starHoverColor="rgb(252,229,65)"
+										starDimension="18px"
+										starSpacing="1px"
+										changeRating={this.changeRating}
+										numberOfStars={5}
+										name={movie.movie_id} />
+								</div>
+							</li>
+						))}
+					</ol>
 			</div>
 		);
 	}

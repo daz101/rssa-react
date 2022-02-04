@@ -7,9 +7,11 @@ import 'intro.js/introjs.css';
 import { Steps } from "intro.js-react";
 import MovieGrid from "./movieGrid";
 import ProgressBarComponent from "../progressBarComponent";
-import axios from "axios";
 
 class PrefPage extends Component {
+
+    moviesRatingCount = 10;
+
     constructor(props) {
         super(props);
         this.rateMoviesHandler = this.rateMovies.bind(this);
@@ -32,21 +34,12 @@ class PrefPage extends Component {
                     intro: "Click the Next button to proceed to the next stage."
                 }
             ],
-            hintsEnabled: false,
-            hints: [
-                {
-                    element: ".container",
-                    hint: "Hello hint",
-                    hintPosition: "middle-right"
-                }],
             count: 0,
             ratedLst: []
         };
     }
 
     rateMovies(ratedLst, isNew) {
-        console.log(ratedLst);
-        console.log(this.state.ratedLst);
         this.setState({
             count: isNew ? this.state.count + 1 : this.state.count,
             ratedLst: ratedLst
@@ -58,11 +51,9 @@ class PrefPage extends Component {
             stepsEnabled,
             steps,
             initialStep,
-            hintsEnabled,
-            hints
         } = this.state;
         let disabled = true;
-        if (this.state.count >= 15) {
+        if (this.state.count >= this.moviesRatingCount) {
             disabled = false;
         }
 
@@ -83,21 +74,18 @@ class PrefPage extends Component {
                 <ProgressBarComponent percentComplete={50} />
                 <br />
                 <div className="test">
-                    <p> Rate 15 movies from the gallery below.</p>
+                    <p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
                 </div>
                 <div className="row padding">
                     <div className="col-sm movieGrid">
                         <MovieGrid handler={this.rateMoviesHandler} />
                     </div>
                 </div>
-                {/* <div style={{marginTop: "1em"}}>
-                <Button variant="primary" style={{float:'left'}} onClick={this.testCheat}>Cheat</Button>
-            </div> */}
                 <div id="footer-container" style={{ display: "flex"}}>
                     <div className="rankHolder">
                         <span> Ranked Movies: </span>
                         <span><i>{this.state.count}</i></span>
-                        <span><i>of 15</i></span>
+                        <span><i>of {this.moviesRatingCount}</i></span>
                     </div>
                     <div style={{ marginTop: "18px" }}>
                         <Link to={{

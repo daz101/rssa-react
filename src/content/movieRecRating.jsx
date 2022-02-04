@@ -3,7 +3,7 @@ import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import axios from "axios";
-import { API, Movie } from "./constants";
+import { API } from "./constants";
 import { Link } from "react-router-dom";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -15,25 +15,15 @@ import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reacts
 class Moviecard extends Component {
     constructor(props) {
         super(props);
-        this.onChangeMovieId = this.onChangeMovieId.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);
-
         this.state = {
-            leftItems: [],
-            rightItems: [],
-            leftCondition: '',
-            rightCondition: '',
-            movies: [],
-            mId: "",
-            rate: '',
-            isHovered: false,
-            isActive: false,
-            rate2: '',
-            isShown: '',
+            leftPanel: {items: [], condition: ''},
+            rightPanel: {items: [], condition: ''},
+            visited: [],
             setIsShown: false,
             activeMovie: null,
         };
         this.handleHover = this.handleHover.bind(this);
+        this.handleRating = this.handleRating.bind(this);
     }
 
     componentDidMount() {
@@ -43,8 +33,7 @@ class Moviecard extends Component {
     getRecommendations() {
         let userid = this.props.location.state.userid;
         let ratings = this.props.location.state.ratings;
-        console.log(userid);
-        console.log(ratings);
+        console.log('getting recs');
 
         axios.post(API + 'recommendations', {
             userid: userid,
@@ -61,118 +50,63 @@ class Moviecard extends Component {
                 if (response.status === 200) {
                     console.log(response.data);
                     this.setState({
-                        leftItems: response.data['recommendations']['left']['items'],
-                        rightItems: response.data['recommendations']['right']['items'],
-                        leftCondition: response.data['recommendations']['left']['label'],
-                        rightCondition: response.data['recommendations']['right']['label']
+                        leftPanel: {
+                            condition: response.data['recommendations']['left']['label'],
+                            items: response.data['recommendations']['left']['items'],
+                        },
+                        rightPanel: {
+                            items: response.data['recommendations']['right']['items'],
+                            condition: response.data['recommendations']['right']['label']
+                        }
                     });
                 }
             });
     }
 
-    // movieList() {
-    //     return this.state.movies.map(currentmovie => {
-    //         return (
-    //             <Movie movie={currentmovie}
-    //                 // deleteMovie={this.deleteMovie}
-    //                 key={currentmovie._id}
-    //             />
-    //         );
-    //     });
-    // }
-
-    onChangeMovieId(e) {
+    handleHover(isShown, activeMovie) {
         this.setState({
-            mId: e.target.value
+            setIsShown: isShown,
+            activeMovie: activeMovie
         });
     }
 
-    // onSubmit(e) {
-    //     e.preventDefault();
-
-    //     // const exercise = {
-    //     //   username: this.state.username,
-    //     //   description: this.state.description,
-    //     //   duration: this.state.duration,
-    //     //   date: this.state.date
-    //     // };
-    //     axios
-    //         .get(API + this.state.mId)
-    //         .then(response => {
-    //             this.setState({ movies: response.data });
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
-
-    // handleShow = () => {
-    //     console.log('hello');
-    //     this.setState({
-    //         isActive: true
-    //     })
-    // };
-
-    // handleHide = () => {
-    //     this.setState({
-    //         isActive: false
-    //     })
-    // };
-
-    handleHover(isShown, activeMovie) {
-        this.setState(prevState => ({
-            setIsShown: isShown,
-            activeMovie: activeMovie,
-            isHovered: !prevState.isHovered
-        }));
-    };
-
-    handleRateChange = evt => {
-        this.setState({ rate: evt.target.value });
-    };
-
-    handleRateChange1 = evt => {
-        this.setState({ rate2: evt.target.value });
-    };
-
-    // handleSubmit = evt => {
-    //     const { rate } = this.state;
-    //     const { rate2 } = this.state;
-    //     alert(`Signed up with rate: ${rate}`);
-    // };
-
-    // canBeSubmitted() {
-    //     const { rate } = this.state;
-    //     const { rate2 } = this.state;
-    //     return rate.length, rate2.length;
-    // }
+    handleRating(panelid, newRating, movieid) {
+        let panel = this.state[panelid];
+        let movieLst = [...panel.items];
+		let vstdLst = [...this.state.visited];
+		let ratedItm = movieLst.map(movie => (
+			movie.movie_id === movieid ? {
+				...movie, rating: newRating
+			} : movie
+		));
+		let isNew = !vstdLst.some(item => item.item_id === movieid);
+		if (isNew) {
+			vstdLst.push({ "item_id": movieid, "rating": newRating });
+		} else {
+			vstdLst = vstdLst.map(movie => (
+				movie.item_id === movieid ? {
+					...movie, rating: newRating
+				} : movie
+			));
+		}
+        panel.items = ratedItm;
+		this.setState({
+			panelid: panel,
+			visited: vstdLst
+		});
+    }
 
     render() {
-        let leftItems = this.state.leftItems;
-        let leftCondition = this.state.leftCondition;
+        let leftItems = this.state.leftPanel.items;
+        let leftCondition = this.state.leftPanel.condition;
 
-        let rightItems = this.state.rightItems;
-        let rightCondition = this.state.rightCondition;
+        let rightItems = this.state.rightPanel.items;
+        let rightCondition = this.state.rightPanel.condition;
 
         let userid = this.props.location.state.userid;
-        // TODO let this be the newrating made on this page
-        let ratings = [];
+        let ratings = this.state.visited;
 
         console.log(userid);
-        console.log(leftCondition);
-        console.log(leftItems);
-        
-        console.log(rightCondition);
-        console.log(rightItems);
-
-        // const active = this.state.isActive ? "pulse animated" : "";
-        // const isEnabled = this.canBeSubmitted();
-        // const { rate } = this.state;
-        // const { rate2 } = this.state;
-
-        // const ratingChanged = (newRating) => {
-        //     console.log(newRating);
-        // };
 
         return (
             <div className="contentWrapper">
@@ -188,8 +122,8 @@ class Moviecard extends Component {
                 </div> */}
 
                 <div className="row padding">
-                    <MovieSidePanel movieList={leftItems} handler={this.handleHover}
-                        panelTitle={leftCondition} />
+                    <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating} panelTitle={leftCondition} />
                     {this.state.setIsShown && (this.state.activeMovie != null) ? (
                         <div className="col-sm-4 no-gutter">
                             <Card inverse style={{
@@ -211,8 +145,8 @@ class Moviecard extends Component {
                         </div>
                     ) : (<div className="col-sm-4" />)
                     }
-                    <MovieSidePanel movieList={rightItems} handler={this.handleHover}
-                        panelTitle={rightCondition} />
+                    <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating} panelTitle={rightCondition} />
                 </div>
                 <div style={{ marginTop: "1em" }}>
                     <Link to={{
