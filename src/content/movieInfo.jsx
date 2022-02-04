@@ -5,7 +5,6 @@ class movieInfo extends Component {
     render() { 
         return ( 
             <div>
-
                 <br></br>
                 <br></br>
                 <div class="col-md-4">
@@ -20,7 +19,6 @@ class movieInfo extends Component {
         <p class="card-text"> <strong>Director:</strong> This is a wider card with supporting text below as a natural lead-in to additional content.</p>
         <p class="card-text"> <strong>Cast:</strong> This is a wider card with supporting text below as a natural lead-in to additional content.</p>
         <p class="card-text"> <strong>Genre:</strong> This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        
       </div>
     </div>
     <div class="col-md-4">

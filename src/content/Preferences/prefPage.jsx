@@ -1,114 +1,114 @@
 import { Link } from "react-router-dom";
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import "react-step-progress-bar/styles.css";
-//import { ProgressBar, Step } from "react-step-progress-bar";
-//import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import Button from 'react-bootstrap/Button';
 import 'intro.js/introjs.css';
-import { Steps, Hints } from "intro.js-react";
-import MovieGrid  from "./movieGrid";
-import CarouselClass from "../carousel";
+import { Steps } from "intro.js-react";
+import MovieGrid from "./movieGrid";
+import ProgressBarComponent from "../progressBarComponent";
 
 class PrefPage extends Component {
-  constructor(props) {
-    super(props);
-    this.handler = this.handler.bind(this);
 
-    this.state = {
-      stepsEnabled: true,
-      initialStep: 0,
-      steps: [
-      {
-        element: ".row",
-        intro: "Select a movie that you are familiar with and provide a rating. You can use the slider to the side to find more options."
-      },
-      {
-        element: ".rankHolder",
-        intro: "Rate a total of 15 movies to proceed to the next stage. "
-      }],
-      hintsEnabled: true,
-      hints: [
-      {
-        element: ".container",
-        hint: "Hello hint",
-        hintPosition: "middle-right"
-      }],
-      count: 0
-    };
-  }
+    moviesRatingCount = 10;
 
-  handler(){
-    let currentCount = this.state.count;
-    currentCount += 1;
-    this.setState({
-      count: currentCount
-    });
-    console.log(this.state.count);
-  }
-  
-  render() { 
-    const {
-      stepsEnabled,
-      steps,
-      initialStep,
-      hintsEnabled,
-      hints
-    } = this.state;
-    let disabled = true;
-    if (this.state.count >= 15){
-      disabled = false;
+    constructor(props) {
+        super(props);
+        this.rateMoviesHandler = this.rateMovies.bind(this);
+
+        this.state = {
+            stepsEnabled: true,
+            initialStep: 0,
+            steps: [
+                {
+                    element: ".test",
+                    intro: "Select a movie that you are familiar with and provide a rating. You can use the slider " +
+                        "to the side to find more options."
+                },
+                {
+                    element: ".rankHolder",
+                    intro: "Rate a total of 15 movies to proceed to the next stage. "
+                },
+                {
+                    element: ".next-button",
+                    intro: "Click the Next button to proceed to the next stage."
+                }
+            ],
+            count: 0,
+            ratedLst: []
+        };
     }
-      
-    return ( 
-      <div>
-        <br></br>
-        <br></br>
-        <Steps
-          enabled={stepsEnabled}
-          steps={steps}
-          initialStep={initialStep}
-          onExit={this.onExit}
-        />
-        <div>
-          <MovieGrid handler = {this.handler}/>
-        </div>
-        {/* <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-          <div className="carousel-inner">
-            <div className="container">
-              <div class="row">
-                <div class="col-sm">
-                  <div className="image"><MovieGrid handler = {this.handler} /></div>
+
+    rateMovies(ratedLst, isNew) {
+        this.setState({
+            count: isNew ? this.state.count + 1 : this.state.count,
+            ratedLst: ratedLst
+        });
+    }
+
+    render() {
+        const {
+            stepsEnabled,
+            steps,
+            initialStep,
+        } = this.state;
+        let disabled = true;
+        if (this.state.count >= this.moviesRatingCount) {
+            disabled = false;
+        }
+
+        let userid = this.props.location.state.userid;
+        console.log(userid);
+
+        let ratings = this.state.ratedLst;
+
+        return (
+            <div className="contentWrapper">
+                <br />
+                <Steps
+                    enabled={stepsEnabled}
+                    steps={steps}
+                    initialStep={initialStep}
+                    onExit={this.onExit}
+                />
+                <ProgressBarComponent percentComplete={50} />
+                <br />
+                <div className="test">
+                    <p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
                 </div>
-              </div>
+                <div className="row padding">
+                    <div className="col-sm movieGrid">
+                        <MovieGrid handler={this.rateMoviesHandler} />
+                    </div>
+                </div>
+                <div id="footer-container" style={{ display: "flex"}}>
+                    <div className="rankHolder">
+                        <span> Ranked Movies: </span>
+                        <span><i>{this.state.count}</i></span>
+                        <span><i>of {this.moviesRatingCount}</i></span>
+                    </div>
+                    <div style={{ marginTop: "18px" }}>
+                        <Link to={{
+                            pathname: "/movies",
+                            state: {
+                                userid: userid,
+                                ratings: ratings
+                            }
+                        }}>
+                            <Button className="next-button" disabled={disabled}
+                                variant="primary">
+                                Next
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
             </div>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div> */}
-        
-        <div id="footer-container">
-			    <div className="rankHolder">
-				    <span> Ranked Movies: </span>
-				    <span id="NumberOfRankedMovies"><i>{this.state.count}</i></span>
-				    <span><i>of 15</i></span>
-			    </div>
-          <Link to="/movies">
-            <Button disabled={disabled} variant="primary" style={{float:'right', marginRight: 90}}>Next</Button>
-          </Link>
-		    </div>
-      </div>
-    );
-  }
-  onExit = () => {
-    this.setState(() => ({stepsEnabled: false}));
-  };
+        );
+    }
+
+    onExit = () => {
+        this.setState(() => ({ stepsEnabled: false }));
+    };
 }
- 
+
 export default PrefPage;

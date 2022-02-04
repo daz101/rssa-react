@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
-import { ProgressBar, Step } from "react-step-progress-bar";
-/*import { Redirect } from 'react-router-dom'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';*/
+import ProgressBarComponent from "./progressBarComponent";
+import Button from 'react-bootstrap/Button';
+import ReactHtmlParser from 'react-html-parser';
 
 class SurveyPage extends Component {
 
@@ -15,12 +12,33 @@ class SurveyPage extends Component {
       toInstructions: false,
       questions: [],
       disabled: true,
-      currentStep: 1
+      currentStep: 1,
+      seen_set: []
     };
     const user = this.props.user;
     /* user.acceptTerms = true;*/
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+    this.testcheat = this.testcheat.bind(this);
+  }
+
+  testcheat(){
+    this.setState({
+      disabled: false
+    })
+  }
+
+  cheatButton(){
+    const currentStep = this.state.currentStep;
+    if (currentStep < 6) {
+      return (
+          <Button style={{float: "left"}} type="primary" onClick={this.testcheat}>
+            Cheat
+          </Button>
+      );
+    }
+    return null;
   }
 
   handleChange(evt) {
@@ -72,11 +90,10 @@ class SurveyPage extends Component {
     const currentStep = this.state.currentStep;
     if (currentStep !== 1) {
       return (
-        <button
-          className="btn btn-secondary"
-          type="button" onClick={this._prev}>
+        <Button
+            type="secondary" style={{float: "right"}} onClick={this._prev}>
           Previous
-        </button>
+        </Button>
       );
     }
     return null;
@@ -86,11 +103,10 @@ class SurveyPage extends Component {
     const currentStep = this.state.currentStep;
     if (currentStep < 6) {
       return (
-        <button disabled={this.state.disabled}
-          className="btn btn-primary float-right"
-          type="button" onClick={this._next}>
+        <Button disabled={this.state.disabled}
+                style={{float: "right"}} type="primary" onClick={this._next}>
           Next
-        </button>
+        </Button>
       );
     }
     return null;
@@ -127,70 +143,76 @@ class SurveyPage extends Component {
   getQuestions(idx) {
     var qBank = {
       1: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'Diversity',
         qData: [
-          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.' },
-          { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike' },
-          { 'qId': 'q3', 'text': 'Most movies were from the same genre' },
-          { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes' },
-          { 'qId': 'q5', 'text': 'The recommended movies were from many different genres' },
-          { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety' }
+          { 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
+          { 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike', 'flag': false },
+          { 'qId': 'q3', 'text': 'Most movies were from the same genre', 'flag': false },
+          { 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes', 'flag': false },
+          { 'qId': 'q5', 'text': 'The recommended movies were from many different genres', 'flag': false },
+          { 'qId': 'q6', 'text': 'The recommendations contained a lot of variety', 'flag': false }
         ] 
       },
       2: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'RecQual',
         qData: [
-          { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender' },
-          { 'qId': 'q2', 'text': 'I found the recommended movies appealing' },
-          { 'qId': 'q3', 'text': 'The recommended movies fit my preference' },
-          { 'qId': 'q4', 'text': 'The recommended movies were relevant' },
-          { 'qId': 'q5', 'text': 'The system recommended too many bad movies.' },
-          { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.' }
+          { 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender', 'flag': false },
+          { 'qId': 'q2', 'text': 'I found the recommended movies appealing', 'flag': false },
+          { 'qId': 'q3', 'text': 'The recommended movies fit my preference', 'flag': false },
+          { 'qId': 'q4', 'text': 'The recommended movies were relevant', 'flag': false },
+          { 'qId': 'q5', 'text': 'The system recommended too many bad movies.', 'flag': false },
+          { 'qId': 'q6', 'text': 'I did not like any of the recommended movies.', 'flag': false }
         ]
       },
       3: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'choiceSat',
         qData: [
-          { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.' },
-          { 'qId': 'q2', 'text': 'The chosen movie fits my preference.' },
-          { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.' },
-          { 'qId': 'q4', 'text': 'I was excited about my chosen movie' },
-          { 'qId': 'q5', 'text': 'I think I chose the best movie from the options' },
-          { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected' },
-          { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected' }
+          { 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.', 'flag': false },
+          { 'qId': 'q2', 'text': 'The chosen movie fits my preference.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I was excited about my chosen movie', 'flag': false },
+          { 'qId': 'q5', 'text': 'I think I chose the best movie from the options', 'flag': false },
+          { 'qId': 'q6', 'text': 'I know several items that are better than the one I selected', 'flag': false },
+          { 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected', 'flag': false }
         ] 
       },
       4: {
+        instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
         qType: 'recConformity',
         qData: [
-          { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.' },
-          { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.' },
-          { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.' },
-          { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.' },
-          { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.' }
+          { 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
+          { 'qId': 'q2', 'text': 'The movies that were recommended are very popular movies.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I selected the movies that I think are the most popular overall.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I selected movies that are rather different from what I imagine others would choose.', 'flag': false },
+          { 'qId': 'q5', 'text': 'Probably nobody selected the exact same set of movies as me.', 'flag': false }
         ]
       },
       5: {
+        instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
         qType: 'tasteCov',
         qData: [
-            { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests' },
-            { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.' },
-            { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.' },
-            { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.' },
-            { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.' },
-            { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.' },
-            { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.' }
+            { 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests', 'flag': false },
+            { 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.', 'flag': false },
+            { 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.', 'flag': false },
+            { 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.', 'flag': false },
+            { 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.', 'flag': false },
+            { 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.', 'flag': false },
+            { 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.', 'flag': false }
           ]
       },
       6: {
+        instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
         qType: 'sysSat',
         qData: [
-          { 'qId': 'q1', 'text': 'I like using the system.' },
-          { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.' },
-          { 'qId': 'q3', 'text': 'I would recommend the system to others.' },
-          { 'qId': 'q4', 'text': 'I can find better movies using the system.' },
-          { 'qId': 'q5', 'text': 'I would quickly abandon using the system.' },
-          { 'qId': 'q6', 'text': 'I would use the system more often if possible.' }
+          { 'qId': 'q1', 'text': 'I like using the system.', 'flag': false },
+          { 'qId': 'q2', 'text': 'Using the system is a pleasant experience.', 'flag': false },
+          { 'qId': 'q3', 'text': 'I would recommend the system to others.', 'flag': false },
+          { 'qId': 'q4', 'text': 'I can find better movies using the system.', 'flag': false },
+          { 'qId': 'q5', 'text': 'I would quickly abandon using the system.', 'flag': false },
+          { 'qId': 'q6', 'text': 'I would use the system more often if possible.', 'flag': false }
         ]
       }
     };
@@ -213,60 +235,8 @@ class SurveyPage extends Component {
 
     return (
       <React.Fragment>
-        <div>
-          <ProgressBar
-            percent={90}
-            filledBackground="linear-gradient(to right, #fefb72, #f0bb31)">
-
-            <Step transition="scale">
-              {({ accomplished }) => (
-                <img
-                  style={{ marginLeft: 40, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-                  width="30"
-                  src="/one.png"
-                />
-              )}
-            </Step>
-            <Step transition="scale">
-              {({ accomplished }) => (
-                <img
-                  style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-                  width="30"
-                  src="/two.png"
-                />
-              )}
-            </Step>
-            <Step transition="scale">
-              {({ accomplished }) => (
-                <img
-                  style={{ paddingright: 90, filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-                  width="30"
-                  src="/three.png"
-                />
-              )}
-            </Step>
-
-            <Step transition="scale">
-              {({ accomplished }) => (
-                <img
-                  style={{ filter: `grayscale(${accomplished ? 0 : 100}%)` }}
-                  width="30"
-                  src="/four.png"
-                />
-              )}
-            </Step>
-
-            <Step transition="scale">
-              {({ accomplished }) => (
-                <img
-                  style={{ marginRight: 40, filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-                  width="30"
-                  src="/five.png"
-                />
-              )}
-            </Step>
-
-          </ProgressBar>
+        <div className="contentWrapper">
+          <ProgressBarComponent percentComplete={90} />
 
           <div className="survey-page">
             <h2>Post-task survey</h2>
@@ -285,6 +255,7 @@ class SurveyPage extends Component {
               {/* {this.previousButton()} */}
               {this.nextButton()}
               {this.submitButton()}
+              {this.cheatButton()}
             </form>
           </div>
         </div>
@@ -293,49 +264,38 @@ class SurveyPage extends Component {
   }
 }
 
+function htmlDecode(input){
+  let e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
+const likertVals = ['Strongly<br>Disagree', 'Disagree', 'No<br>Opinion', 'Agree', 'Strongly<br>Disagree'];
+
 function StepThrough(props) {
   if (props.currentStep !== props.stepFlag) {
     return null
   }
-  var qType = props.questions_.qType;
+  let qType = props.questions_.qType;
+  let qInstruct = props.questions_.instruction;
   return (
     <React.Fragment>
       <div className="card bg-light mb-3">
         <div className="card-body">
-          <p>Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:</p>
+          <h4>Scenario {props.currentStep} out of 6:</h4>
+          <p>{ReactHtmlParser(qInstruct)}</p>
           {props.questions_.qData.map((likert, i) => (
-            <div className="form-group" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
+            <div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} onChange={(evt) => props.handleChange(evt)}>
               <div className="form-row">  
-                <label as="legend" className="font-weight-bold">{likert.text}</label>
- 
-                <div className="col">
-
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-1"} />
-                  <label htmlFor={qType + "_" + likert.qId + "-1"}>Strongly disagree</label>
-                </div>
-
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-2"} />
-                  <label htmlFor={qType + "_" + likert.qId + "-2"}>Disagree</label>
-                </div>
-
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-3"} />
-                  <label htmlFor={qType + "_" + likert.qId + "-3"}>Neither agree nor disagree</label>
-                </div>
-
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-4"} />
-                  <label htmlFor={qType + "_" + likert.qId + "4"}>Agree</label>
-                </div>
-
-                <div className="custom-control custom-radio custom-control-inline">
-                  <input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-5"} />
-                  <label htmlFor={qType + "_" + likert.qId + "5"}>Strongly agree</label>
-                </div>
-
-                </div>
+                <label is="legend" className="font-weight-bold"><strong>{ReactHtmlParser(likert.text)}</strong></label>
+				<div className="col">
+					{likertVals.map((strVal, j) =>
+						<label htmlFor={qType + "_" + likert.qId + "-" + j} class="checkboxBtn">
+							<p className="checkboxLbl">{ReactHtmlParser(strVal)}</p>
+							<input className="radio-margin" type="radio" name={qType + "_" + likert.qId} id={qType + "_" + likert.qId + "-" + j} />
+						</label>
+					)}
+				</div>
               </div>
             </div>
           ))}

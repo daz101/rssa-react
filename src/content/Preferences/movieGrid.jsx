@@ -1,248 +1,148 @@
-import React, { Component } from 'react';
-import StarRatings from 'react-star-ratings';
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
+import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import StarRatings from 'react-star-ratings';
+import { API } from "../constants";
 
-const Movie = props => (
-	<tr>
-	  <td>{props.movie.rssa_id}</td>
-	  <td>{props.movie.movie_id}</td>
-	  <td>{props.movie.imdb_id}</td>
-	  <td>{props.movie.title}</td>
-	  <td>{props.movie.year}</td>
-	  <td>{props.movie.runtime}</td>
-	  <td>{props.movie.genre}</td>
-	  <td>{props.movie.aveRating}</td>
-	  <td>{props.movie.director}</td>
-	  <td>{props.movie.writer}</td>
-	  <td>{props.movie.description}</td>
-	  <td>{props.movie.cast}</td>
-	  <td>
-		<img src={props.movie.poster} alt={props.movie.title} width="100" />
-	  </td>
-	</tr>
-  );
-
-const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-      slidesToSlide: 3 // optional, default to 1.
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-      slidesToSlide: 2 // optional, default to 1.
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      slidesToSlide: 1 // optional, default to 1.
-    }
-  };
 
 class MovieGrid extends Component {
-	
+	itemsPerPage = 18;
+
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			movies: [],
-			movies_: [],
-			visited: []
+			visited: [],
+			currentPage: 0
 		}
+		this.renderNext = this.renderNextSet.bind(this);
+		this.renderPrev = this.renderPrevSet.bind(this);
 	}
 
 	componentDidMount() {
-		let API = "";
-		let movie_map = [];
-		// let randomMovies = [];
-		if (process.env.NODE_ENV === "production") {
-		  API = "https://movie-mern.herokuapp.com/api/movies/";
-		} else {
-		  API = "http://localhost:5000/api/movies/";
-		}
+		this.getMovies();
+	}
+
+	getMovies() {
+		let curr = this.state.currentPage;
+		console.log(this.itemsPerPage);
+		// We prefetch the next page; every query is two pages of items
 		axios
-		.get(API)
-		.then(response => {
-			response.data.map(movie => {
-				movie_map.push({
-					"movie": movie,
-					"rating": 0
-				});
-			},
-			this.setState({
-				movies: response.data,
-				movies_: movie_map
+			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
+			.then(response => {
+				this.setState({
+					movies: response.data
+				})
 			})
-			);
-		})
-		.catch(error => {
-			console.log(error);
+			.catch(error => {
+				console.log(error);
+			});
+	}
+
+	renderNextSet() {
+		// console.log("Next Button Clicked");
+		let curr = this.state.currentPage;
+		curr += 1;
+		this.setState({
+			currentPage: curr
 		});
-		if (this.state.visited.length <= 5){
-			this.updateVisted();
-			console.log(this.state.visited);
+		if (curr % 2 !== 0) {
+			this.getMovies();
 		}
 	}
 
-	updateVisted = () => {
-		let randomMovies = [];
-		if (this.state.visited.length <= 5){
-			randomMovies = this.getRandomMovies(this.state.movies_);
-				
+	renderPrevSet() {
+		// console.log("Previous Button Clicked");
+		let curr = this.state.currentPage;
+		if (curr > 0) {
+			curr -= 1;
 			this.setState({
-				visited: randomMovies
+				currentPage: curr
 			});
 		}
 	}
-  
-	movieList() {
-		return this.state.movies.map(currentmovie => {
-		  return (
-			<Movie
-			  movie={currentmovie}
-			  // deleteMovie={this.deleteMovie}
-			  key={currentmovie._id}
-			/>
-		  );
-		});
-	}
-	
-	onChangeMovieId(e) {
-		  console.log("onChangeMovieId");
-		  console.log(e);
-		this.setState({
-		  mId: e.target.value
-		});
-	}
-	
-	onSubmit(e) {
-		e.preventDefault();
-	
-		// const exercise = {
-		//   username: this.state.username,
-		//   description: this.state.description,
-		//   duration: this.state.duration,
-		//   date: this.state.date
-		// };
-	
-		console.log(this.state.mId);
-		var API = "";
-		if (process.env.NODE_ENV === "production") {
-		  API = "https://movie-mern.herokuapp.com/api/movies/";
-		} else {
-		  API = "http://localhost:5000/api/movies/";
-		}
-		axios
-		  .get(API + this.state.mId)
-		  .then(response => {
-			this.setState({ movies: response.data});
-		  })
-		  .catch(error => {
-			console.log(error);
-		  });
-	} 
-	
-	changeRating = (newRating, movieid) =>{
-		let movieLst = [...this.state.movies_];
-		let ratedItm = movieLst.map(movieItm => (
-			movieItm.movie._id === movieid ? {
-				...movieItm, rating: newRating}: movieItm
+
+	changeRating = (newRating, movieid) => {
+		let movieLst = [...this.state.movies];
+		let vstdLst = [...this.state.visited];
+		let ratedItm = movieLst.map(movie => (
+			movie.movie_id === movieid ? {
+				...movie, rating: newRating
+			} : movie
 		));
-		this.setState({
-			movies_: ratedItm
-		});
-
-		this.props.handler();
-	}
-
-	getRandomMovies = (allMovies) => {
-		// let allMovies = this.state.movies_;
-		const randomCount = 5;
-
-		const randomMovies = [];
-		for (let i = 0; i < randomCount; i++){
-			const randIdx = Math.floor(Math.random() * allMovies.length);
-			const randItm = allMovies.splice(randIdx, 1)[0];
-			randomMovies.push(randItm);
+		let isNew = !vstdLst.some(item => item.item_id === movieid);
+		if (isNew) {
+			vstdLst.push({ "item_id": movieid, "rating": newRating });
+		} else {
+			vstdLst = vstdLst.map(movie => (
+				movie.item_id === movieid ? {
+					...movie, rating: newRating
+				} : movie
+			));
 		}
-		return randomMovies;
+		this.setState({
+			movies: ratedItm,
+			visited: vstdLst
+		});
+		this.props.handler(vstdLst, isNew);
 	}
 
-	getRandomMovie = () => {
-		let allMovies = this.state.movies_;
-		const randomCount = 5;
-
-		const randIdx = Math.floor(Math.random() * allMovies.length);
-		return allMovies.splice(randIdx, 1)[0];
-	}
-
-	removeItem = (movieID) => {
-		console.log(movieID);
-	}
-
-    render() {
-		if (this.state.visited.length > 0){
-			// let visited = this.state.movies_;
+	render() {
+		if (this.state.movies.length > 0) {
+			let startIdx = this.state.currentPage * this.itemsPerPage;
 			return (
-				<div>
-					<Carousel  
-					additionalTransfrom={0}
-					arrows
-					autoPlaySpeed={3000}
-					centerMode={true}
-					className=""
-					containerClass="container-with-dots"
-					dotListClass=""
-					draggable
-					focusOnSelect={false}
-					infinite
-					keyBoardControl
-					minimumTouchDrag={80}
-					renderButtonGroupOutside={false}
-					renderDotsOutside={false}
-					responsive={responsive}		
-					showDots={false}
-					sliderClass=""
-					slidesToSlide={1}
-					swipeable
-					itemClass="carousel-item-padding-0-px">
-					{this.state.movies_.map(currentmovie => (
-						<div class="container"  key={currentmovie.movie._id}>
-							{/* <button onClick={() => this.removeItem(currentmovie.movie._id)}>X</button> */}
-							<img id={"TN_"+currentmovie.movie._id} src={currentmovie.movie.poster} className="imageTrans"/>
-								<div class="star-div">
-									<StarRatings
-										rating={currentmovie.rating}
-										starRatedColor="rgb(252,229,65)"
-										starHoverColor="rgb(252,229,65)"
-										starDimension="18px"
-										starSpacing="3px"
-										changeRating={this.changeRating}
-										numberOfStars={5}
-										name={currentmovie.movie._id}/>
+				<div className="grid-layout" style={{ minWidth: "500px", maxWidth: "1200px", margin: "auto", display: "flex" }}>
+					<div style={{ paddingTop: "270px", marginRight: "18px" }}>
+						<Button disabled={startIdx === 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
+							&lt;
+						</Button>
+					</div>
+					<div className="grid-container">
+						{this.state.movies.slice(startIdx, startIdx + this.itemsPerPage).map(currentMovie => (
+							<div id={"TN_" + currentMovie.rssa_idc} key={"TN_" + currentMovie.rssa_id}
+								className="movieCardContainer grid-item" style={{ position: "relative" }}>
+								<div className="container"
+									style={{
+										backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
+										backgroundSize: "100% auto"
+									}}>
+									<div className="overlay">
+										<div className="star-div">
+											<StarRatings
+												rating={currentMovie.rating}
+												starRatedColor="rgb(252,229,65)"
+												starHoverColor="rgb(252,229,65)"
+												starDimension="18px"
+												starSpacing="1px"
+												changeRating={this.changeRating}
+												numberOfStars={5}
+												name={currentMovie.movie_id} />
+										</div>
+									</div>
 								</div>
-								<div class="text">
-									{currentmovie.movie.title}
-								</div>									
-						</div>
-						// <div>
-						// <img src={currentmovie.movie.poster} className="imageTrans"/>
-						// </div>
-					))}
-					</Carousel>
+								<div className="text" style={{ position: "absolute" }}>
+									{currentMovie.title + " (" + currentMovie.year + ")"}
+								</div>
+							</div>
+						))}
+					</div>
+
+					<div style={{ paddingTop: "270px", marginLeft: "18px" }}>
+						<Button variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderNext}>
+							&gt;
+						</Button>
+					</div>
 				</div>
 			);
 		} else {
-			return (<div></div>);
+			return (
+				<div style={{ minWidth: "300px", minHeight: "300px" }}>
+					<Spinner animation="border" role="status" style={{ margin: "3em 50%", width: "54px", height: "54px" }} />
+				</div>
+			);
 		}
-    }
+	}
 }
 
 export default MovieGrid;
