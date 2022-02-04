@@ -12,7 +12,7 @@ class MovieGrid extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			movies_: [],
+			movies: [],
 			visited: [],
 			currentPage: 0
 		}
@@ -25,21 +25,14 @@ class MovieGrid extends Component {
 	}
 
 	getMovies() {
-		let movie_map = this.state.movies_;
 		let curr = this.state.currentPage;
 		console.log(this.itemsPerPage);
 		// We prefetch the next page; every query is two pages of items
 		axios
 			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
 			.then(response => {
-				response.data.map(movie => {
-					movie_map.push({
-						"movie": movie,
-						"rating": 0
-					});
-				});
 				this.setState({
-					movies_: movie_map
+					movies: response.data
 				})
 			})
 			.catch(error => {
@@ -71,33 +64,32 @@ class MovieGrid extends Component {
 	}
 
 	changeRating = (newRating, movieid) => {
-		let movieLst = [...this.state.movies_];
+		let movieLst = [...this.state.movies];
 		let vstdLst = [...this.state.visited];
-		let ratedItm = movieLst.map(movieItm => (
-			movieItm.movie.movie_id === movieid ? {
-				...movieItm, rating: newRating
-			} : movieItm
+		let ratedItm = movieLst.map(movie => (
+			movie.movie_id === movieid ? {
+				...movie, rating: newRating
+			} : movie
 		));
 		let isNew = !vstdLst.some(item => item.item_id == movieid);
 		if (isNew) {
 			vstdLst.push({ "item_id": movieid, "rating": newRating });
 		} else {
-			vstdLst = vstdLst.map(movieItm => (
-				movieItm.item_id === movieid ? {
-					...movieItm, rating: newRating
-				} : movieItm
+			vstdLst = vstdLst.map(movie => (
+				movie.item_id === movieid ? {
+					...movie, rating: newRating
+				} : movie
 			));
 		}
 		this.setState({
-			movies_: ratedItm,
+			movies: ratedItm,
 			visited: vstdLst
 		});
-		console.log(vstdLst);
 		this.props.handler(vstdLst, isNew);
 	}
 
 	render() {
-		if (this.state.movies_.length > 0) {
+		if (this.state.movies.length > 0) {
 			let startIdx = this.state.currentPage * this.itemsPerPage;
 			return (
 				<div className="grid-layout" style={{ minWidth: "500px", maxWidth: "1200px", margin: "auto", display: "flex" }}>
@@ -107,12 +99,12 @@ class MovieGrid extends Component {
 						</Button>
 					</div>
 					<div className="grid-container">
-						{this.state.movies_.slice(startIdx, startIdx + this.itemsPerPage).map(currentMovie => (
-							<div id={"TN_" + currentMovie.movie.rssa_idc} key={"TN_" + currentMovie.movie.rssa_id}
+						{this.state.movies.slice(startIdx, startIdx + this.itemsPerPage).map(currentMovie => (
+							<div id={"TN_" + currentMovie.rssa_idc} key={"TN_" + currentMovie.rssa_id}
 								className="movieCardContainer grid-item" style={{ position: "relative" }}>
 								<div className="container"
 									style={{
-										backgroundImage: "url(" + currentMovie.movie.poster + "), url('/default_movie_icon.svg')",
+										backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
 										backgroundSize: "100% auto"
 									}}>
 									<div className="overlay">
@@ -125,12 +117,12 @@ class MovieGrid extends Component {
 												starSpacing="1px"
 												changeRating={this.changeRating}
 												numberOfStars={5}
-												name={currentMovie.movie.movie_id} />
+												name={currentMovie.movie_id} />
 										</div>
 									</div>
 								</div>
 								<div className="text" style={{ position: "absolute" }}>
-									{currentMovie.movie.title + " (" + currentMovie.movie.year + ")"}
+									{currentMovie.title + " (" + currentMovie.year + ")"}
 								</div>
 							</div>
 						))}
