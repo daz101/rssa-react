@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-step-progress-bar/styles.css";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import ProgressBarComponent from "../widgets/progressBar";
 import axios from 'axios';
 import { API } from '../constants';
@@ -13,8 +13,12 @@ class InstructionPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			instructionDateTime: undefined
+			instructionDateTime: undefined,
+			pageid: 3,
+			userid: props.location.state.userid,
+			updateSuccess: false
 		}
+		this.updateSurvey = this.updateSurveyResponse.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,13 +27,18 @@ class InstructionPage extends Component {
 		});
 	}
 
-	updateServerTime() {
+	updateSurveyResponse() {
 		let instructionDateTime = this.state.instructionDateTime;
 		let instructionEndTime = new Date();
+		let pageid = this.state.pageid;
+		let userid = this.state.userid;
 
-		axios.post(API + 'updateSurveyResponse', {
-			instructionStartTime: instructionDateTime.toUTCString(),
-			instructionEndTime: instructionEndTime.toUTCString()
+		axios.put(API + 'add_survey_response', {
+			pageid: pageid,
+			userid: userid,
+			starttime: instructionDateTime.toUTCString(),
+			endtime: instructionEndTime.toUTCString(),
+			response: {}
 		},
 		{
 			headers: {
@@ -40,15 +49,24 @@ class InstructionPage extends Component {
 		.then(response => {
 			if (response.status === 200){
 				this.setState({
-					userCreated: true,
-					userid: response.data['user_id']
+					updateSuccess: true
 				});
 			}
 		})
 	}
 
 	render() {
-		let userid = this.props.location.state.userid;
+		let userid = this.state.userid;
+		if (this.state.updateSuccess){
+			return (
+				<Redirect to = {{
+					pathname: "/ratemovies",
+					state: {
+						userid: userid
+					}
+				}}/>
+			);
+		}
 
 		return (
 			<div className="contentWrapper">
@@ -95,16 +113,17 @@ class InstructionPage extends Component {
 					</div>
 				</div>
 				<div style={{ marginTop: "1em" }}>
-					<Link to={{
+					{/* <Link to={{
 						pathname: "/ratemovies",
 						state: {
 							userid: userid
 						}
-					}}>
-						<Button variant="primary" size="lg" style={{ float: 'right' }}>
+					}}> */}
+						<Button variant="primary" size="lg" style={{ float: 'right' }} 
+						onClick={this.updateSurvey}>
 							Next
 						</Button>
-					</Link>
+					{/* </Link> */}
 				</div>
 			</div>
 		);
