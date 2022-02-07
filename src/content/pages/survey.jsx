@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "react-step-progress-bar/styles.css";
-import ProgressBarComponent from "./progressBarComponent";
+import ProgressBarComponent from "../widgets/progressBar";
 import Button from 'react-bootstrap/Button';
 import ReactHtmlParser from 'react-html-parser';
 

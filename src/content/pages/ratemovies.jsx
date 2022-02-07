@@ -5,10 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import 'intro.js/introjs.css';
 import { Steps } from "intro.js-react";
-import MovieGrid from "./movieGrid";
-import ProgressBarComponent from "../progressBarComponent";
+import MovieGrid from "../widgets/movieGrid";
+import ProgressBarComponent from "../widgets/progressBar";
 
-class PrefPage extends Component {
+class RatingPage extends Component {
 
     moviesRatingCount = 10;
 
@@ -111,4 +111,4 @@ class PrefPage extends Component {
     };
 }
 
-export default PrefPage;
+export default RatingPage;

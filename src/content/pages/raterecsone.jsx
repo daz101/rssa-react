@@ -1,18 +1,18 @@
-import '../App.css';
-import "react-step-progress-bar/styles.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-star-rating/dist/css/react-star-rating.min.css';
 import axios from "axios";
-import { API } from "./constants";
-import { Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import Jumbotron from "react-bootstrap/Jumbotron";
-import MovieSidePanel from "./Preferences/movieSidePanel";
-import ProgressBarComponent from "./progressBarComponent";
+// import Jumbotron from "react-bootstrap/Jumbotron";
+import { Link } from "react-router-dom";
+import 'react-star-rating/dist/css/react-star-rating.min.css';
+import "react-step-progress-bar/styles.css";
 import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
+import '../../App.css';
+import { API } from "../constants";
+import MovieSidePanel from "../widgets/movieSidePanel";
+import ProgressBarComponent from "../widgets/progressBar";
 
-class Moviecard extends Component {
+class RecommendationPageOne extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -112,9 +112,14 @@ class Moviecard extends Component {
             <div className="contentWrapper">
                 <ProgressBarComponent percentComplete={75} />
                 <br />
-                <Jumbotron>
+                {/* <Jumbotron>
                     <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
-                </Jumbotron>
+                </Jumbotron> */}
+                <div className="jumbotron">
+                    <p>
+                        Please rate the following movies.
+                    </p>
+                </div>
 
                 {/* 
                 <div style={{ minWidth: "300px", minHeight: "300px" }}>
@@ -166,4 +171,4 @@ class Moviecard extends Component {
     }
 }
 
-export default Moviecard;
+export default RecommendationPageOne;

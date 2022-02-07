@@ -1,19 +1,18 @@
-import React, {Component} from 'react';
-import "react-step-progress-bar/styles.css";
-import {Link} from "react-router-dom";
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import 'react-star-rating/dist/css/react-star-rating.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import ReactStars from "react-rating-stars-component";
-import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
-import ProgressBarComponent from "./progressBarComponent";
-import {API, Movie} from "./constants";
-import MovieSidePanel from "./Preferences/movieSidePanel";
-import Jumbotron from "react-bootstrap/Jumbotron";
+// import Jumbotron from "react-bootstrap/Jumbotron";
+import { Link } from "react-router-dom";
+import 'react-star-rating/dist/css/react-star-rating.min.css';
+import "react-step-progress-bar/styles.css";
+import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
+import '../../App.css';
+import { API, Movie } from "../constants";
+import MovieSidePanel from "../widgets/movieSidePanel";
+import ProgressBarComponent from "../widgets/movieSidePanel";
 
-class MoviePick extends Component {
+class RecommendationPageThree extends Component {
     constructor(props) {
         super(props);
         this.onChangeMovieId = this.onChangeMovieId.bind(this);
@@ -134,9 +133,12 @@ class MoviePick extends Component {
             <div className="contentWrapper">
                 <ProgressBarComponent percentComplete={75} />
                 <br/>
-                <Jumbotron>
+                {/* <Jumbotron>
                     <p style={{textAlign: "center"}}>Please pick one movie that you will watch right now if you could.</p>
-                </Jumbotron>
+                </Jumbotron> */}
+                <div className="jumbotron">
+                <p style={{textAlign: "center"}}>Please pick one movie that you will watch right now if you could.</p>
+                </div>
                 <div className="row padding">
                     <MovieSidePanel movieList={this.state.movies.slice(0, 10)} handler={this.handleHover}
                                     panelTitle={"Movies You May Like"}/>
@@ -173,4 +175,4 @@ class MoviePick extends Component {
     }
 }
 
-export default MoviePick;
+export default RecommendationPageThree;

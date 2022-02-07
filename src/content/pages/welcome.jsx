@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from "react-bootstrap/Card";
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Jumbotron from "react-bootstrap/Jumbotron";
-import { Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
-import ProgressBarComponent from "./progressBarComponent";
 import axios from 'axios';
-import { API } from './constants';
-import { Redirect } from 'react-router-dom';
+import { API } from '../constants';
+import React, { Component } from 'react';
+import { Button, Card, Form, Modal } from 'react-bootstrap';
+import { Link, Redirect } from "react-router-dom";
+import ProgressBarComponent from "../widgets/progressBar";
 
-class Welcome extends Component {
+class WelcomePage extends Component {
 
 	constructor(props) {
 		super(props);
@@ -29,14 +24,14 @@ class Welcome extends Component {
 
 	componentDidMount() {
 		this.setState({
-			"welcomeDateTime": new Date()
+			welcomeDateTime: new Date()
 		});
 	}
 
 	showSurvey() {
 		this.setState({
-			"show": true,
-			"consentStartTime": new Date() 
+			show: true,
+			consentStartTime: new Date() 
 		});
 	}
 
@@ -45,7 +40,7 @@ class Welcome extends Component {
 		let welcomeDateTime = this.state.welcomeDateTime;
 		let consentStartTime = this.state.consentStartTime;
 
-		axios.post(API+'new_user', {
+		axios.post(API + 'new_user', {
 			welcomeTime: welcomeDateTime.toUTCString(),
 			consentStartTime: consentStartTime.toUTCString(),
 			consentEndTime: consentEndTime.toUTCString()
@@ -57,14 +52,13 @@ class Welcome extends Component {
 			}
 		})
 		.then(response => {
-			console.log(response);
 			if (response.status === 200){
 				this.setState({
 					userCreated: true,
 					userid: response.data['user_id']
 				});
 			}
-		})
+		});
 	}
 
 	render() {
@@ -74,7 +68,7 @@ class Welcome extends Component {
 		if (userCreated){
 			return (
 				<Redirect to = {{
-					pathname: "/inst",
+					pathname: "/instructions",
 					state: {
 						userid: userid
 					}
@@ -85,10 +79,10 @@ class Welcome extends Component {
 		return (
 			<div className="contentWrapper">
 				<ProgressBarComponent percentComplete={5} />
-				<Jumbotron>
+				<div className="jumbotron">
 					<h1 className="header">Welcome</h1>
-					<p>Welcome to the study on movie recommendation</p>
-				</Jumbotron>
+					<p>Welcome to the study on movie recommendation.</p>
+				</div>
 
 				<Card bg="light">
 					<Card.Body>
@@ -181,4 +175,4 @@ class Welcome extends Component {
 	}
 }
 
-export default Welcome;
+export default WelcomePage;

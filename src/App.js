@@ -1,14 +1,14 @@
+import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css';
-import Exit from './content/ExitPage';
-import Instructions from './content/Instructions';
-import MovieInfo from './content/movieRecPick';
-import Movies from './content/movieRecRating';
-import MoviesList from "./content/movies-list.component";
-import Preferences from './content/Preferences/prefPage';
-import Survey from "./content/survey";
-import Welcome from './content/welcome';
+import WelcomePage from './content/pages/welcome';
+import InstructionPage from './content/pages/instructions';
+import RatingPage from './content/pages/ratemovies';
+import RecommendationPageOne from './content/pages/raterecsone';
+import RecommendationPageTwo from './content/pages/raterecstwo';
+import RecommendationPageThree from './content/pages/pickrecs';
+import SurveyPage from './content/pages/survey';
+import ExitPage from './content/pages/exit';
 
 class App extends Component {
 
@@ -16,21 +16,21 @@ class App extends Component {
         return (
             <div>
                 <div className="App">
-                    <nav className="navbar navbar-light bg-light">
+                    <nav className="navbar navbar-light bg-light" 
+                        style={{ paddingLeft: "1.0em", paddingRight: "1.0em"}}>
                         <span className="navbar-brand mb-0 h1">Movie Recommender Study</span>
                     </nav>
-
                 </div>
                 <Router>
                     <Switch>
-                        <Route exact path="/" component={Welcome}/>
-                        <Route path="/inst" component={Instructions}/>
-                        <Route path="/pref" component={Preferences}/>
-                        <Route path="/movies" component={Movies}/>
-                        <Route path="/movieInfo" component={MovieInfo}/>
-                        <Route path="/survey" component={Survey}/>
-                        <Route path="/exit" component={Exit}/>
-                        <Route path="/mern" component={MoviesList}/>
+                        <Route exact path="/" component={WelcomePage}/>
+                        <Route path="/instructions" component={InstructionPage}/>
+                        <Route path="/ratemovies" component={RatingPage}/>
+                        <Route path="/raterecommendations1" component={RecommendationPageOne}/>
+                        <Route path="/raterecommendations2" component={RecommendationPageTwo}/>
+                        <Route path="/pickrecommendations" component={RecommendationPageThree}/>
+                        <Route path="/survey" component={SurveyPage}/>
+                        <Route path="/exit" component={ExitPage}/>
                     </Switch>
 
                 </Router>
