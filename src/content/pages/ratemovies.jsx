@@ -1,12 +1,14 @@
 import 'intro.js/introjs.css';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Steps } from "intro.js-react";
 import MovieGrid from "../widgets/movieGrid";
 import ProgressBarComponent from "../widgets/progressBar";
+import {API} from "../constants";
+import axios from "axios";
 
 class RatingPage extends Component {
 
@@ -17,6 +19,9 @@ class RatingPage extends Component {
         this.rateMoviesHandler = this.rateMovies.bind(this);
 
         this.state = {
+            raterDateTime: undefined,
+            userid: this.props.location.state.userid,
+            pageid: 4,
             stepsEnabled: true,
             initialStep: 0,
             steps: [
@@ -35,8 +40,39 @@ class RatingPage extends Component {
                 }
             ],
             count: 0,
-            ratedLst: []
+            ratedLst: [],
+            updateSuccess: false
         };
+        this.updateSurvey = this.updateSurveyResponse.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            raterDateTime: new Date()
+        });
+    }
+
+    updateSurveyResponse() {
+        let raterDateTime = this.state.raterDateTime;
+        let raterEndTime = new Date();
+        let pageid = this.state.pageid;
+        let userid = this.state.userid;
+        let ratedLst = this.state.ratedLst;
+
+        axios.put(API + 'add_survey_response', {
+            pageid: pageid,
+            userid: userid,
+            starttime: raterDateTime.toUTCString(),
+            endtime: raterEndTime.toUTCString(),
+            response: {ratings: ratedLst}
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this.setState({
+                    updateSuccess: true
+                });
+            }
+        })
     }
 
     rateMovies(ratedLst, isNew) {
@@ -47,6 +83,20 @@ class RatingPage extends Component {
     }
 
     render() {
+        let userid = this.state.userid;
+        let ratings = this.state.ratedLst;
+        if (this.state.updateSuccess){
+            return (
+                <Redirect to={{
+                    pathname: "/raterecommendations1",
+                    state:{
+                        userid: userid,
+                        ratings: ratings
+                    }
+                }} />
+            );
+        }
+
         const {
             stepsEnabled,
             steps,
@@ -56,9 +106,6 @@ class RatingPage extends Component {
         if (this.state.count >= this.moviesRatingCount) {
             disabled = false;
         }
-
-        let userid = this.props.location.state.userid;
-        let ratings = this.state.ratedLst;
 
         return (
             <div className="contentWrapper">
@@ -90,18 +137,18 @@ class RatingPage extends Component {
                             <span><i>of {this.moviesRatingCount}</i></span>
                         </div>
                         <div style={{ marginTop: "18px" }}>
-                            <Link to={{
+                            {/* <Link to={{
                                 pathname: "/raterecommendations1",
                                 state: {
                                     userid: userid,
                                     ratings: ratings
                                 }
-                            }}>
+                            }}> */}
                                 <Button className="next-button" disabled={disabled}
-                                    variant="primary">
+                                    variant="primary" onClick={this.updateSurvey}>
                                     Next
                                 </Button>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>
