@@ -113,17 +113,10 @@ class InstructionPage extends Component {
 					</div>
 				</div>
 				<div style={{ marginTop: "1em" }}>
-					{/* <Link to={{
-						pathname: "/ratemovies",
-						state: {
-							userid: userid
-						}
-					}}> */}
-						<Button variant="primary" size="lg" style={{ float: 'right' }} 
-						onClick={this.updateSurvey}>
-							Next
-						</Button>
-					{/* </Link> */}
+					<Button variant="primary" size="lg" style={{ float: 'right' }} 
+					onClick={this.updateSurvey}>
+						Next
+					</Button>
 				</div>
 			</div>
 		);

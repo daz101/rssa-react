@@ -336,6 +336,27 @@ letter-spacing: 5px;
 	display: none;
 }
 
+.star-div-rated {
+	height: 27px;
+	justify-content: center;
+	align-content: center;
+	margin: 0 auto;
+	padding-top: 80%;
+	display: visible;
+}
+
+.container-visited .overlay {
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.8;
+}
+
+.container-visited .star-div-visited {
+	z-index: 2;
+	display: flex;
+}
+
 /*progress bar*/ 
 .parent_container .progressbar {
 	margin-top: 20px;
@@ -395,7 +416,10 @@ letter-spacing: 5px;
 
 .contentWrapper {
 	align-content: center;
-	margin: 1em;
+	margin: 0 auto;
+	min-width: 1080px;
+	width: fit-content;
+
 }
 
 
@@ -512,8 +536,9 @@ letter-spacing: 5px;
 }
 
 #footer-container {
-	width: 100%;
-	height: 30px;
+	/* width: 100%;
+	height: 30px; */
+	background-color: inherit;
 }
 
 .bghjHX {
@@ -522,7 +547,7 @@ letter-spacing: 5px;
 
 .rankHolder {
 	width: fit-content;
-	margin: 18px auto 0 auto;
+	margin: 18px auto 18px auto;
 	/* width: 27%;
 	display:block;
 	box-align: center;
@@ -956,11 +981,47 @@ div.box.sample:after {
 	font-size: small;
 }
 
+/* @media (min-width: 1366px){
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto;
+		justify-items: stretch;
+	}
+
+}
+
+@media (min-width: 1200px)
+	and (max-width: 1365px){
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto;
+		justify-items: stretch;
+	}
+}
+
+@media (min-width: 1050px)
+	and (max-width: 1199px){
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto auto auto;
+		grid-template-rows: auto auto auto;
+		justify-items: stretch;
+	}
+} */
+
 .grid-container {
+	/* width: 100%; */
 	display: grid;
-	grid-template-columns: auto auto auto auto auto auto;
+	/* grid-template-columns: repeat(auto-fill, 180px); */
+	/* grid-template-rows: repeat(3, minmax(0, 1fr)); */
+	grid-template-columns: auto auto auto auto auto;
 	grid-template-rows: auto auto auto;
 	justify-items: stretch;
+	/* grid-row-gap: .5em; */
+	/* grid-column-gap: 1em; */
+	overflow-x: hidden;
 }
 
 .grid-item {
@@ -1020,8 +1081,8 @@ div.box.sample:after {
 }
 
 .jumbotron {
-	padding: 2em 1rem;
-	margin-bottom: 2rem;
+	padding: 1em 1rem;
+	margin-bottom: 1rem;
 	background-color: #e9ecef;
 	border-radius: 0.3rem;
 }

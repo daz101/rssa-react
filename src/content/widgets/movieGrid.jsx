@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import StarRatings from 'react-star-ratings';
+import MovieGridItem from './movieGridItem';
 import { API } from "../constants";
 
 
 class MovieGrid extends Component {
-	itemsPerPage = 18;
+	itemsPerPage = 15;
 
 	constructor(props) {
 		super(props);
@@ -26,13 +27,16 @@ class MovieGrid extends Component {
 
 	getMovies() {
 		let curr = this.state.currentPage;
-		console.log(this.itemsPerPage);
+		let movies_ = this.state.movies;
 		// We prefetch the next page; every query is two pages of items
 		axios
 			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
 			.then(response => {
+				response.data.map(movie_ =>{
+					movies_.push(movie_);
+				});
 				this.setState({
-					movies: response.data
+					movies: movies_
 				})
 			})
 			.catch(error => {
@@ -100,31 +104,7 @@ class MovieGrid extends Component {
 					</div>
 					<div className="grid-container">
 						{this.state.movies.slice(startIdx, startIdx + this.itemsPerPage).map(currentMovie => (
-							<div id={"TN_" + currentMovie.rssa_idc} key={"TN_" + currentMovie.rssa_id}
-								className="movieCardContainer grid-item" style={{ position: "relative" }}>
-								<div className="container"
-									style={{
-										backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
-										backgroundSize: "100% auto"
-									}}>
-									<div className="overlay">
-										<div className="star-div">
-											<StarRatings
-												rating={currentMovie.rating}
-												starRatedColor="rgb(252,229,65)"
-												starHoverColor="rgb(252,229,65)"
-												starDimension="18px"
-												starSpacing="1px"
-												changeRating={this.changeRating}
-												numberOfStars={5}
-												name={currentMovie.movie_id} />
-										</div>
-									</div>
-								</div>
-								<div className="text" style={{ position: "absolute" }}>
-									{currentMovie.title + " (" + currentMovie.year + ")"}
-								</div>
-							</div>
+							<MovieGridItem key={"TN_" + currentMovie.rssa_id} movieItem={currentMovie} ratingCallback={this.changeRating} />							
 						))}
 					</div>
 
