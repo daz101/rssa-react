@@ -619,6 +619,11 @@ letter-spacing: 5px;
 	background-color: #f3ba6a;
 }
 
+.list-group-item-selected {
+	padding: 2.0em 1.75em;
+	background-color: #f3ba6a;
+}
+
 div.card {
 	background-color: #f3ba6a;
 }
