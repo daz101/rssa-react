@@ -2,7 +2,6 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import "react-step-progress-bar/styles.css";
 import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
@@ -21,6 +20,8 @@ class RecommendationPageOne extends Component {
             visited: [],
             setIsShown: false,
             activeMovie: null,
+            recDateTime: new Date(),
+            pageid: 5,
             ratings: this.props.location.state.ratings,
             userid: this.props.location.state.userid,
             updateSuccess: false
@@ -79,7 +80,7 @@ class RecommendationPageOne extends Component {
             userid: userid,
             starttime: recDateTime.toUTCString(),
             endtime: recEndTime.toUTCString(),
-            ratedLst: {ratings: ratedLst}
+            response: {ratings: ratedLst}
         })
         .then(response => {
             if (response.status === 200) {

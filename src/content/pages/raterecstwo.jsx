@@ -4,13 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import axios from "axios";
 import { API } from "../constants";
-import { Link } from "react-router-dom";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-// import Jumbotron from "react-bootstrap/Jumbotron";
 import MovieSidePanel from "../widgets/movieSidePanel";
 import ProgressBarComponent from "../widgets/progressBar";
 import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
+import { Redirect } from "react-router-dom";
 
 class RecommendationPageTwo extends Component {
     constructor(props) {
@@ -21,9 +20,15 @@ class RecommendationPageTwo extends Component {
             visited: [],
             setIsShown: false,
             activeMovie: null,
+            recDateTime: new Date(),
+            pageid: 6,
+            ratings: this.props.location.state.ratings,
+            userid: this.props.location.state.userid,
+            updateSuccess: false
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
+        this.updateSurvey = this.updateSurveyResponse.bind(this);
     }
 
     componentDidMount() {
@@ -39,28 +44,50 @@ class RecommendationPageTwo extends Component {
             userid: userid,
             ratings: ratings
         },
-            {
-                headers: {
-                    'Access-Control-Allow-Credentials': true,
-                    'Access-Control-Allow-Origin': '*'
-                }
+        {
+            headers: {
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then(response => {
+            if (response.status === 200) {
+                console.log(response.data);
+                this.setState({
+                    leftPanel: {
+                        condition: response.data['recommendations']['left']['label'],
+                        items: response.data['recommendations']['left']['items'],
+                    },
+                    rightPanel: {
+                        items: response.data['recommendations']['right']['items'],
+                        condition: response.data['recommendations']['right']['label']
+                    }
+                });
+            }
+        });
+    }
 
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                    this.setState({
-                        leftPanel: {
-                            condition: response.data['recommendations']['left']['label'],
-                            items: response.data['recommendations']['left']['items'],
-                        },
-                        rightPanel: {
-                            items: response.data['recommendations']['right']['items'],
-                            condition: response.data['recommendations']['right']['label']
-                        }
-                    });
-                }
-            });
+    updateSurveyResponse() {
+        let recDateTime = this.state.recDateTime;
+        let recEndTime = new Date();
+        let pageid = this.state.pageid;
+        let userid = this.state.userid;
+        let ratedLst = this.state.visited;
+
+        axios.put(API + 'add_survey_response', {
+            pageid: pageid,
+            userid: userid,
+            starttime: recDateTime.toUTCString(),
+            endtime: recEndTime.toUTCString(),
+            response: {ratings: ratedLst}
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this.setState({
+                    updateSuccess: true
+                });
+            }
+        })
     }
 
     handleHover(isShown, activeMovie) {
@@ -97,33 +124,36 @@ class RecommendationPageTwo extends Component {
     }
 
     render() {
+        let userid = this.state.userid;
+        let ratings = this.state.visited.concat(this.state.ratings);
+
+        if (this.state.updateSuccess){
+            return (
+                <Redirect to={{
+                    pathname: "/raterecommendations3",
+                    state: {
+                        userid: userid,
+                        ratings: ratings
+                    }
+                }} />
+            );
+        }
+
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
 
-        let userid = this.props.location.state.userid;
-        let ratings = this.state.visited;
-
-        console.log(userid);
 
         return (
             <div className="contentWrapper">
                 <div style={{margin: "0 3em"}}>
                 <ProgressBarComponent percentComplete={75} />
                 <br />
-                {/* <Jumbotron>
-                    <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
-                </Jumbotron> */}
                 <div className="jumbotron">
                 <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
                 </div>
-
-                {/* 
-                <div style={{ minWidth: "300px", minHeight: "300px" }}>
-                <Spinner animation="border" role="status" style={{ margin: "3em 50%", width: "54px", height: "54px" }} />
-                </div> */}
 
                 <div className="row padding">
                     <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
@@ -153,17 +183,9 @@ class RecommendationPageTwo extends Component {
                         ratingHandler={this.handleRating} panelTitle={rightCondition} />
                 </div>
                 <div style={{ marginTop: "1em" }}>
-                    <Link to={{
-                            pathname: "/pickrecommendations",
-                            state: {
-                                userid: userid,
-                                ratings: ratings
-                            }
-                        }}>
-                        <Button variant="primary" style={{ float: 'right' }}>
-                            Next
-                        </Button>
-                    </Link>
+                    <Button variant="primary" style={{ float: 'right' }} onClick={this.updateSurvey}> 
+                        Next
+                    </Button>
                 </div>
                 </div>
             </div>
