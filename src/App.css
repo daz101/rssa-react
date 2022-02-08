@@ -1052,7 +1052,15 @@ div.box.sample:after {
 }
 
 .checkboxBtn:hover {
-	background-color: rgb(50, 185, 50);
+	background-color: #55AA55;
+}
+
+.checkboxBtn label + input[type="radio"]:checked{
+	background-color: #55AA55;
+}
+
+.checkboxBtnChecked {
+	background-color: #55AA55;
 }
 
 .checkboxLbl {

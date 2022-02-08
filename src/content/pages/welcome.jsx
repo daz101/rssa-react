@@ -1,6 +1,6 @@
 import "react-step-progress-bar/styles.css";
 import axios from 'axios';
-import { API } from '../constants';
+import { API } from '../utils/constants';
 import React, { Component } from 'react';
 import { Button, Card, Form, Modal } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";

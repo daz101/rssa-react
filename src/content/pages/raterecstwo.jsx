@@ -3,7 +3,7 @@ import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import axios from "axios";
-import { API } from "../constants";
+import { API } from "../utils/constants";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import MovieSidePanel from "../widgets/movieSidePanel";
@@ -144,7 +144,6 @@ class RecommendationPageTwo extends Component {
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
-
 
         return (
             <div className="contentWrapper">

@@ -1,13 +1,13 @@
 import 'intro.js/introjs.css';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Steps } from "intro.js-react";
 import MovieGrid from "../widgets/movieGrid";
 import ProgressBarComponent from "../widgets/progressBar";
-import {API} from "../constants";
+import {API} from "../utils/constants";
 import axios from "axios";
 
 class RatingPage extends Component {
@@ -137,18 +137,10 @@ class RatingPage extends Component {
                             <span><i>of {this.moviesRatingCount}</i></span>
                         </div>
                         <div style={{ marginTop: "18px" }}>
-                            {/* <Link to={{
-                                pathname: "/raterecommendations1",
-                                state: {
-                                    userid: userid,
-                                    ratings: ratings
-                                }
-                            }}> */}
-                                <Button className="next-button" disabled={disabled}
-                                    variant="primary" onClick={this.updateSurvey}>
-                                    Next
-                                </Button>
-                            {/* </Link> */}
+                            <Button className="next-button" disabled={disabled}
+                                variant="primary" onClick={this.updateSurvey}>
+                                Next
+                            </Button>
                         </div>
                     </div>
                 </div>

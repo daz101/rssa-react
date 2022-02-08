@@ -5,19 +5,15 @@ class MoviePickSidePanel extends Component {
 	onValueChange = (event) => {
 		let movieid = event.target.value;
 		this.props.selectionHandler(movieid);
-		// this.setState({selected: movieid});
 	}
 
 	onHover = (event, movie) => {
-		console.log(event.target);
-		// console.log(movie);
 		this.props.hoverHandler(true, movie);
 	}
 
 	render() {
 
 		let selected = this.props.selectedid;
-		console.log(selected);
 		const selectClassStr = 'list-group-item-selected';
 		const listClassStr = 'list-group-item';
 
@@ -30,13 +26,10 @@ class MoviePickSidePanel extends Component {
 				</div>
 					<ol className="list-group">
 						{this.props.movieList.map((movie) => (
-							console.log(selected + "<--->" + movie.movie_id),
 							<label htmlFor={'ID_'+movie.movie_id}>
 							<li key={movie.movie_id}
 								className={(selected === movie.movie_id ? selectClassStr : listClassStr) + " d-flex justify-content-between align-items-center"}
 								onMouseEnter={((event) => this.onHover(event, movie))}
-							// onMouseLeave={() => this.props.handler(false, null)}
-								sytle={{backgroundColor: selected === movie.movie_id ? "red" : ""}}
 							>
 								<b> {movie.title} </b>
 								<div>

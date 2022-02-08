@@ -4,10 +4,6 @@ import StarRatings from 'react-star-ratings';
 
 class MovieGridItem extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 
 		let currentMovie = this.props.movieItem;

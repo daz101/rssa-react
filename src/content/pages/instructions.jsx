@@ -2,10 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-step-progress-bar/styles.css";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import ProgressBarComponent from "../widgets/progressBar";
 import axios from 'axios';
-import { API } from '../constants';
+import { API } from '../utils/constants';
 
 
 class InstructionPage extends Component {

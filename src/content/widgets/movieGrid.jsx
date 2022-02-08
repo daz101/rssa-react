@@ -2,9 +2,8 @@ import axios from "axios";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import StarRatings from 'react-star-ratings';
 import MovieGridItem from './movieGridItem';
-import { API } from "../constants";
+import { API } from "../utils/constants";
 
 
 class MovieGrid extends Component {
@@ -32,7 +31,7 @@ class MovieGrid extends Component {
 		axios
 			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
 			.then(response => {
-				response.data.map(movie_ =>{
+				response.data.map(movie_ => {
 					movies_.push(movie_);
 				});
 				this.setState({

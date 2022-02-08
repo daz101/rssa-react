@@ -7,7 +7,7 @@ import 'react-star-rating/dist/css/react-star-rating.min.css';
 import "react-step-progress-bar/styles.css";
 import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 import '../../App.css';
-import { API } from "../constants";
+import { API } from "../utils/constants";
 import MoviePickSidePanel from "../widgets/moviePickSidePanel";
 import ProgressBarComponent from "../widgets/progressBar";
 
@@ -104,7 +104,6 @@ class RecommendationPageThree extends Component {
     render() {
         let userid = this.state.userid;
         let selectedid = this.state.selectedid;
-        // let ratings = this.state.visited.concat(this.state.ratings);
 
         if (this.state.updateSuccess) {
             return (
@@ -123,7 +122,6 @@ class RecommendationPageThree extends Component {
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
-
 
         return (
             <div className="contentWrapper">

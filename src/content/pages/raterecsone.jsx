@@ -6,7 +6,7 @@ import 'react-star-rating/dist/css/react-star-rating.min.css';
 import "react-step-progress-bar/styles.css";
 import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 import '../../App.css';
-import { API } from "../constants";
+import { API } from "../utils/constants";
 import MovieSidePanel from "../widgets/movieSidePanel";
 import ProgressBarComponent from "../widgets/progressBar";
 import { Redirect } from "react-router-dom";
@@ -146,7 +146,6 @@ class RecommendationPageOne extends Component {
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
 
-
         return (
             <div className="contentWrapper">
                 <div style={{margin: "0 3em"}}>
@@ -186,17 +185,9 @@ class RecommendationPageOne extends Component {
                         ratingHandler={this.handleRating} panelTitle={rightCondition} />
                 </div>
                 <div style={{ marginTop: "1em" }}>
-                    {/* <Link to={{
-                            pathname: "/raterecommendations2",
-                            state: {
-                                userid: userid,
-                                ratings: ratings
-                            }
-                        }}> */}
-                        <Button variant="primary" style={{ float: 'right' }} onClick={this.updateSurvey}>
-                            Next
-                        </Button>
-                    {/* </Link> */}
+                    <Button variant="primary" style={{ float: 'right' }} onClick={this.updateSurvey}>
+                        Next
+                    </Button>
                 </div>
                 </div>
             </div>
