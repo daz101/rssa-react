@@ -2,7 +2,6 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-// import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import "react-step-progress-bar/styles.css";
@@ -11,6 +10,7 @@ import '../../App.css';
 import { API } from "../constants";
 import MovieSidePanel from "../widgets/movieSidePanel";
 import ProgressBarComponent from "../widgets/progressBar";
+import { Redirect } from "react-router-dom";
 
 class RecommendationPageOne extends Component {
     constructor(props) {
@@ -21,9 +21,13 @@ class RecommendationPageOne extends Component {
             visited: [],
             setIsShown: false,
             activeMovie: null,
+            ratings: this.props.location.state.ratings,
+            userid: this.props.location.state.userid,
+            updateSuccess: false
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
+        this.updateSurvey = this.updateSurveyResponse.bind(this);
     }
 
     componentDidMount() {
@@ -31,8 +35,8 @@ class RecommendationPageOne extends Component {
     }
 
     getRecommendations() {
-        let userid = this.props.location.state.userid;
-        let ratings = this.props.location.state.ratings;
+        let userid = this.state.userid;
+        let ratings = this.state.ratings;
         console.log('getting recs');
 
         axios.post(API + 'recommendations', {
@@ -61,6 +65,29 @@ class RecommendationPageOne extends Component {
                     });
                 }
             });
+    }
+
+    updateSurveyResponse() {
+        let recDateTime = this.state.recDateTime;
+        let recEndTime = new Date();
+        let pageid = this.state.pageid;
+        let userid = this.state.userid;
+        let ratedLst = this.state.visited;
+
+        axios.put(API + 'add_survey_response', {
+            pageid: pageid,
+            userid: userid,
+            starttime: recDateTime.toUTCString(),
+            endtime: recEndTime.toUTCString(),
+            ratedLst: {ratings: ratedLst}
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this.setState({
+                    updateSuccess: true
+                });
+            }
+        })
     }
 
     handleHover(isShown, activeMovie) {
@@ -97,35 +124,38 @@ class RecommendationPageOne extends Component {
     }
 
     render() {
+        let userid = this.state.userid;
+        let ratings = this.state.visited.concat(this.state.ratings);
+
+        if (this.state.updateSuccess){
+            return (
+                <Redirect to={{
+                    pathname: "/raterecommendations2",
+                    state: {
+                        userid: userid,
+                        ratings: ratings
+                    }
+                }} />
+            );
+        }
+
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
 
-        let userid = this.props.location.state.userid;
-        let ratings = this.state.visited;
-
-        console.log(userid);
 
         return (
             <div className="contentWrapper">
                 <div style={{margin: "0 3em"}}>
                 <ProgressBarComponent percentComplete={75} />
                 <br />
-                {/* <Jumbotron>
-                    <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
-                </Jumbotron> */}
                 <div className="jumbotron">
                     <p>
                         Please rate the following movies.
                     </p>
                 </div>
-
-                {/* 
-                <div style={{ minWidth: "300px", minHeight: "300px" }}>
-                <Spinner animation="border" role="status" style={{ margin: "3em 50%", width: "54px", height: "54px" }} />
-                </div> */}
 
                 <div className="row padding">
                     <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
@@ -155,17 +185,17 @@ class RecommendationPageOne extends Component {
                         ratingHandler={this.handleRating} panelTitle={rightCondition} />
                 </div>
                 <div style={{ marginTop: "1em" }}>
-                    <Link to={{
+                    {/* <Link to={{
                             pathname: "/raterecommendations2",
                             state: {
                                 userid: userid,
                                 ratings: ratings
                             }
-                        }}>
-                        <Button variant="primary" style={{ float: 'right' }}>
+                        }}> */}
+                        <Button variant="primary" style={{ float: 'right' }} onClick={this.updateSurvey}>
                             Next
                         </Button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
                 </div>
             </div>
