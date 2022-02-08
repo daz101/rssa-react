@@ -131,6 +131,7 @@ class RecommendationPageThree extends Component {
 
         return (
             <div className="contentWrapper">
+                <div style={{margin: "0 3em"}}>
                 <ProgressBarComponent percentComplete={75} />
                 <br/>
                 {/* <Jumbotron>
@@ -143,7 +144,7 @@ class RecommendationPageThree extends Component {
                     <MovieSidePanel movieList={this.state.movies.slice(0, 10)} handler={this.handleHover}
                                     panelTitle={"Movies You May Like"}/>
                     {this.state.setIsShown && (this.state.activeMovie!= null) ? (
-                        <div className="col-sm-4">
+                        <div className="col-sm-4" style={{maxWidth: "480px"}}>
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333', width:"100%",
                                 height:"100%"}}>
                                 <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
@@ -169,6 +170,7 @@ class RecommendationPageThree extends Component {
                             Next
                         </Button>
                     </Link>
+                </div>
                 </div>
             </div>
         );

@@ -78,6 +78,7 @@ class WelcomePage extends Component {
 
 		return (
 			<div className="contentWrapper">
+				<div style={{margin: "0 3em"}}>
 				<ProgressBarComponent percentComplete={5} />
 				<div className="jumbotron">
 					<h1 className="header">Welcome</h1>
@@ -170,6 +171,7 @@ class WelcomePage extends Component {
 						</Button>
 					</Modal.Footer>
 				</Modal>
+				</div>
 			</div>
 		);
 	}

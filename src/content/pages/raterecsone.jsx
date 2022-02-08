@@ -110,6 +110,7 @@ class RecommendationPageOne extends Component {
 
         return (
             <div className="contentWrapper">
+                <div style={{margin: "0 3em"}}>
                 <ProgressBarComponent percentComplete={75} />
                 <br />
                 {/* <Jumbotron>
@@ -130,7 +131,7 @@ class RecommendationPageOne extends Component {
                     <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={leftCondition} />
                     {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                        <div className="col-sm-4 no-gutter">
+                        <div className="col-sm-4 no-gutter" style={{maxWidth: '480px'}}>
                             <Card inverse style={{
                                 backgroundColor: '#333', borderColor: '#333', maxHeight: '810px'
                             }}>
@@ -155,7 +156,7 @@ class RecommendationPageOne extends Component {
                 </div>
                 <div style={{ marginTop: "1em" }}>
                     <Link to={{
-                            pathname: "/movieInfo",
+                            pathname: "/raterecommendations2",
                             state: {
                                 userid: userid,
                                 ratings: ratings
@@ -165,6 +166,7 @@ class RecommendationPageOne extends Component {
                             Next
                         </Button>
                     </Link>
+                </div>
                 </div>
             </div>
         );

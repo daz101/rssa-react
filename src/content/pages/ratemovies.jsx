@@ -62,7 +62,7 @@ class RatingPage extends Component {
 
         return (
             <div className="contentWrapper">
-                <div style={{margin: "0 3em"}}>
+                <div style={{ margin: "0 3em" }}>
                     <br />
                     <Steps
                         enabled={stepsEnabled}
@@ -82,12 +82,8 @@ class RatingPage extends Component {
                     <div className="jumbotron">
                         <p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
                     </div>
-                    {/* <div className="row padding"> */}
-                        {/* <div className="col-sm movieGrid"> */}
-                            <MovieGrid handler={this.rateMoviesHandler} />
-                        {/* </div> */}
-                    {/* </div> */}
-                    <div id="footer-container" style={{ display: "flex"}}>
+                    <MovieGrid handler={this.rateMoviesHandler} />
+                    <div id="footer-container" style={{ display: "flex" }}>
                         <div className="rankHolder">
                             <span> Ranked Movies: </span>
                             <span><i>{this.state.count}</i></span>
@@ -95,7 +91,7 @@ class RatingPage extends Component {
                         </div>
                         <div style={{ marginTop: "18px" }}>
                             <Link to={{
-                                pathname: "/movies",
+                                pathname: "/raterecommendations1",
                                 state: {
                                     userid: userid,
                                     ratings: ratings
