@@ -25,41 +25,48 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route exact path="/" component={WelcomePage}/>
-                        <Route path="/instructions" render={() => (
+                        <Route path="/instructions" component={InstructionPage} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <InstructionPage title="RSSA Survey Instructions" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/ratemovies" render={() => (
+                        )}/>*/}
+                        <Route path="/ratemovies" component={RatingPage} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <RatingPage title="RSSA Rate Movie" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/raterecommendations1" render={() => (
+                        )}/>*/}
+                        <Route path="/raterecommendations1" component={RecommendationPageOne} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageOne title="RSSA Recommendations" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/raterecommendations2" render={() => (
+                        )}/>*/}
+                        <Route path="/raterecommendations2" component={RecommendationPageTwo} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageTwo title="RSSA Recommendations" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/raterecommendations3" render={() => (
+                        )}/>*/}
+                        <Route path="/raterecommendations3" component={RecommendationPageThree} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageThree title="RSSA Recommendations" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/survey" render={() => (
+                        )}/>*/}
+                        <Route path="/survey" component={SurveyPage} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <SurveyPage title="RSSA Survey Questionnaire" />
                             </ErrorBoundary>
-                        )}/>
-                        <Route path="/exit" render={() => (
+                        )}/>*/}
+                        <Route path="/exit" component={ExitPage} />
+                        {/*render={() => (
                             <ErrorBoundary>
                                 <ExitPage title="RSSA" />
                             </ErrorBoundary>
-                        )}/>
+                        )}/>*/}
                     </Switch>
 
                 </Router>
@@ -67,5 +74,5 @@ class App extends Component {
         );
     }
 }
- 
+
 export default App;
