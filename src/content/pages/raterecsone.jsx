@@ -182,20 +182,19 @@ class RecommendationPageOne extends Component {
                         </p>
                     </div>
 
-                    <div className="row">
+                    <div className="row g-0">
                         <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
                             ratingHandler={this.handleRating} panelTitle={leftCondition} />
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                            <div className="col-sm-4 no-gutter" style={{maxWidth: '480px'}}>
+                            <div className="col-sm-4 gx-sm-4" style={{maxWidth: '480px'}}>
                                 <Card bg="dark" text="white" style={{
-                                    backgroundColor: '#333', borderColor: '#333', maxHeight: '810px'
-                                }}>
-                                    <Card.Header style={{ height: '594px', alignSelf: 'center' }}>
-                                        <Card.Img src={this.state.activeMovie.poster} alt="Card image cap"
-                                            style={{ maxWidth: '100%', maxHeight: '100%', width: 'initial' }} />
-                                    </Card.Header>
-                                    <Card.Body style={{ height: '216px' }}>
-                                        <Card.Title style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
+                                    backgroundColor: '#333', borderColor: '#333' }}>
+                                    {/* <Card.Header style={{ height: '594px', alignSelf: 'center' }}> */}
+                                    {/* </Card.Header> */}
+                                    <Card.Body style={{ height: '648px' }}>
+                                        <Card.Img variant="top" className="d-flex" src={this.state.activeMovie.poster} alt={"Poster of the movie " + 
+                                            this.state.activeMovie.title} style={{maxHeight: "72%", width: "auto", margin: "auto"}} />
+                                        <Card.Title style={{marginTop: "0.5rem"}}>
                                             {this.state.activeMovie.title}
                                         </Card.Title>
                                         <Card.Text>
@@ -218,7 +217,7 @@ class RecommendationPageOne extends Component {
                 </div> */}
                 </>
             ) :
-             (
+            (
                 <>
                     <LoadingAnimation></LoadingAnimation>
                 </>

@@ -594,7 +594,8 @@ body {
 }
 
 .list-group-item {
-	padding: 2.0em 1.75em;
+	/* padding: 1.44em 1.44em; */
+	height: 81px;
 }
 
 /*background color change on hover for movie item */
@@ -632,12 +633,12 @@ div.card {
 }
 	
 /*List Group*/
-.text-container {
+/* .text-container {
 	float:left;
 	width:60%;
-}
+} */
 
-.rating {
+/* .rating {
     float:left;
 	align-content: center;
 	opacity:1;
@@ -691,7 +692,7 @@ div.card {
     position:relative;
     top:2px;
     left:2px;
-}
+} */
 
 .choice-button {
 	background-color: #ccc;
