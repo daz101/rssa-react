@@ -15,12 +15,14 @@ class MovieGridItem extends Component {
 
 		return (
 			<div id={"TN_" + currentMovie.rssa_id}
-				className="movieCardContainer grid-item" style={{ position: "relative" }}>
-				<div className={"container " + containerClass}
+				className={"grid-item " + containerClass} style={{
+					backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
+				}}>
+				{/* <div className={"container " + containerClass}
 					style={{
 						backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
-						backgroundSize: "100% auto"
-					}}>
+						backgroundSize: "contain"
+					}}> */}
 					<div className="overlay">
 						<div className={starDivClass}>
 							<StarRatings
@@ -34,8 +36,8 @@ class MovieGridItem extends Component {
 								name={currentMovie.movie_id} />
 						</div>
 					</div>
-				</div>
-				<div className="text" style={{ position: "absolute" }}>
+				{/* </div> */}
+				<div className="grid-item-label" style={{ position: "absolute" }}>
 					{currentMovie.title + " (" + currentMovie.year + ")"}
 				</div>
 			</div>

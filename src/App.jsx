@@ -10,18 +10,47 @@ import RecommendationPageTwo from './content/pages/raterecstwo';
 import RecommendationPageThree from './content/pages/pickrecs';
 import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
+import ProgressBarComponent from "./content/widgets/progressBar";
+import { Navbar } from 'react-bootstrap';
 
 class App extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            loaderActive: false
+        };
+        this.loaderToggler = this.toggleLoader.bind(this);
+    }
+
+    toggleLoader(toggle){
+        this.setState({
+            loaderActive: toggle
+        });
+    }
+
     render() {
+        let loaderActive = this.state.loaderActive;
+        console.log(loaderActive);
+        let progBarVisibility = loaderActive ? "pb_invisible" : "pb_visible";
         return (
-            <div>
-                <div className="App">
-                    <nav className="navbar navbar-light bg-light" 
+            <div className="App">
+                {/* <div className="App"> */}
+                    {/* <nav className="navbar navbar-light bg-light" 
                         style={{ paddingLeft: "1.0em", paddingRight: "1.0em"}}>
                         <span className="navbar-brand mb-0 h1">Movie Recommender Study</span>
-                    </nav>
-                </div>
+                    </nav> */}
+                    <Navbar bg="light">
+                        <Navbar.Brand style={{marginLeft: "1em", fontWeight: "450"}}>Movie Recommender Study</Navbar.Brand>
+                    </Navbar>
+                {/* </div> */}
+                <div className="contentWrapper">
+                
+                    <div style={{margin: "0 3em"}}>
+                        <div className={progBarVisibility}>
+                    <ProgressBarComponent className={progBarVisibility} percentComplete={5} />
+                    </div>   
+                 
                 <Router>
                     <Switch>
                         <Route exact path="/" component={WelcomePage}/>
@@ -37,7 +66,9 @@ class App extends Component {
                                 <RatingPage title="RSSA Rate Movie" />
                             </ErrorBoundary>
                         )}/>*/}
-                        <Route path="/raterecommendations1" component={RecommendationPageOne} />
+                        <Route path="/raterecommendations1" render={(props) => <RecommendationPageOne {...props} toggleLoader={this.loaderToggler} />} />
+                        {/* toggleLoader={this.loaderToggler} 
+                            component={RecommendationPageOne} /> */}
                         {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageOne title="RSSA Recommendations" />
@@ -70,6 +101,8 @@ class App extends Component {
                     </Switch>
 
                 </Router>
+                </div>
+                </div>
             </div>
         );
     }

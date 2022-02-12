@@ -2,7 +2,7 @@ import "react-step-progress-bar/styles.css";
 import axios from 'axios';
 import { API } from '../utils/constants';
 import React, { Component } from 'react';
-import { Button, Card, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Card, Modal } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import ProgressBarComponent from "../widgets/progressBar";
 
@@ -77,9 +77,7 @@ class WelcomePage extends Component {
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{margin: "0 3em"}}>
-				<ProgressBarComponent percentComplete={5} />
+				<>
 				<div className="jumbotron">
 					<h1 className="header">Welcome</h1>
 					<p>Welcome to the study on movie recommendation.</p>
@@ -171,8 +169,9 @@ class WelcomePage extends Component {
 						</Button>
 					</Modal.Footer>
 				</Modal>
-				</div>
-			</div>
+				</>
+			// 	</div>
+			// </div>
 		);
 	}
 }

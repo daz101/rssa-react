@@ -7,6 +7,8 @@ import { qBank, likertVals, API } from '../utils/constants';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
+import ReactHtmlParser from 'react-html-parser';
+
 
 class SurveyPage extends Component {
 
@@ -42,11 +44,17 @@ class SurveyPage extends Component {
 
 
 		axios.put(API + 'add_survey_response', {
-			pageid: pageid,
-			userid: userid,
 			starttime: surveyDateTime.toUTCString(),
 			endtime: surveyEndTime.toUTCString(),
+			pageid: pageid,
+			userid: userid,
 			response: { responses: responses }
+		},
+		{
+			headers: {
+				'Access-Control-Allow-Credentials': true,
+				'Access-Control-Allow-Origin': '*'
+			}
 		})
 			.then(response => {
 				if (response.status === 200) {
@@ -103,25 +111,6 @@ class SurveyPage extends Component {
 		});
 	}
 
-	_prev = () => {
-		let currentStep = this.state.currentStep;
-		currentStep = currentStep <= 1 ? 1 : currentStep - 1;
-		this.setState({ currentStep: currentStep, disabled: true });
-	}
-
-	previousButton() {
-		const currentStep = this.state.currentStep;
-		if (currentStep !== 1) {
-			return (
-				<Button
-					type="secondary" style={{ float: "right" }} onClick={this._prev}>
-					Previous
-				</Button>
-			);
-		}
-		return null;
-	}
-
 	nextButton() {
 		const currentStep = this.state.currentStep;
 		if (currentStep < 6) {
@@ -141,20 +130,6 @@ class SurveyPage extends Component {
 		}
 	}
 
-	submitButton() {
-		const currentStep = this.state.currentStep;
-		if (currentStep === 6) {
-			return (
-				<button disabled={this.state.disabled}
-					className="btn btn-primary float-right"
-					size="lg" type="submit">
-					Submit
-				</button>
-			);
-		}
-		return null;
-	}
-
 	getQuestions(idx) {
 		return qBank[idx];
 	};
@@ -164,6 +139,7 @@ class SurveyPage extends Component {
 		let currentStep = this.state.currentStep;
 		let userid = this.state.userid;
 		let done = this.state.done;
+		let qSet = this.getQuestions(currentStep);
 
 		if (done) {
 			return (
@@ -178,22 +154,29 @@ class SurveyPage extends Component {
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{ margin: "0 3em" }}>
-					<ProgressBarComponent percentComplete={90} />
+			// <div className="contentWrapper">
+			// 	<div style={{ margin: "0 3em" }}>
+			// 		<ProgressBarComponent percentComplete={90} />
+			<>
+			                    <div className="jumbotron">
+						{/* <h1 className="header">Post-task Survey</h1> */}
+						<h4>Scenario {currentStep} out of {maxPanes}:</h4>
+					{/* <p>{ReactHtmlParser(qInstruct)}</p> */}
+                        <p>{ReactHtmlParser(qSet.instruction)}</p>
+                    </div>
 					<div className="survey-page">
-						<h2>Post-task survey</h2>
 						<SurveyPane
 							maxPanes={maxPanes}
 							key={currentStep}
 							currentStep={currentStep}
 							handleChange={this.handleChange}
 							stepFlag={currentStep}
-							questions={this.getQuestions(currentStep)} />;
+							questions={qSet} />;
 						{this.nextButton()}
 					</div>
-				</div>
-			</div>
+				{/* </div>
+			</div> */}
+			</>
 		);
 	}
 }

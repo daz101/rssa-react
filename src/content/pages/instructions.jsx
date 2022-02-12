@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-step-progress-bar/styles.css";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -40,19 +40,19 @@ class InstructionPage extends Component {
 			endtime: instructionEndTime.toUTCString(),
 			response: {}
 		},
-			{
-				headers: {
-					'Access-Control-Allow-Credentials': true,
-					'Access-Control-Allow-Origin': '*'
-				}
-			})
-			.then(response => {
-				if (response.status === 200) {
-					this.setState({
-						updateSuccess: true
-					});
-				}
-			})
+		{
+			headers: {
+				'Access-Control-Allow-Credentials': true,
+				'Access-Control-Allow-Origin': '*'
+			}
+		})
+		.then(response => {
+			if (response.status === 200) {
+				this.setState({
+					updateSuccess: true
+				});
+			}
+		});
 	}
 
 	render() {
@@ -70,10 +70,15 @@ class InstructionPage extends Component {
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{ margin: "0 3em" }}>
-					<ProgressBarComponent percentComplete={30} />
-					<br />
+			// <div className="contentWrapper">
+			// 	<div style={{ margin: "0 3em" }}>
+			// 		<ProgressBarComponent percentComplete={30} />
+			// 		<br />
+			<>
+							<div className="jumbotron">
+					<h1 className="header">Overview</h1>
+					<p>The study consists of three steps.</p>
+				</div>
 					<div className="instructions-page">
 						<div className="row">
 							<div className="col-sm">
@@ -120,8 +125,9 @@ class InstructionPage extends Component {
 							Next
 						</Button>
 					</div>
-				</div>
-			</div>
+					</>
+			// 	</div>
+			// </div>
 		);
 	}
 }

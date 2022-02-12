@@ -1,5 +1,6 @@
 import StarRatings from 'react-star-ratings';
 import React, { Component } from "react";
+import {ListGroup} from "react-bootstrap";
 
 class MovieSidePanel extends Component {
 
@@ -12,32 +13,31 @@ class MovieSidePanel extends Component {
 		return (
 			<div className="col-sm-4">
 				<div style={{ minHeight: "102px", maxHeight: "102px", textAlign: "center", 
-					padding: "1.8em", fontSize: "1.2em", borderRadius: "3px", backgroundColor: "#e9ecef"
+					padding: "1.8em", fontSize: "1.2em", borderRadius: "0.3rem 0.3rem 0 0", backgroundColor: "#e9ecef"
 				}}>
 					<strong>{this.props.panelTitle}</strong>
 				</div>
-					<ol className="list-group">
+					<ListGroup as="ul">
 						{this.props.movieList.map((movie) => (
-							<li key={movie.movie_id}
-								className="list-group-item d-flex justify-content-between align-items-center"
+							<ListGroup.Item as="li" key={movie.movie_id}
+								className="d-flex justify-content-between align-items-start"
 								onMouseEnter={() => this.props.hoverHandler(true, movie)}
-							// onMouseLeave={() => this.props.handler(false, null)}
 							>
-								<b> {movie.title} </b>
+								<p> {movie.title} </p>
 								<div className="rating">
 									<StarRatings
 										starRatedColor="rgb(252,229,65)"
 										rating={movie.rating}
 										starHoverColor="rgb(252,229,65)"
-										starDimension="18px"
+										starDimension="22px"
 										starSpacing="1px"
 										changeRating={this.changeRating}
 										numberOfStars={5}
 										name={movie.movie_id} />
 								</div>
-							</li>
+							</ListGroup.Item>
 						))}
-					</ol>
+					</ListGroup>
 			</div>
 		);
 	}

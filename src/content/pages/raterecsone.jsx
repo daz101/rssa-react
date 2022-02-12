@@ -1,20 +1,26 @@
+import '../../App.css';
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
+// import { Button } from 'reactstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-star-rating/dist/css/react-star-rating.min.css';
 import "react-step-progress-bar/styles.css";
-import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
-import '../../App.css';
 import { API } from "../utils/constants";
 import MovieSidePanel from "../widgets/movieSidePanel";
 import ProgressBarComponent from "../widgets/progressBar";
 import { Redirect } from "react-router-dom";
+import {Container, Card, Button} from "react-bootstrap";
+import LoadingAnimation from '../widgets/loadingView';
+// import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 
 class RecommendationPageOne extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props);
+
         this.state = {
+            ready: false,
             leftPanel: {items: [], condition: ''},
             rightPanel: {items: [], condition: ''},
             visited: [],
@@ -32,13 +38,14 @@ class RecommendationPageOne extends Component {
     }
 
     componentDidMount() {
+        this.props.toggleLoader(true);
         this.getRecommendations();
+        this.startTimer();
     }
 
     getRecommendations() {
         let userid = this.state.userid;
         let ratings = this.state.ratings;
-        console.log('getting recs');
 
         axios.post(API + 'recommendations', {
             userid: userid,
@@ -53,7 +60,6 @@ class RecommendationPageOne extends Component {
             })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     this.setState({
                         leftPanel: {
                             condition: response.data['recommendations']['left']['label'],
@@ -66,6 +72,21 @@ class RecommendationPageOne extends Component {
                     });
                 }
             });
+    }
+
+    async startTimer () {
+        await this.wait(10000);
+        console.log('wait is over');
+        this.setState({
+            ready: true
+        });
+        this.props.toggleLoader(false);
+    }
+
+    wait(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time);
+        });
     }
 
     updateSurveyResponse() {
@@ -146,52 +167,62 @@ class RecommendationPageOne extends Component {
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
 
-        return (
-            <div className="contentWrapper">
-                <div style={{margin: "0 3em"}}>
-                <ProgressBarComponent percentComplete={75} />
-                <br />
-                <div className="jumbotron">
-                    <p>
-                        Please rate the following movies.
-                    </p>
-                </div>
 
-                <div className="row padding">
-                    <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} panelTitle={leftCondition} />
-                    {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                        <div className="col-sm-4 no-gutter" style={{maxWidth: '480px'}}>
-                            <Card inverse style={{
-                                backgroundColor: '#333', borderColor: '#333', maxHeight: '810px'
-                            }}>
-                                <CardHeader style={{ height: '594px', alignSelf: 'center' }}>
-                                    <CardImg top src={this.state.activeMovie.poster} alt="Card image cap"
-                                        style={{ maxWidth: '100%', maxHeight: '100%', width: 'initial' }} />
-                                </CardHeader>
-                                <CardBody style={{ height: '216px' }}>
-                                    <CardTitle style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
-                                        {this.state.activeMovie.title}
-                                    </CardTitle>
-                                    <CardText>
-                                        {this.state.activeMovie.description}
-                                    </CardText>
-                                </CardBody>
-                            </Card>
-                        </div>
-                    ) : (<div className="col-sm-4" />)
-                    }
-                    <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} panelTitle={rightCondition} />
-                </div>
-                <div style={{ marginTop: "1em" }}>
-                    <Button variant="primary" style={{ float: 'right' }} onClick={this.updateSurvey}>
-                        Next
-                    </Button>
-                </div>
-                </div>
-            </div>
-        );
+            return this.state.ready ? (
+                // <div className="contentWrapper">
+                //     <div style={{margin: "0 3em"}}>
+                //     <ProgressBarComponent percentComplete={75} />
+                //     <br />
+
+                <>
+                    <div className="jumbotron">
+                        <h1 className="header">Rating Recommendations</h1>
+                        <p>
+                            Please rate the following recommendations.
+                        </p>
+                    </div>
+
+                    <div className="row">
+                        <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
+                            ratingHandler={this.handleRating} panelTitle={leftCondition} />
+                        {this.state.setIsShown && (this.state.activeMovie != null) ? (
+                            <div className="col-sm-4 no-gutter" style={{maxWidth: '480px'}}>
+                                <Card bg="dark" text="white" style={{
+                                    backgroundColor: '#333', borderColor: '#333', maxHeight: '810px'
+                                }}>
+                                    <Card.Header style={{ height: '594px', alignSelf: 'center' }}>
+                                        <Card.Img src={this.state.activeMovie.poster} alt="Card image cap"
+                                            style={{ maxWidth: '100%', maxHeight: '100%', width: 'initial' }} />
+                                    </Card.Header>
+                                    <Card.Body style={{ height: '216px' }}>
+                                        <Card.Title style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
+                                            {this.state.activeMovie.title}
+                                        </Card.Title>
+                                        <Card.Text>
+                                            {this.state.activeMovie.description}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        ) : (<div className="col-sm-4" />)
+                        }
+                        <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
+                            ratingHandler={this.handleRating} panelTitle={rightCondition} />
+                    </div>
+                    <div style={{ marginTop: "1em", marginBottom: "1em" }}>
+                        <Button variant="primary" size="lg" style={{ float: 'right' }} onClick={this.updateSurvey}>
+                            Next
+                        </Button>
+                    </div>
+                    {/* </div>
+                </div> */}
+                </>
+            ) :
+             (
+                <>
+                    <LoadingAnimation></LoadingAnimation>
+                </>
+            );
     }
 }
 

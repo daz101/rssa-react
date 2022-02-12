@@ -146,10 +146,11 @@ class RecommendationPageTwo extends Component {
         let rightCondition = this.state.rightPanel.condition;
 
         return (
-            <div className="contentWrapper">
-                <div style={{margin: "0 3em"}}>
-                <ProgressBarComponent percentComplete={75} />
-                <br />
+            // <div className="contentWrapper">
+            //     <div style={{margin: "0 3em"}}>
+            //     <ProgressBarComponent percentComplete={75} />
+            //     <br />
+            <>
                 <div className="jumbotron">
                 <p style={{ textAlign: "center" }}>Please rate the following movies.</p>
                 </div>
@@ -186,8 +187,9 @@ class RecommendationPageTwo extends Component {
                         Next
                     </Button>
                 </div>
-                </div>
-            </div>
+                {/* </div>
+            </div> */}
+            </>
         );
     }
 }

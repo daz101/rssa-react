@@ -12,8 +12,6 @@ class SurveyPane extends Component {
 		return (
 			<div className="card bg-light mb-3">
 				<div className="card-body">
-					<h4>Scenario {this.props.currentStep} out of {paneCount}:</h4>
-					<p>{ReactHtmlParser(qInstruct)}</p>
 					{this.props.questions.qData.map((likert, i) => (
 						<div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} >
 							<div className="form-row">
