@@ -605,7 +605,7 @@ body {
 }
 
 .list-group-item-selected {
-	padding: 2.0em 1.75em;
+	/* padding: 2.0em 1.75em; */
 	background-color: #f3ba6a;
 }
 

@@ -5,7 +5,7 @@ import ErrorBoundary from './content/utils/ErrorBoundary';
 import WelcomePage from './content/pages/welcome';
 import InstructionPage from './content/pages/instructions';
 import RatingPage from './content/pages/ratemovies';
-import RecommendationPageOne from './content/pages/raterecsone';
+import RecommendationPage from './content/pages/raterecs';
 import RecommendationPageTwo from './content/pages/raterecstwo';
 import RecommendationPageThree from './content/pages/pickrecs';
 import SurveyPage from './content/pages/survey';
@@ -66,7 +66,8 @@ class App extends Component {
                                 <RatingPage title="RSSA Rate Movie" />
                             </ErrorBoundary>
                         )}/>*/}
-                        <Route path="/raterecommendations1" render={(props) => <RecommendationPageOne {...props} toggleLoader={this.loaderToggler} />} />
+                        <Route path="/raterecommendations1" render={(props) => <RecommendationPage {...props} 
+                            toggleLoader={this.loaderToggler} dest="/raterecommendations2" key={1}/>} />
                         {/* toggleLoader={this.loaderToggler} 
                             component={RecommendationPageOne} /> */}
                         {/*render={() => (
@@ -74,13 +75,16 @@ class App extends Component {
                                 <RecommendationPageOne title="RSSA Recommendations" />
                             </ErrorBoundary>
                         )}/>*/}
-                        <Route path="/raterecommendations2" component={RecommendationPageTwo} />
+                        <Route path="/raterecommendations2" render={(props) => <RecommendationPage {...props}
+                            toggleLoader={this.loaderToggler} dest="/raterecommendations3" key={2}/>} />
                         {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageTwo title="RSSA Recommendations" />
                             </ErrorBoundary>
                         )}/>*/}
-                        <Route path="/raterecommendations3" component={RecommendationPageThree} />
+                        <Route path="/raterecommendations3" render={(props) => <RecommendationPage {...props} 
+                            toggleLoader={this.loaderToggler} dest="/survey" pick={true} key={3}/>} />
+                        {/* <Route path="/raterecommendations3" component={RecommendationPageThree} /> */}
                         {/*render={() => (
                             <ErrorBoundary>
                                 <RecommendationPageThree title="RSSA Recommendations" />

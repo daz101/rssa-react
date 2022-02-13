@@ -14,7 +14,7 @@ import {Container, Card, Button} from "react-bootstrap";
 import LoadingAnimation from '../widgets/loadingView';
 // import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 
-class RecommendationPageOne extends Component {
+class RecommendationPage extends Component {
     constructor(props) {
         super(props);
         console.log(this.props);
@@ -30,10 +30,12 @@ class RecommendationPageOne extends Component {
             pageid: 5,
             ratings: this.props.location.state.ratings,
             userid: this.props.location.state.userid,
-            updateSuccess: false
+            updateSuccess: false,
+            selectedid: undefined
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
         this.updateSurvey = this.updateSurveyResponse.bind(this);
     }
 
@@ -76,7 +78,6 @@ class RecommendationPageOne extends Component {
 
     async startTimer () {
         await this.wait(10000);
-        console.log('wait is over');
         this.setState({
             ready: true
         });
@@ -145,14 +146,24 @@ class RecommendationPageOne extends Component {
 		});
     }
 
+    handleSelect(movieid) {
+        console.log('we are here');
+        this.setState({
+            selectedid: movieid
+        });
+    }
+
     render() {
+        let pick  = this.props.pick || false;
+        let selectedid = this.state.selectedid;
+
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
 
         if (this.state.updateSuccess){
             return (
                 <Redirect to={{
-                    pathname: "/raterecommendations2",
+                    pathname: this.props.dest,
                     state: {
                         userid: userid,
                         ratings: ratings
@@ -184,29 +195,33 @@ class RecommendationPageOne extends Component {
 
                     <div className="row g-0">
                         <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
-                            ratingHandler={this.handleRating} panelTitle={leftCondition} />
+                            ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick} 
+                            selectionHandler={this.handleSelect} selectedid={selectedid} />
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                            <div className="col-sm-4 gx-sm-4" style={{maxWidth: '480px'}}>
+                            <div className="col-sm-4 gx-sm-4">
                                 <Card bg="dark" text="white" style={{
                                     backgroundColor: '#333', borderColor: '#333' }}>
                                     {/* <Card.Header style={{ height: '594px', alignSelf: 'center' }}> */}
                                     {/* </Card.Header> */}
                                     <Card.Body style={{ height: '648px' }}>
-                                        <Card.Img variant="top" className="d-flex" src={this.state.activeMovie.poster} alt={"Poster of the movie " + 
-                                            this.state.activeMovie.title} style={{maxHeight: "72%", width: "auto", margin: "auto"}} />
+                                        <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail" src={this.state.activeMovie.poster} alt={"Poster of the movie " + 
+                                            this.state.activeMovie.title} style={{maxHeight: "63%", minHeight: "63%", width: "auto"}} />
                                         <Card.Title style={{marginTop: "0.5rem"}}>
                                             {this.state.activeMovie.title}
                                         </Card.Title>
+                                        <Container className="overflow-auto" style={{height: "30%"}}>
                                         <Card.Text>
                                             {this.state.activeMovie.description}
                                         </Card.Text>
+                                        </Container>
                                     </Card.Body>
                                 </Card>
                             </div>
-                        ) : (<div className="col-sm-4" />)
+                        ) : (<div className="col-sm-4 gx-sm-4"/>)
                         }
                         <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
-                            ratingHandler={this.handleRating} panelTitle={rightCondition} />
+                            ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick} 
+                            selectionHandler={this.handleSelect} selectedid={selectedid} />
                     </div>
                     <div style={{ marginTop: "1em", marginBottom: "1em" }}>
                         <Button variant="primary" size="lg" style={{ float: 'right' }} onClick={this.updateSurvey}>
@@ -225,4 +240,4 @@ class RecommendationPageOne extends Component {
     }
 }
 
-export default RecommendationPageOne;
+export default RecommendationPage;
