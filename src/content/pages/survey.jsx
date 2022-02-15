@@ -171,7 +171,7 @@ class SurveyPage extends Component {
 							currentStep={currentStep}
 							handleChange={this.handleChange}
 							stepFlag={currentStep}
-							questions={qSet} />;
+							questions={qSet} />
 						{this.nextButton()}
 					</div>
 				{/* </div>

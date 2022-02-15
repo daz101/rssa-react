@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { likertVals } from '../utils/constants';
 import ReactHtmlParser from 'react-html-parser';
+import { Container, Card, FormGroup, FormLabel, Col, Form } from 'react-bootstrap';
 
 class SurveyPane extends Component {
 
@@ -10,16 +11,24 @@ class SurveyPane extends Component {
 		let qInstruct = this.props.questions.instruction;
 		let paneCount = this.props.maxPanes;
 		return (
-			<div className="card bg-light mb-3">
-				<div className="card-body">
+			// <div className="card bg-light mb-3">
+			// <Container>
+				// {/* <div className="card-body"> */}
+				<>
+				<Card bg="light" className="mb-3 justify-content-center">
 					{this.props.questions.qData.map((likert, i) => (
-						<div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} >
-							<div className="form-row">
-								<label is="legend" className="font-weight-bold">
-									<strong>{ReactHtmlParser(likert.text)}</strong></label>
-								<div className="col">
+						// <div className="form-group survey-question" controlid={qType + "_" + i} key={qType + "_" + i} >
+						// controlId={qType + "_" + i} 
+						<FormGroup className="survey-question-block" key={qType + "_" + i} >
+							{/* <div className="form-row"> */}
+							{/* <Form */}
+								<div className="font-weight-bold surveyQuestion">
+									<p className="lead">{ReactHtmlParser(likert.text)}</p></div>
+								{/* <div className="col"> */}
+								{/* <Col> */}
+								<div className="checkboxGroup">
 									{likertVals.map((strVal, j) =>
-										<label htmlFor={qType + "_" + likert.qId + "_" + j}
+										<FormLabel htmlFor={qType + "_" + likert.qId + "_" + j}
 											key={qType + "_" + i + "_" + j} className="checkboxBtn">
 											<p className="checkboxLbl">{ReactHtmlParser(strVal)}</p>
 											<input className="radio-margin" type="radio"
@@ -30,14 +39,18 @@ class SurveyPane extends Component {
 													qNums
 												)}
 											/>
-										</label>
+										</FormLabel>
 									)}
-								</div>
-							</div>
-						</div>
+									</div>
+									{/* </Col> */}
+								{/* </div> */}
+							{/* </div> */}
+						{/* </div> */}
+						</FormGroup>
 					))}
-				</div>
-			</div>
+					</Card>
+					</>
+
 		);
 	}
 }

@@ -949,7 +949,7 @@ div.box.sample:after {
 	font-weight: bold;
 }
 
-.survey-question {
+.survey-question-block {
 	padding: 3px 9px 0 9px;
     border-top-width: 1px;
     border-top-style: dotted;
@@ -957,6 +957,28 @@ div.box.sample:after {
     border-left-width: 3px;
     border-left-color: darkgray;
     border-left-style: solid;
+	margin: 0 auto 9px auto;
+    border-right-width: 3px;
+    border-right-color: darkgray;
+    border-right-style: solid;
+    width: fit-content;
+}
+
+.survey-question-block:first-child {
+	border-top-style: solid;
+	border-top-width: 3px;
+	border-top-color: darkgray;
+}
+
+.survey-question-block:last-child {
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+	border-bottom-color: darkgray;
+	margin-bottom: 0;
+}
+
+.surveyQuestion {
+	margin: 9px 0 9px 18px;
 }
 
 .checkboxgroup {
@@ -1039,15 +1061,15 @@ div.box.sample:after {
     display: inline-grid;
     margin: 3px;
     padding: 3px;
-	background-color: silver;
-	margin: 3px 3px 9px 3px;
-	
+	background-color: #e9ecef;
+	margin: 3px 9px 9px 9px;
+	border-radius: 3px;
 }
 
 .checkboxBtn input[type="radio"] {
-    -ms-transform: scale(1.2); /* IE 9 */
-    -webkit-transform: scale(1.2); /* Chrome, Safari, Opera */
-    transform: scale(1.2);
+    -ms-transform: scale(1.4); /* IE 9 */
+    -webkit-transform: scale(1.4); /* Chrome, Safari, Opera */
+    transform: scale(1.4);
 }
 
 .checkboxBtn:hover {
@@ -1063,9 +1085,10 @@ div.box.sample:after {
 }
 
 .checkboxLbl {
-    height: 45px;
-    width: 90px;
+    height: 36px;
+    width: 108px;
     text-align: center;
+	margin-top: 18px;
 }
 
 /* Bootstrap Overrides and add-ons */
@@ -1115,4 +1138,10 @@ div.box.sample:after {
 .list-group-item:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+
+
+.checkboxGroup{
+	margin: 0 0 9px 18px;
 }
