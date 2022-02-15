@@ -1,28 +1,19 @@
-import '../../App.css';
 import axios from "axios";
 import React, { Component } from 'react';
-// import Button from 'react-bootstrap/Button';
-// import { Button } from 'reactstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-star-rating/dist/css/react-star-rating.min.css';
-import "react-step-progress-bar/styles.css";
 import { API } from "../utils/constants";
 import MovieSidePanel from "../widgets/movieSidePanel";
-import ProgressBarComponent from "../widgets/progressBar";
 import { Redirect } from "react-router-dom";
-import {Container, Card, Button} from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
 import LoadingAnimation from '../widgets/loadingView';
-// import { Card, CardBody, CardHeader, CardImg, CardText, CardTitle } from "reactstrap";
 
 class RecommendationPage extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
 
         this.state = {
             ready: false,
-            leftPanel: {items: [], condition: ''},
-            rightPanel: {items: [], condition: ''},
+            leftPanel: { items: [], condition: '' },
+            rightPanel: { items: [], condition: '' },
             visited: [],
             setIsShown: false,
             activeMovie: null,
@@ -76,7 +67,7 @@ class RecommendationPage extends Component {
             });
     }
 
-    async startTimer () {
+    async startTimer() {
         await this.wait(10000);
         this.setState({
             ready: true
@@ -102,15 +93,16 @@ class RecommendationPage extends Component {
             userid: userid,
             starttime: recDateTime.toUTCString(),
             endtime: recEndTime.toUTCString(),
-            response: {ratings: ratedLst}
+            response: { ratings: ratedLst }
         })
-        .then(response => {
-            if (response.status === 200) {
-                this.setState({
-                    updateSuccess: true
-                });
-            }
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({
+                        updateSuccess: true
+                    });
+                }
+                this.props.progressUpdater(10);
+            })
     }
 
     handleHover(isShown, activeMovie) {
@@ -123,44 +115,43 @@ class RecommendationPage extends Component {
     handleRating(panelid, newRating, movieid) {
         let panel = this.state[panelid];
         let movieLst = [...panel.items];
-		let vstdLst = [...this.state.visited];
-		let ratedItm = movieLst.map(movie => (
-			movie.movie_id === movieid ? {
-				...movie, rating: newRating
-			} : movie
-		));
-		let isNew = !vstdLst.some(item => item.item_id === movieid);
-		if (isNew) {
-			vstdLst.push({ "item_id": movieid, "rating": newRating });
-		} else {
-			vstdLst = vstdLst.map(movie => (
-				movie.item_id === movieid ? {
-					...movie, rating: newRating
-				} : movie
-			));
-		}
+        let vstdLst = [...this.state.visited];
+        let ratedItm = movieLst.map(movie => (
+            movie.movie_id === movieid ? {
+                ...movie, rating: newRating
+            } : movie
+        ));
+        let isNew = !vstdLst.some(item => item.item_id === movieid);
+        if (isNew) {
+            vstdLst.push({ "item_id": movieid, "rating": newRating });
+        } else {
+            vstdLst = vstdLst.map(movie => (
+                movie.item_id === movieid ? {
+                    ...movie, rating: newRating
+                } : movie
+            ));
+        }
         panel.items = ratedItm;
-		this.setState({
-			panelid: panel,
-			visited: vstdLst
-		});
+        this.setState({
+            panelid: panel,
+            visited: vstdLst
+        });
     }
 
     handleSelect(movieid) {
-        console.log('we are here');
         this.setState({
             selectedid: movieid
         });
     }
 
     render() {
-        let pick  = this.props.pick || false;
+        let pick = this.props.pick || false;
         let selectedid = this.state.selectedid;
 
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
 
-        if (this.state.updateSuccess){
+        if (this.state.updateSuccess) {
             return (
                 <Redirect to={{
                     pathname: this.props.dest,
@@ -179,62 +170,54 @@ class RecommendationPage extends Component {
         let rightCondition = this.state.rightPanel.condition;
 
 
-            return this.state.ready ? (
-                // <div className="contentWrapper">
-                //     <div style={{margin: "0 3em"}}>
-                //     <ProgressBarComponent percentComplete={75} />
-                //     <br />
+        return this.state.ready ? (
+            <>
+                <div className="jumbotron">
+                    <h1 className="header">{this.props.pageHeader}</h1>
+                    <p>{this.props.headerSubtitle}
+                    </p>
+                </div>
 
-                <>
-                    <div className="jumbotron">
-                        <h1 className="header">Rating Recommendations</h1>
-                        <p>
-                            Please rate the following recommendations.
-                        </p>
-                    </div>
-
-                    <div className="row g-0">
-                        <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
-                            ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick} 
-                            selectionHandler={this.handleSelect} selectedid={selectedid} />
-                        {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                            <div className="col-sm-4 gx-sm-4">
-                                <Card bg="dark" text="white" style={{
-                                    backgroundColor: '#333', borderColor: '#333' }}>
-                                    {/* <Card.Header style={{ height: '594px', alignSelf: 'center' }}> */}
-                                    {/* </Card.Header> */}
-                                    <Card.Body style={{ height: '648px' }}>
-                                        <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail" src={this.state.activeMovie.poster} alt={"Poster of the movie " + 
-                                            this.state.activeMovie.title} style={{maxHeight: "63%", minHeight: "63%", width: "auto"}} />
-                                        <Card.Title style={{marginTop: "0.5rem"}}>
-                                            {this.state.activeMovie.title}
-                                        </Card.Title>
-                                        <Container className="overflow-auto" style={{height: "30%"}}>
+                <div className="row g-0">
+                    <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
+                        selectionHandler={this.handleSelect} selectedid={selectedid} />
+                    {this.state.setIsShown && (this.state.activeMovie != null) ? (
+                        <div className="col-sm-4 gx-sm-4">
+                            <Card bg="dark" text="white" style={{
+                                backgroundColor: '#333', borderColor: '#333'
+                            }}>
+                                <Card.Body style={{ height: '648px' }}>
+                                    <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail" src={this.state.activeMovie.poster} alt={"Poster of the movie " +
+                                        this.state.activeMovie.title} style={{ maxHeight: "63%", minHeight: "63%", width: "auto" }} />
+                                    <Card.Title style={{ marginTop: "0.5rem" }}>
+                                        {this.state.activeMovie.title}
+                                    </Card.Title>
+                                    <Container className="overflow-auto" style={{ height: "30%" }}>
                                         <Card.Text>
                                             {this.state.activeMovie.description}
                                         </Card.Text>
-                                        </Container>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        ) : (<div className="col-sm-4 gx-sm-4"/>)
-                        }
-                        <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
-                            ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick} 
-                            selectionHandler={this.handleSelect} selectedid={selectedid} />
-                    </div>
-                    <div style={{ marginTop: "1em", marginBottom: "1em" }}>
-                        <Button variant="primary" size="lg" style={{ float: 'right' }} onClick={this.updateSurvey}>
-                            Next
-                        </Button>
-                    </div>
-                    {/* </div>
-                </div> */}
-                </>
-            ) :
+                                    </Container>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ) : (<div className="col-sm-4 gx-sm-4" />)
+                    }
+                    <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick}
+                        selectionHandler={this.handleSelect} selectedid={selectedid} />
+                </div>
+                <div className="jumbotron jumbotron-footer">
+                    <Button className="footer-btn" variant="primary" size="lg"
+                        onClick={this.updateSurvey}>
+                        Next
+                    </Button>
+                </div>
+            </>
+        ) :
             (
                 <>
-                    <LoadingAnimation></LoadingAnimation>
+                    <LoadingAnimation waitMsg={this.props.waitMsg}></LoadingAnimation>
                 </>
             );
     }

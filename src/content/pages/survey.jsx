@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import 'react-step-progress-bar/styles.css';
-import ProgressBarComponent from '../widgets/progressBar';
 import Button from 'react-bootstrap/Button';
 import SurveyPane from '../widgets/surveyPanes';
 import { qBank, likertVals, API } from '../utils/constants';
@@ -50,20 +48,22 @@ class SurveyPage extends Component {
 			userid: userid,
 			response: { responses: responses }
 		},
-		{
-			headers: {
-				'Access-Control-Allow-Credentials': true,
-				'Access-Control-Allow-Origin': '*'
-			}
-		})
+			{
+				headers: {
+					'Access-Control-Allow-Credentials': true,
+					'Access-Control-Allow-Origin': '*'
+				}
+			})
 			.then(response => {
 				if (response.status === 200) {
 					if (surveyPageCount === currentStep) {
 						this.setState({
 							done: true
 						});
+						this.props.progressUpdater(100);
 					} else {
 						this._next();
+						this.props.progressUpdater();
 					}
 				}
 			})
@@ -116,14 +116,16 @@ class SurveyPage extends Component {
 		if (currentStep < 6) {
 			return (
 				<Button disabled={this.state.disabled}
-					style={{ float: "right" }} type="primary" onClick={this.updateSurvey}>
+					className="footer-btn"
+					variant="primary" size="lg" onClick={this.updateSurvey}>
 					Next
 				</Button>
 			);
 		} else {
 			return (
 				<Button disabled={this.state.disabled}
-					style={{ float: "right" }} type="primary" onClick={this.updateSurvey}>
+					className="footer-btn"
+					variant="primary" size="lg" onClick={this.updateSurvey}>
 					Submit
 				</Button>
 			);
@@ -154,28 +156,23 @@ class SurveyPage extends Component {
 		}
 
 		return (
-			// <div className="contentWrapper">
-			// 	<div style={{ margin: "0 3em" }}>
-			// 		<ProgressBarComponent percentComplete={90} />
 			<>
-			                    <div className="jumbotron">
-						{/* <h1 className="header">Post-task Survey</h1> */}
-						<h4>Scenario {currentStep} out of {maxPanes}:</h4>
-					{/* <p>{ReactHtmlParser(qInstruct)}</p> */}
-                        <p>{ReactHtmlParser(qSet.instruction)}</p>
-                    </div>
-					<div className="survey-page">
-						<SurveyPane
-							maxPanes={maxPanes}
-							key={currentStep}
-							currentStep={currentStep}
-							handleChange={this.handleChange}
-							stepFlag={currentStep}
-							questions={qSet} />
+				<div className="jumbotron">
+					<h4>Scenario {currentStep} out of {maxPanes}:</h4>
+					<p>{ReactHtmlParser(qSet.instruction)}</p>
+				</div>
+				<div className="survey-page">
+					<SurveyPane
+						maxPanes={maxPanes}
+						key={currentStep}
+						currentStep={currentStep}
+						handleChange={this.handleChange}
+						stepFlag={currentStep}
+						questions={qSet} />
+					<div className="jumbotron jumbotron-footer">
 						{this.nextButton()}
 					</div>
-				{/* </div>
-			</div> */}
+				</div>
 			</>
 		);
 	}

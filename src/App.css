@@ -543,7 +543,7 @@ body {
 	font-family: "Calibri", Georgia, Serif, serif;
 	font-size: 1.6em;
 	text-align: center;
-	padding-top: 17px;
+	/* padding-top: 17px; */
 }
 
 .rankHolder span:nth-child(2) {
@@ -1094,7 +1094,7 @@ div.box.sample:after {
 /* Bootstrap Overrides and add-ons */
 @media (min-width: 576px){
 	.jumbotron {
-		padding: 2em 2rem !important;
+		padding: 1.5em 1.5rem !important;
 	}
 }
 
@@ -1144,4 +1144,14 @@ div.box.sample:after {
 
 .checkboxGroup{
 	margin: 0 0 9px 18px;
+}
+
+.jumbotron-footer {
+	float: right;
+	width: 100%;
+	margin-top: 0.5em;
+}
+
+.footer-btn {
+	float: right;
 }

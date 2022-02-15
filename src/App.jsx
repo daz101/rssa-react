@@ -1,13 +1,12 @@
 import './App.css';
+import "react-step-progress-bar/styles.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ErrorBoundary from './content/utils/ErrorBoundary';
 import WelcomePage from './content/pages/welcome';
 import InstructionPage from './content/pages/instructions';
 import RatingPage from './content/pages/ratemovies';
 import RecommendationPage from './content/pages/raterecs';
-import RecommendationPageTwo from './content/pages/raterecstwo';
-import RecommendationPageThree from './content/pages/pickrecs';
 import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
 import ProgressBarComponent from "./content/widgets/progressBar";
@@ -15,97 +14,77 @@ import { Navbar } from 'react-bootstrap';
 
 class App extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            loaderActive: false
+            loaderActive: false,
+            progress: 0
         };
         this.loaderToggler = this.toggleLoader.bind(this);
+        this.progressUpdater = this.updateProgress.bind(this);
     }
 
-    toggleLoader(toggle){
+    toggleLoader(toggle) {
         this.setState({
             loaderActive: toggle
         });
     }
 
+    updateProgress(stepsize = 5) {
+        let prog = this.state.progress + stepsize;
+        
+        this.setState({
+            progress: prog > 100 ? 100 : prog
+        });
+    }
+
     render() {
         let loaderActive = this.state.loaderActive;
-        console.log(loaderActive);
+        let prog = this.state.progress;
         let progBarVisibility = loaderActive ? "pb_invisible" : "pb_visible";
         return (
             <div className="App">
-                {/* <div className="App"> */}
-                    {/* <nav className="navbar navbar-light bg-light" 
-                        style={{ paddingLeft: "1.0em", paddingRight: "1.0em"}}>
-                        <span className="navbar-brand mb-0 h1">Movie Recommender Study</span>
-                    </nav> */}
-                    <Navbar bg="light">
-                        <Navbar.Brand style={{marginLeft: "1em", fontWeight: "450"}}>Movie Recommender Study</Navbar.Brand>
-                    </Navbar>
-                {/* </div> */}
+                <Navbar bg="light">
+                    <Navbar.Brand style={{ marginLeft: "1em", fontWeight: "450" }}>Movie Recommender Study</Navbar.Brand>
+                </Navbar>
                 <div className="contentWrapper">
-                
-                    <div style={{margin: "0 3em"}}>
-                        <div className={progBarVisibility}>
-                    <ProgressBarComponent className={progBarVisibility} percentComplete={5} />
-                    </div>   
-                 
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={WelcomePage}/>
-                        <Route path="/instructions" component={InstructionPage} />
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <InstructionPage title="RSSA Survey Instructions" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/ratemovies" component={RatingPage} />
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <RatingPage title="RSSA Rate Movie" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/raterecommendations1" render={(props) => <RecommendationPage {...props} 
-                            toggleLoader={this.loaderToggler} dest="/raterecommendations2" key={1}/>} />
-                        {/* toggleLoader={this.loaderToggler} 
-                            component={RecommendationPageOne} /> */}
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <RecommendationPageOne title="RSSA Recommendations" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/raterecommendations2" render={(props) => <RecommendationPage {...props}
-                            toggleLoader={this.loaderToggler} dest="/raterecommendations3" key={2}/>} />
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <RecommendationPageTwo title="RSSA Recommendations" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/raterecommendations3" render={(props) => <RecommendationPage {...props} 
-                            toggleLoader={this.loaderToggler} dest="/survey" pick={true} key={3}/>} />
-                        {/* <Route path="/raterecommendations3" component={RecommendationPageThree} /> */}
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <RecommendationPageThree title="RSSA Recommendations" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/survey" component={SurveyPage} />
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <SurveyPage title="RSSA Survey Questionnaire" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                        <Route path="/exit" component={ExitPage} />
-                        {/*render={() => (
-                            <ErrorBoundary>
-                                <ExitPage title="RSSA" />
-                            </ErrorBoundary>
-                        )}/>*/}
-                    </Switch>
 
-                </Router>
-                </div>
+                    <div style={{ margin: "0 3em" }}>
+                        <div className={progBarVisibility}>
+                            <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
+                        </div>
+                        <Router>
+                            <Switch>
+                                <Route exact path="/" render={(props) => <WelcomePage {...props}
+                                    progressUpdater={this.progressUpdater} dest="/instructions" />} />
+                                <Route path="/instructions" render={(props) => <InstructionPage {...props}
+                                    progressUpdater={this.progressUpdater} dest="/ratemovies" />} />
+                                <Route path="/ratemovies" render={(props) => <RatingPage {...props}
+                                    progressUpdater={this.progressUpdater} dest="/raterecommendation1" />} />
+                                <Route path="/raterecommendations1" render={(props) => <RecommendationPage {...props}
+                                    progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
+                                    waitMsg={"Please hang on while we find the recommendations for you."}
+                                    pageHeader={"Rating Recommendations: Step 1 of 2"}
+                                    headerSubtitle={"Please rate the following recommendations to help us fine tune recommendations for you."}
+                                    dest="/raterecommendations2" key={1} />} />
+                                <Route path="/raterecommendations2" render={(props) => <RecommendationPage {...props}
+                                    progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
+                                    waitMsg={"Please hang on while we fine tune your recommendations."}
+                                    pageHeader={"Rating Recommendations: Step 2 of 2"}
+                                    headerSubtitle={"Please rate the following recommendations to help us finalize your recommendations."}
+                                    dest="/raterecommendations3" key={2} />} />
+                                <Route path="/raterecommendations3" render={(props) => <RecommendationPage {...props}
+                                    progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
+                                    waitMsg={"Please hang on while we build your final recommendations."}
+                                    pageHeader={"Choosing A Recommendation"}
+                                    headerSubtitle={"Please pick one movie that you would watch right now if you could."}
+                                    dest="/survey" pick={true} key={3} />} />
+                                <Route path="/survey" render={(props) => <SurveyPage {...props}
+                                    progressUpdater={this.progressUpdater} dest="/exit" key={3} />} />
+                                <Route path="/exit" component={ExitPage} />
+                            </Switch>
+                        </Router>
+                    </div>
                 </div>
             </div>
         );
