@@ -1,8 +1,4 @@
-import "react-step-progress-bar/styles.css";
 import React, { Component } from 'react';
-import ProgressBarComponent from "../widgets/progressBar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import {card}
 import { Card } from "react-bootstrap";
 import axios from "axios";
 import { API } from "../utils/constants";
@@ -22,7 +18,6 @@ class ExitPage extends Component {
 	componentDidMount() {
 		this.getCompletionCode();
 	}
-
 
 	getCompletionCode() {
 		let userid = this.state.userid;
@@ -58,9 +53,6 @@ class ExitPage extends Component {
 		return (
 			<div className="contentWrapper">
 				<div style={{ margin: "0 3em" }}>
-
-					<ProgressBarComponent percentComplete={100} />
-					<br />
 					<div className="exit-page">
 						<Card bg="light">
 							<Card.Header>
@@ -89,7 +81,6 @@ class ExitPage extends Component {
 										the codes as soon as possible.
 									</p>
 								</Card.Body>
-								// </Card>
 							) : (
 								<Card.Body>
 									<p>You decided not to participate in the study. Maybe next time <span role="img" aria-label="Smile ">&#128512;</span>. </p>

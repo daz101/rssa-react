@@ -1,5 +1,6 @@
-import StarRatings from 'react-star-ratings';
 import React, { Component } from "react";
+import { ListGroup } from "react-bootstrap";
+import SidePanelItem from './movieSidePanelItem';
 
 class MovieSidePanel extends Component {
 
@@ -8,36 +9,30 @@ class MovieSidePanel extends Component {
 		this.props.ratingHandler(panelid, newRating, movieid);
 	}
 
+	onValueChange = (event) => {
+		let movieid = event.target.value;
+		this.props.selectionHandler(movieid);
+	}
+
 	render() {
+
 		return (
-			<div className="col-sm-4">
-				<div style={{ minHeight: "102px", maxHeight: "102px", textAlign: "center", 
-					padding: "1.8em", fontSize: "1.2em", borderRadius: "3px", backgroundColor: "#e9ecef"
+			<div className="col-sm-4 gy-sm-0">
+				<div className="d-flex align-items-center justify-content-center" style={{
+					height: "81px",
+					textAlign: "center", borderRadius: "0.3rem 0.3rem 0 0", backgroundColor: "#e9ecef"
 				}}>
-					<strong>{this.props.panelTitle}</strong>
+					<h5>{this.props.panelTitle}</h5>
 				</div>
-					<ol className="list-group">
-						{this.props.movieList.map((movie) => (
-							<li key={movie.movie_id}
-								className="list-group-item d-flex justify-content-between align-items-center"
-								onMouseEnter={() => this.props.hoverHandler(true, movie)}
-							// onMouseLeave={() => this.props.handler(false, null)}
-							>
-								<b> {movie.title} </b>
-								<div className="rating">
-									<StarRatings
-										starRatedColor="rgb(252,229,65)"
-										rating={movie.rating}
-										starHoverColor="rgb(252,229,65)"
-										starDimension="18px"
-										starSpacing="1px"
-										changeRating={this.changeRating}
-										numberOfStars={5}
-										name={movie.movie_id} />
-								</div>
-							</li>
-						))}
-					</ol>
+				<ListGroup as="ul">
+					{this.props.movieList.map((movie) => (
+						<SidePanelItem key={movie.rssa_id} movie={movie} pick={this.props.pick || false}
+							selectedid={this.props.selectedid}
+							hoverHandler={this.props.hoverHandler}
+							ratingsHandler={this.changeRating}
+							selectStateHandler={this.onValueChange} />
+					))}
+				</ListGroup>
 			</div>
 		);
 	}

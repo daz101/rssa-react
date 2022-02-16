@@ -1,5 +1,5 @@
-export const API = process.env.NODE_ENV === "production" ? "https://movie-mern.herokuapp.com/api/movies/"
-	: "http://localhost:5001/";
+export const API = process.env.NODE_ENV === "production" ? "https://64.225.56.158:6390/"
+	: "http://64.225.56.158:6390/";
 
 export const likertVals = ['Strongly<br>Disagree', 'Disagree', 'No<br>Opinion', 'Agree', 'Strongly<br>Agree'];
 

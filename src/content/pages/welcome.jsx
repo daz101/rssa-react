@@ -1,10 +1,8 @@
-import "react-step-progress-bar/styles.css";
 import axios from 'axios';
 import { API } from '../utils/constants';
 import React, { Component } from 'react';
-import { Button, Card, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Card, Modal } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
-import ProgressBarComponent from "../widgets/progressBar";
 
 class WelcomePage extends Component {
 
@@ -31,7 +29,7 @@ class WelcomePage extends Component {
 	showSurvey() {
 		this.setState({
 			show: true,
-			consentStartTime: new Date() 
+			consentStartTime: new Date()
 		});
 	}
 
@@ -45,41 +43,41 @@ class WelcomePage extends Component {
 			consentStartTime: consentStartTime.toUTCString(),
 			consentEndTime: consentEndTime.toUTCString()
 		},
-		{
-			headers: {
-				'Access-Control-Allow-Credentials': true,
-				'Access-Control-Allow-Origin': '*'
-			}
-		})
-		.then(response => {
-			if (response.status === 200){
-				this.setState({
-					userCreated: true,
-					userid: response.data['user_id']
-				});
-			}
-		});
+			{
+				headers: {
+					'Access-Control-Allow-Credentials': true,
+					'Access-Control-Allow-Origin': '*'
+				}
+			})
+			.then(response => {
+				if (response.status === 200) {
+					this.setState({
+						userCreated: true,
+						userid: response.data['user_id']
+					}
+					);
+					this.props.progressUpdater();
+				}
+			});
 	}
 
 	render() {
 		const show = this.state.show;
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
-		if (userCreated){
+		if (userCreated) {
 			return (
-				<Redirect to = {{
+				<Redirect to={{
 					pathname: "/instructions",
 					state: {
 						userid: userid
 					}
-				}}/>
+				}} />
 			);
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{margin: "0 3em"}}>
-				<ProgressBarComponent percentComplete={5} />
+			<>
 				<div className="jumbotron">
 					<h1 className="header">Welcome</h1>
 					<p>Welcome to the study on movie recommendation.</p>
@@ -111,13 +109,16 @@ class WelcomePage extends Component {
 
 						<p>Thanks,<br />
 							Research Team</p>
-						{/*GET  STARTED BUTTON*/}
-						<Button variant="primary" size="lg"
-							onClick={this.displaySurvey}>
-							Get started
-						</Button>
+
 					</Card.Body>
 				</Card>
+				<div className="jumbotron jumbotron-footer">
+					{/*GET  STARTED BUTTON*/}
+					<Button variant="primary" size="lg" className="footer-btn"
+						onClick={this.displaySurvey}>
+						Get started
+					</Button>
+				</div>
 
 				<Modal show={show} dialogClassName="modal-70w" >
 					<Modal.Header>
@@ -165,14 +166,13 @@ class WelcomePage extends Component {
 								Exit
 							</Button>
 						</Link>
-						<Button variant="primary" disabled={this.state.disabled} 
+						<Button variant="primary" disabled={this.state.disabled}
 							onClick={this.createNewUser}>
 							Continue
 						</Button>
 					</Modal.Footer>
 				</Modal>
-				</div>
-			</div>
+			</>
 		);
 	}
 }

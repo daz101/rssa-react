@@ -1,9 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "react-step-progress-bar/styles.css";
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from "react-router-dom";
-import ProgressBarComponent from "../widgets/progressBar";
 import axios from 'axios';
 import { API } from '../utils/constants';
 
@@ -51,8 +48,9 @@ class InstructionPage extends Component {
 					this.setState({
 						updateSuccess: true
 					});
+					this.props.progressUpdater();
 				}
-			})
+			});
 	}
 
 	render() {
@@ -61,7 +59,7 @@ class InstructionPage extends Component {
 		if (this.state.updateSuccess) {
 			return (
 				<Redirect to={{
-					pathname: "/ratemovies",
+					pathname: this.props.dest,
 					state: {
 						userid: userid
 					}
@@ -70,58 +68,58 @@ class InstructionPage extends Component {
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{ margin: "0 3em" }}>
-					<ProgressBarComponent percentComplete={30} />
-					<br />
-					<div className="instructions-page">
-						<div className="row">
-							<div className="col-sm">
-								<div className="card ">
-									<img src="/Preference-rssa.png" className="card-img-top" alt="..." />
-									<div className="card-body">
-										<h5 className="card-title"> Select Preferences</h5>
-										<p className="card-text">
-											Rate movies for the system to learn about your
-											preferences. You can select "Get another option" to get a new movie option.
-										</p>
-									</div>
+			<>
+				<div className="jumbotron">
+					<h1 className="header">Overview</h1>
+					<p>The study consists of three steps.</p>
+				</div>
+				<div className="instructions-page">
+					<div className="row">
+						<div className="col-sm">
+							<div className="card ">
+								<img src="/Preference-rssa.png" className="card-img-top" alt="..." />
+								<div className="card-body">
+									<h5 className="card-title"> Select Preferences</h5>
+									<p className="card-text">
+										Rate movies for the system to learn about your
+										preferences. You can select "Get another option" to get a new movie option.
+									</p>
 								</div>
 							</div>
-							<div className="col-sm">
-								<div className="card">
-									<img src="/recommendation-rssa.png" className="card-img-top" alt="..." />
-									<div className="card-body">
-										<h5 className="card-title">Rate Recommendations</h5>
-										<p className="card-text">
-											The system will provide recommendations and for each
-											you will be asked to rate the recommendation.
-										</p>
-									</div>
+						</div>
+						<div className="col-sm">
+							<div className="card">
+								<img src="/recommendation-rssa.png" className="card-img-top" alt="..." />
+								<div className="card-body">
+									<h5 className="card-title">Rate Recommendations</h5>
+									<p className="card-text">
+										The system will provide recommendations and for each
+										you will be asked to rate the recommendation.
+									</p>
 								</div>
 							</div>
-							<div className="col-sm">
-								<div className="card">
-									<img src="/survey-rssa.png" className="card-img-top" alt="..." />
-									<div className="card-body">
-										<h5 className="card-title">Complete Survey</h5>
-										<p className="card-text">
-											Lastly, you will be asked to complete a survey about
-											your experience interacting with the system.
-										</p>
-									</div>
+						</div>
+						<div className="col-sm">
+							<div className="card">
+								<img src="/survey-rssa.png" className="card-img-top" alt="..." />
+								<div className="card-body">
+									<h5 className="card-title">Complete Survey</h5>
+									<p className="card-text">
+										Lastly, you will be asked to complete a survey about
+										your experience interacting with the system.
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div style={{ marginTop: "1em" }}>
-						<Button variant="primary" size="lg" style={{ float: 'right' }}
-							onClick={this.updateSurvey}>
-							Next
-						</Button>
-					</div>
 				</div>
-			</div>
+				<div className="jumbotron jumbotron-footer">
+					<Button variant="primary" size="lg" className="footer-btn"
+						onClick={this.updateSurvey}>
+						Next
+					</Button>
+				</div>
+			</>
 		);
 	}
 }

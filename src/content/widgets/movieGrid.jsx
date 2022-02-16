@@ -1,9 +1,8 @@
+import { API } from "../utils/constants";
 import axios from "axios";
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+import { Button, Spinner } from 'react-bootstrap';
 import MovieGridItem from './movieGridItem';
-import { API } from "../utils/constants";
 
 
 class MovieGrid extends Component {
@@ -31,11 +30,8 @@ class MovieGrid extends Component {
 		axios
 			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
 			.then(response => {
-				response.data.map(movie_ => {
-					movies_.push(movie_);
-				});
 				this.setState({
-					movies: movies_
+					movies: movies_.concat(response.data)
 				})
 			})
 			.catch(error => {
@@ -95,8 +91,8 @@ class MovieGrid extends Component {
 		if (this.state.movies.length > 0) {
 			let startIdx = this.state.currentPage * this.itemsPerPage;
 			return (
-				<div className="grid-layout" style={{ minWidth: "500px", maxWidth: "1200px", margin: "auto", display: "flex" }}>
-					<div style={{ paddingTop: "270px", marginRight: "18px" }}>
+				<div className="grid-layout" style={{ width:"fit-content", margin: "0 auto", display: "flex" }}>
+					<div style={{ paddingTop: "234px", marginRight: "18px" }}>
 						<Button disabled={startIdx === 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
 							&lt;
 						</Button>
@@ -107,7 +103,7 @@ class MovieGrid extends Component {
 						))}
 					</div>
 
-					<div style={{ paddingTop: "270px", marginLeft: "18px" }}>
+					<div style={{ paddingTop: "234px", marginLeft: "18px" }}>
 						<Button variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderNext}>
 							&gt;
 						</Button>
