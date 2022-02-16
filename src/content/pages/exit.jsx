@@ -53,18 +53,18 @@ class ExitPage extends Component {
 		return (
 			<div className="contentWrapper">
 				<div style={{ margin: "0 3em" }}>
+					<div className="jumbotron">
+						<h4>End of Study</h4>
+						{completed ?
+							<p>Thank you for completing the survey.</p>
+							:
+							<p>Thank you for your interest in the study.</p>
+						}
+					</div>
 					<div className="exit-page">
 						<Card bg="light">
-							<Card.Header>
-								<Card.Title>
-									End of Study
-								</Card.Title>
-							</Card.Header>
 							{completed ? (
 								<Card.Body>
-									<p>
-										Thank you for completing the survey. <span role="img" aria-label="Smile ">&#128512;</span>.
-									</p>
 									<p>
 										Your Amazon Mechanical Turk code to claim your payment is:
 									</p>
