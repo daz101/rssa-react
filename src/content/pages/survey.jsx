@@ -12,7 +12,6 @@ class SurveyPage extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			userid: props.location.state.userid,
 			pickid: props.location.state.selectedid,
@@ -113,11 +112,12 @@ class SurveyPage extends Component {
 
 	nextButton() {
 		const currentStep = this.state.currentStep;
+		let buttonVariant = this.state.disabled ? 'secondary' : 'primary';
 		if (currentStep < 6) {
 			return (
 				<Button disabled={this.state.disabled}
 					className="footer-btn"
-					variant="primary" size="lg" onClick={this.updateSurvey}>
+					variant={buttonVariant} size="lg" onClick={this.updateSurvey}>
 					Next
 				</Button>
 			);
@@ -125,7 +125,7 @@ class SurveyPage extends Component {
 			return (
 				<Button disabled={this.state.disabled}
 					className="footer-btn"
-					variant="primary" size="lg" onClick={this.updateSurvey}>
+					variant={buttonVariant} size="lg" onClick={this.updateSurvey}>
 					Submit
 				</Button>
 			);

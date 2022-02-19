@@ -100,10 +100,8 @@ class RatingPage extends Component {
             steps,
             initialStep,
         } = this.state;
-        let disabled = true;
-        if (this.state.count >= this.moviesRatingCount) {
-            disabled = false;
-        }
+        let disabled = this.state.count < this.moviesRatingCount;
+        let buttonVariant = disabled ? 'secondary' : 'primary';
 
         return (
             <>
@@ -133,7 +131,7 @@ class RatingPage extends Component {
                         <span><i>{this.state.count}</i></span>
                         <span><i>of {this.moviesRatingCount}</i></span>
                     </div>
-                        <Button variant="primary" size="lg" style={{height: "fit-content", marginTop: "1em"}} 
+                        <Button variant={buttonVariant} size="lg" style={{height: "fit-content", marginTop: "1em"}} 
                             className="next-button footer-btn" disabled={disabled}
                             onClick={this.updateSurvey}>
                             Next

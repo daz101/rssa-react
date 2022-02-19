@@ -169,6 +169,10 @@ class RecommendationPage extends Component {
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
 
+        let buttonDisabled = ((leftItems.length + rightItems.length) !== 
+            this.state.visited.length) && selectedid === undefined;
+
+        let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
         return this.state.ready ? (
             <>
@@ -208,7 +212,8 @@ class RecommendationPage extends Component {
                         selectionHandler={this.handleSelect} selectedid={selectedid} />
                 </div>
                 <div className="jumbotron jumbotron-footer">
-                    <Button className="footer-btn" variant="primary" size="lg"
+                    <Button className="footer-btn" variant={buttonVariant} size="lg"
+                        disabled={buttonDisabled}
                         onClick={this.updateSurvey}>
                         Next
                     </Button>
