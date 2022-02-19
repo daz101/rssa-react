@@ -24,11 +24,11 @@ class MovieGrid extends Component {
 	}
 
 	getMovies() {
-		let curr = this.state.currentPage;
+		let curr = this.state.currentPage + 1;
 		let movies_ = this.state.movies;
 		// We prefetch the next page; every query is two pages of items
 		axios
-			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr + 1 } })
+			.get(API+'movies', { params: { limit: this.itemsPerPage * 2, page: curr} })
 			.then(response => {
 				this.setState({
 					movies: movies_.concat(response.data)
@@ -43,12 +43,12 @@ class MovieGrid extends Component {
 		// console.log("Next Button Clicked");
 		let curr = this.state.currentPage;
 		curr += 1;
+		if (curr % 2 === 0) {
+			this.getMovies();
+		}
 		this.setState({
 			currentPage: curr
 		});
-		if (curr % 2 !== 0) {
-			this.getMovies();
-		}
 	}
 
 	renderPrevSet() {
