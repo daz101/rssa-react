@@ -4,6 +4,9 @@ import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { API } from '../utils/constants';
 
+const surveyRssa = require("../res/survey-rssa.png");
+const prefRssa = require("../res/Preference-rssa.png");
+const recommendationRssa = require("../res/recommendation-rssa.png");
 
 class InstructionPage extends Component {
 
@@ -77,7 +80,7 @@ class InstructionPage extends Component {
 					<div className="row">
 						<div className="col-sm">
 							<div className="card ">
-								<img src="/Preference-rssa.png" className="card-img-top" alt="..." />
+								<img src={prefRssa} className="card-img-top" alt="..." />
 								<div className="card-body">
 									<h5 className="card-title"> Select Preferences</h5>
 									<p className="card-text">
@@ -89,7 +92,7 @@ class InstructionPage extends Component {
 						</div>
 						<div className="col-sm">
 							<div className="card">
-								<img src="/recommendation-rssa.png" className="card-img-top" alt="..." />
+								<img src={recommendationRssa} className="card-img-top" alt="..." />
 								<div className="card-body">
 									<h5 className="card-title">Rate Recommendations</h5>
 									<p className="card-text">
@@ -101,7 +104,7 @@ class InstructionPage extends Component {
 						</div>
 						<div className="col-sm">
 							<div className="card">
-								<img src="/survey-rssa.png" className="card-img-top" alt="..." />
+								<img src={surveyRssa} className="card-img-top" alt="..." />
 								<div className="card-body">
 									<h5 className="card-title">Complete Survey</h5>
 									<p className="card-text">

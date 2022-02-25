@@ -1,7 +1,7 @@
-export const API = process.env.NODE_ENV === "production" ? "https://64.225.56.158:6390/"
-	: "http://64.225.56.158:6390/";
+export const API = process.env.NODE_ENV === "production" ? "https://rssa.recsys.dev/rssa/api/v1/"
+	: "https://rssa.recsys.dev/rssa/api/v1/";
 
-export const likertVals = ['Strongly<br>Disagree', 'Disagree', 'No<br>Opinion', 'Agree', 'Strongly<br>Agree'];
+export const likertVals = ['Strongly<br>Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly<br>Agree'];
 
 // FIXME this should go to the server with an edit API
 export const qBank = {

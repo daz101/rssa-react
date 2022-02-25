@@ -30,6 +30,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://rssa.recsys.dev/rssa",
   "browserslist": {
     "production": [
       ">0.2%",

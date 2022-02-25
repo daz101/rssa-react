@@ -53,7 +53,7 @@ class App extends Component {
                         <div className={progBarVisibility}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
-                        <Router>
+                        <Router basename='/rssa'>
                             <Switch>
                                 <Route exact path="/" render={(props) => <WelcomePage {...props}
                                     progressUpdater={this.progressUpdater} dest="/instructions" />} />

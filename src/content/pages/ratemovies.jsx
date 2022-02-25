@@ -120,7 +120,7 @@ class RatingPage extends Component {
                 />
                 <div className="jumbotron">
                     <h1 className="header">Rating Movies</h1>
-                    <p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
+                    <p> Rate {this.moviesRatingCount} movies that <strong>you already watched</strong> from the gallery below.</p>
                 </div>
                 <Container>
                     <MovieGrid handler={this.rateMoviesHandler} />

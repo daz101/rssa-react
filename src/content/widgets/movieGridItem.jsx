@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StarRatings from 'react-star-ratings';
 
+const defaultMovieIco = require("../res/default_movie_icon.svg");
 
 class MovieGridItem extends Component {
 
@@ -16,7 +17,7 @@ class MovieGridItem extends Component {
 		return (
 			<div id={"TN_" + currentMovie.rssa_id}
 				className={"grid-item " + containerClass} style={{
-					backgroundImage: "url(" + currentMovie.poster + "), url('/default_movie_icon.svg')",
+					backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
 				}}>
 				<div className="overlay">
 					<div className={starDivClass}>

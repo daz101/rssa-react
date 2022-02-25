@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 
+const loadingAnim = require("../res/loading.gif");
+
 class LoadingAnimation extends Component {
 
 	render() {
@@ -12,7 +14,7 @@ class LoadingAnimation extends Component {
 						width: "fit-content"
 					}}>{this.props.waitMsg}</h4>
 					<div>
-						<img src="/loading.gif" alt="loading animation" style={{
+						<img src={loadingAnim} alt="loading animation" style={{
 							zIndex: "81",
 							opacity: "0.1",
 							margin: "-18em auto 0 auto",

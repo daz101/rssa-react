@@ -17,6 +17,7 @@ class RecommendationPage extends Component {
             visited: [],
             setIsShown: false,
             activeMovie: null,
+            pick: this.props.pick || false,
             recDateTime: new Date(),
             pageid: 5,
             ratings: this.props.location.state.ratings,
@@ -34,6 +35,9 @@ class RecommendationPage extends Component {
         this.props.toggleLoader(true);
         this.getRecommendations();
         this.startTimer();
+        if(this.state.pick){
+            document.body.style.backgroundColor = "blanchedalmond";
+        }
     }
 
     getRecommendations() {
@@ -145,7 +149,7 @@ class RecommendationPage extends Component {
     }
 
     render() {
-        let pick = this.props.pick || false;
+        let pick = this.state.pick;
         let selectedid = this.state.selectedid;
 
         let userid = this.state.userid;

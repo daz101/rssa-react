@@ -1,6 +1,11 @@
 import React, {Component} from "react";
 import {ProgressBar, Step} from "react-step-progress-bar";
 
+const one = require("../res/one.png");
+const two = require("../res/two.png");
+const three = require("../res/three.png");
+const four = require("../res/four.png");
+const five = require("../res/five.png");
 
 class ProgressBarComponent extends Component{
 
@@ -16,7 +21,7 @@ class ProgressBarComponent extends Component{
 							<img
 								style={{filter: `grayscale(${accomplished ? 0 : 100}%)`}}
 								width="30"
-								src="/one.png"
+								src={one}
 								alt={1}
 							/>
 						)}
@@ -26,7 +31,7 @@ class ProgressBarComponent extends Component{
 							<img
 								style={{filter: `grayscale(${accomplished ? 0 : 100}%)`}}
 								width="30"
-								src="/two.png"
+								src={two}
 								alt={2}
 							/>
 						)}
@@ -36,7 +41,7 @@ class ProgressBarComponent extends Component{
 							<img
 								style={{paddingright: 90, filter: `grayscale(${accomplished ? 0 : 100}%)`}}
 								width="30"
-								src="/three.png"
+								src={three}
 								alt={3}
 							/>
 						)}
@@ -47,7 +52,7 @@ class ProgressBarComponent extends Component{
 							<img
 								style={{filter: `grayscale(${accomplished ? 0 : 100}%)`}}
 								width="30"
-								src="/four.png"
+								src={four}
 								alt={4}
 							/>
 						)}
@@ -58,7 +63,7 @@ class ProgressBarComponent extends Component{
 							<img
 								style={{filter: `grayscale(${accomplished ? 0 : 80}%)`}}
 								width="30"
-								src="/five.png"
+								src={five}
 								alt={5}
 							/>
 						)}
