@@ -2,7 +2,10 @@ import './App.css';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
+import { API } from './content/utils/constants';
+import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import WelcomePage from './content/pages/welcome';
 import InstructionPage from './content/pages/instructions';
 import RatingPage from './content/pages/ratemovies';
@@ -10,7 +13,6 @@ import RecommendationPage from './content/pages/raterecs';
 import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
 import ProgressBarComponent from "./content/widgets/progressBar";
-import { Navbar } from 'react-bootstrap';
 
 class App extends Component {
 
@@ -39,8 +41,8 @@ class App extends Component {
         });
     }
 
-    syncMouseActivity (posData, pageWidth, pageHeight, userid, pageid) {
-        const url = 'http://127.0.0.1:5001/sync_movement';
+    syncMouseActivity(posData, pageWidth, pageHeight, userid, pageid) {
+        const url = API + 'sync_movement';
         fetch(url, {
             method: 'PUT',
             headers: {
