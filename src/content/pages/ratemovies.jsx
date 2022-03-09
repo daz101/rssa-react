@@ -6,6 +6,7 @@ import MovieGrid from "../widgets/movieGrid";
 import { API } from "../utils/constants";
 import axios from "axios";
 import { Container, Button } from 'react-bootstrap';
+import { withMousePositionHook } from '../hooks/useMousePosition';
 
 class RatingPage extends Component {
 
@@ -83,7 +84,14 @@ class RatingPage extends Component {
     render() {
         let userid = this.state.userid;
         let ratings = this.state.ratedLst;
+        let pageid = this.state.pageid;
+
+		const mousePos = this.props.mousePositionHook;
+		const pageHeight = document.body.scrollHeight;
+		const pageWidth = document.body.scrollWidth;
+
         if (this.state.updateSuccess) {
+            this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
             return (
                 <Redirect to={{
                     pathname: "/raterecommendations1",
@@ -146,4 +154,4 @@ class RatingPage extends Component {
     };
 }
 
-export default RatingPage;
+export default withMousePositionHook(RatingPage);

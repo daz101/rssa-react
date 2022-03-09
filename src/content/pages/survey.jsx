@@ -1,9 +1,10 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import SurveyPane from '../widgets/surveyPanes';
 import { qBank, likertVals, API } from '../utils/constants';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { withMousePositionHook } from "../hooks/useMousePosition";
 
 import ReactHtmlParser from 'react-html-parser';
 
@@ -142,8 +143,14 @@ class SurveyPage extends Component {
 		let userid = this.state.userid;
 		let done = this.state.done;
 		let qSet = this.getQuestions(currentStep);
+		let pageid = this.state.pageid;
+
+		const mousePos = this.props.mousePositionHook;
+		const pageHeight = document.body.scrollHeight;
+		const pageWidth = document.body.scrollWidth;
 
 		if (done) {
+			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
 				<Redirect to={{
 					pathname: "/exit",
@@ -178,4 +185,4 @@ class SurveyPage extends Component {
 	}
 }
 
-export default SurveyPage;
+export default withMousePositionHook(SurveyPage);

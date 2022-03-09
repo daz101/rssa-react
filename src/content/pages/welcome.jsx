@@ -3,6 +3,7 @@ import { API } from '../utils/constants';
 import React, { Component } from 'react';
 import { Button, Form, Card, Modal } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
+import { withMousePositionHook } from "../hooks/useMousePosition";
 
 class WelcomePage extends Component {
 
@@ -14,7 +15,8 @@ class WelcomePage extends Component {
 			welcomeDateTime: undefined,
 			consentStartTime: undefined,
 			userid: undefined,
-			userCreated: false
+			userCreated: false,
+			mousePosHist: []
 		};
 		this.displaySurvey = this.showSurvey.bind(this);
 		this.createNewUser = this.createUser.bind(this);
@@ -62,10 +64,16 @@ class WelcomePage extends Component {
 	}
 
 	render() {
+
+		const mousePos = this.props.mousePositionHook;
+		const pageHeight = document.body.scrollHeight;
+		const pageWidth = document.body.scrollWidth;
+
 		const show = this.state.show;
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
 		if (userCreated) {
+			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Redirect to={{
 					pathname: "/instructions",
@@ -177,4 +185,4 @@ class WelcomePage extends Component {
 	}
 }
 
-export default WelcomePage;
+export default withMousePositionHook(WelcomePage);

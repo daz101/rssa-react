@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { API } from '../utils/constants';
+import { withMousePositionHook } from '../hooks/useMousePosition';
 
 const surveyRssa = require("../res/survey-rssa.png");
 const prefRssa = require("../res/Preference-rssa.png");
@@ -58,8 +59,14 @@ class InstructionPage extends Component {
 
 	render() {
 		let userid = this.state.userid;
+		let pageid = this.state.pageid;
+
+		const mousePos = this.props.mousePositionHook;
+		const pageHeight = document.body.scrollHeight;
+		const pageWidth = document.body.scrollWidth;
 
 		if (this.state.updateSuccess) {
+			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
 				<Redirect to={{
 					pathname: this.props.dest,
@@ -127,4 +134,4 @@ class InstructionPage extends Component {
 	}
 }
 
-export default InstructionPage;
+export default withMousePositionHook(InstructionPage);

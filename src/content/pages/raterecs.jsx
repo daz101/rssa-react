@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { Component } from 'react';
 import { API } from "../utils/constants";
-import MovieSidePanel from "../widgets/movieSidePanel";
 import { Redirect } from "react-router-dom";
 import { Container, Card, Button } from "react-bootstrap";
+import { withMousePositionHook } from "../hooks/useMousePosition";
+import MovieSidePanel from "../widgets/movieSidePanel";
+
 import LoadingAnimation from '../widgets/loadingView';
 
 class RecommendationPage extends Component {
@@ -154,8 +156,14 @@ class RecommendationPage extends Component {
 
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
+        let pageid = this.state.pageid;
+
+		const mousePos = this.props.mousePositionHook;
+		const pageHeight = document.body.scrollHeight;
+		const pageWidth = document.body.scrollWidth;
 
         if (this.state.updateSuccess) {
+            this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
             return (
                 <Redirect to={{
                     pathname: this.props.dest,
@@ -232,4 +240,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default RecommendationPage;
+export default withMousePositionHook(RecommendationPage);
