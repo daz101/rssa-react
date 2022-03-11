@@ -6,7 +6,7 @@ import MovieGrid from "../widgets/movieGrid";
 import { API } from "../utils/constants";
 import axios from "axios";
 import { Container, Button } from 'react-bootstrap';
-import { withMousePositionHook } from '../hooks/useMousePosition';
+// import { withMousePositionHook } from '../hooks/useMousePosition';
 
 class RatingPage extends Component {
 
@@ -131,7 +131,7 @@ class RatingPage extends Component {
                     <p> Rate {this.moviesRatingCount} movies that <strong>you already watched</strong> from the gallery below.</p>
                 </div>
                 <Container>
-                    <MovieGrid handler={this.rateMoviesHandler} />
+                    <MovieGrid handler={this.rateMoviesHandler} userid={userid} pageid={pageid} />
                 </Container>
                 <div className="jumbotron jumbotron-footer" style={{display: "flex"}}>
                     <div className="rankHolder">
@@ -154,4 +154,5 @@ class RatingPage extends Component {
     };
 }
 
-export default withMousePositionHook(RatingPage);
+// export default withMousePositionHook(RatingPage);
+export default RatingPage;

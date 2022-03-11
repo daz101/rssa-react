@@ -15,7 +15,7 @@ class MovieGridItem extends Component {
 
 
 		return (
-			<div id={"TN_" + currentMovie.rssa_id}
+			<div id={"TN_" + currentMovie.movie_id}
 				className={"grid-item " + containerClass} style={{
 					backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
 				}}>
