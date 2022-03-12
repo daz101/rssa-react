@@ -9,6 +9,7 @@ import { Container, Button } from 'react-bootstrap';
 // import { withMousePositionHook } from '../hooks/useMousePosition';
 
 class RatingPage extends Component {
+    // _isMounted = false;
 
     moviesRatingCount = 10;
 
@@ -25,12 +26,16 @@ class RatingPage extends Component {
             steps: [
                 {
                     element: ".jumbotron",
-                    intro: "Select a movie that you are familiar with and provide a rating. You can use the slider " +
-                        "to the side to find more options."
+                    intro: "Find a movie that you have watched and rate it on a 5-point scale."
+                },
+                {
+                    element: "#gallery-right-btn",
+                    intro: "Click this button to scroll through the gallery of movies.",
+                    position: "left"
                 },
                 {
                     element: ".rankHolder",
-                    intro: "Rate a total of " + this.moviesRatingCount + " movies to proceed to the next stage. "
+                    intro: "You must rate at least " + this.moviesRatingCount + " movies to proceed."
                 },
                 {
                     element: ".next-button",
@@ -45,9 +50,14 @@ class RatingPage extends Component {
     }
 
     componentDidMount() {
+        // this._isMounted = true;
         this.setState({
             raterDateTime: new Date()
         });
+    }
+
+    componentWillUnmount() {
+        // this._isMounted = false;
     }
 
     updateSurveyResponse() {
@@ -79,6 +89,12 @@ class RatingPage extends Component {
             count: isNew ? this.state.count + 1 : this.state.count,
             ratedLst: ratedLst
         });
+    }
+
+    onBeforeChange = nextStepIndex => {
+        if (nextStepIndex === 1){
+            this.steps.updateStepElement(nextStepIndex);
+        }
     }
 
     render() {
@@ -120,10 +136,13 @@ class RatingPage extends Component {
                         nextToDone: true
                     }}
                     ref={steps => (this.steps = steps)}
+                    onBeforeChange={this.onBeforeChange}
                 />
                 <div className="jumbotron">
-                    <h1 className="header">Rating Movies</h1>
-                    <p> Rate {this.moviesRatingCount} movies that <strong>you already watched</strong> from the gallery below.</p>
+                    <h1 className="header">Indicate your preferences</h1>
+                    <p>Use the blue button on the right to scroll through 
+                        the gallery of movies and rate at least 10 movies 
+                        that you have already watched</p>
                 </div>
                 <Container>
                     <MovieGrid handler={this.rateMoviesHandler} userid={userid} pageid={pageid} />

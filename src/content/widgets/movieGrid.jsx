@@ -101,7 +101,7 @@ class MovieGrid extends Component {
 			return (
 				<div className="grid-layout" style={{ width: "fit-content", margin: "0 auto", display: "flex" }}>
 					<div style={{ paddingTop: "234px", marginRight: "18px" }}>
-						<Button disabled={startIdx === 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
+						<Button id="gallery-left-btn" disabled={startIdx === 0} variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderPrev}>
 							&lt;
 						</Button>
 					</div>
@@ -116,7 +116,7 @@ class MovieGrid extends Component {
 						</div>
 					}
 					<div style={{ paddingTop: "234px", marginLeft: "18px" }}>
-						<Button variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderNext}>
+						<Button id="gallery-right-btn" variant="primary" style={{ width: "54px", height: "270px" }} onClick={this.renderNext}>
 							&gt;
 						</Button>
 					</div>
