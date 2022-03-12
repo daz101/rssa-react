@@ -13,6 +13,7 @@ import RecommendationPage from './content/pages/raterecs';
 import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
 import ProgressBarComponent from "./content/widgets/progressBar";
+import axios from 'axios';
 
 class App extends Component {
 
@@ -43,23 +44,18 @@ class App extends Component {
 
     syncMouseActivity(posData, pageWidth, pageHeight, userid, pageid) {
         const url = API + 'sync_movement';
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Access-Control-Allow-Credentials': true,
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userid: userid,
-                pageid: pageid,
-                pageWidth: pageWidth,
-                pageHeight: pageHeight,
-                mouseActivity: posData
-            })
-        }).then(res => res.json())
-            .then(response => console.log('Success:', response))
-            .catch(error => console.error('Error:', error));
+        axios.put(url, {
+            userid: userid,
+            pageid: pageid,
+            pageWidth: pageWidth,
+            pageHeight: pageHeight,
+            mouseActivity: posData
+        })
+        .then(response => {
+            if (response.status === 200) {
+                console.log(response.data);
+            }
+        })
     }
 
     render() {
