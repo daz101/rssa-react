@@ -13,7 +13,6 @@ class MovieGridItem extends Component {
 		let containerClass = currentMovie.rating > 0 ? 'container-visited' : '';
 		let starDivClass = currentMovie.rating > 0 ? 'star-div-rated' : 'star-div';
 
-
 		return (
 			<div id={"TN_" + currentMovie.movie_id}
 				className={"grid-item " + containerClass} style={{

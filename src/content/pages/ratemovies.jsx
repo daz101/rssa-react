@@ -86,12 +86,7 @@ class RatingPage extends Component {
         let ratings = this.state.ratedLst;
         let pageid = this.state.pageid;
 
-		const mousePos = this.props.mousePositionHook;
-		const pageHeight = document.body.scrollHeight;
-		const pageWidth = document.body.scrollWidth;
-
         if (this.state.updateSuccess) {
-            this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
             return (
                 <Redirect to={{
                     pathname: "/raterecommendations1",
@@ -133,17 +128,17 @@ class RatingPage extends Component {
                 <Container>
                     <MovieGrid handler={this.rateMoviesHandler} userid={userid} pageid={pageid} />
                 </Container>
-                <div className="jumbotron jumbotron-footer" style={{display: "flex"}}>
+                <div className="jumbotron jumbotron-footer" style={{ display: "flex" }}>
                     <div className="rankHolder">
                         <span> Ranked Movies: </span>
                         <span><i>{this.state.count}</i></span>
                         <span><i>of {this.moviesRatingCount}</i></span>
                     </div>
-                        <Button variant={buttonVariant} size="lg" style={{height: "fit-content", marginTop: "1em"}} 
-                            className="next-button footer-btn" disabled={disabled}
-                            onClick={this.updateSurvey}>
-                            Next
-                        </Button>
+                    <Button variant={buttonVariant} size="lg" style={{ height: "fit-content", marginTop: "1em" }}
+                        className="next-button footer-btn" disabled={disabled}
+                        onClick={this.updateSurvey}>
+                        Next
+                    </Button>
                 </div>
             </>
         );

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { API } from "../utils/constants";
 import { Redirect } from "react-router-dom";
 import { Container, Card, Button } from "react-bootstrap";
-import { withMousePositionHook } from "../hooks/useMousePosition";
+// import { withMousePositionHook } from "../hooks/useMousePosition";
 import MovieSidePanel from "../widgets/movieSidePanel";
 
 import LoadingAnimation from '../widgets/loadingView';
@@ -14,8 +14,8 @@ class RecommendationPage extends Component {
 
         this.state = {
             ready: false,
-            leftPanel: { items: [], condition: '' },
-            rightPanel: { items: [], condition: '' },
+            leftPanel: { items: [], condition: '', byline: '' },
+            rightPanel: { items: [], condition: '', byline: '' },
             visited: [],
             setIsShown: false,
             activeMovie: null,
@@ -37,7 +37,7 @@ class RecommendationPage extends Component {
         this.props.toggleLoader(true);
         this.getRecommendations();
         this.startTimer();
-        if(this.state.pick){
+        if (this.state.pick) {
             document.body.style.backgroundColor = "blanchedalmond";
         }
     }
@@ -62,11 +62,13 @@ class RecommendationPage extends Component {
                     this.setState({
                         leftPanel: {
                             condition: response.data['recommendations']['left']['label'],
-                            items: response.data['recommendations']['left']['items'],
+                            byline: response.data['recommendations']['left']['byline'],
+                            items: response.data['recommendations']['left']['items']
                         },
                         rightPanel: {
-                            items: response.data['recommendations']['right']['items'],
-                            condition: response.data['recommendations']['right']['label']
+                            condition: response.data['recommendations']['right']['label'],
+                            byline: response.data['recommendations']['left']['byline'],
+                            items: response.data['recommendations']['right']['items']
                         }
                     });
                 }
@@ -156,14 +158,9 @@ class RecommendationPage extends Component {
 
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
-        let pageid = this.state.pageid;
-
-		const mousePos = this.props.mousePositionHook;
-		const pageHeight = document.body.scrollHeight;
-		const pageWidth = document.body.scrollWidth;
+        // let pageid = this.state.pageid;
 
         if (this.state.updateSuccess) {
-            this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
             return (
                 <Redirect to={{
                     pathname: this.props.dest,
@@ -177,11 +174,15 @@ class RecommendationPage extends Component {
 
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
+        let leftbyline = this.state.leftPanel.byline;
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
+        let rightbyline = this.state.rightPanel.byline;
 
-        let buttonDisabled = ((leftItems.length + rightItems.length) !== 
+        console.log(leftItems);
+
+        let buttonDisabled = ((leftItems.length + rightItems.length) !==
             this.state.visited.length) && selectedid === undefined;
 
         let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
@@ -197,13 +198,14 @@ class RecommendationPage extends Component {
                 <div className="row g-0">
                     <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
-                        selectionHandler={this.handleSelect} selectedid={selectedid} />
+                        selectionHandler={this.handleSelect} selectedid={selectedid} 
+                        panelByline={leftbyline} />
                     {this.state.setIsShown && (this.state.activeMovie != null) ? (
                         <div className="col-sm-4 gx-sm-4">
                             <Card bg="dark" text="white" style={{
                                 backgroundColor: '#333', borderColor: '#333'
                             }}>
-                                <Card.Body style={{ height: '648px' }}>
+                                <Card.Body style={{ height: '700px' }}>
                                     <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail" src={this.state.activeMovie.poster} alt={"Poster of the movie " +
                                         this.state.activeMovie.title} style={{ maxHeight: "63%", minHeight: "63%", width: "auto" }} />
                                     <Card.Title style={{ marginTop: "0.5rem" }}>
@@ -221,7 +223,8 @@ class RecommendationPage extends Component {
                     }
                     <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick}
-                        selectionHandler={this.handleSelect} selectedid={selectedid} />
+                        selectionHandler={this.handleSelect} selectedid={selectedid} 
+                        panelByline={rightbyline} />
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="footer-btn" variant={buttonVariant} size="lg"
@@ -240,4 +243,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default withMousePositionHook(RecommendationPage);
+export default RecommendationPage;

@@ -73,7 +73,7 @@ class WelcomePage extends Component {
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
 		if (userCreated) {
-			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
+			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Redirect to={{
 					pathname: "/instructions",
