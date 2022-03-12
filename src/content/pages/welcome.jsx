@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { API } from '../utils/constants';
 import React, { Component } from 'react';
-import { Button, Form, Card, Modal } from 'react-bootstrap';
+import { Button, Card, Form, Modal } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import { withMousePositionHook } from "../hooks/useMousePosition";
+import { API } from '../utils/constants';
 
 class WelcomePage extends Component {
 
@@ -73,7 +73,7 @@ class WelcomePage extends Component {
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
 		if (userCreated) {
-			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
+			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Redirect to={{
 					pathname: "/instructions",
@@ -95,25 +95,17 @@ class WelcomePage extends Component {
 					<Card.Body>
 						<Card.Title>What can you expect?</Card.Title>
 						<p>
-							Dr. Knijnenburg invites you to take part in a research study. Dr. Knijnenburg is a professor at Clemson
-							University. This is a study that aims to test a new recommender system for movies. Your participation in
+							This is a study that aims to test a new recommender system for movies. Your participation in
 							this study will be valued.
 						</p>
 						<p>
 							It will take you about 10-15 minutes to complete the four steps of the study:
 						</p>
 						<ol>
-							<li>Introduction</li>
 							<li>Instructions for the study</li>
-							<li>Interact with movie recommender</li>
-							<li>Complete survey describing your experience</li>
+							<li>Interact with movie recommender system</li>
+							<li>Complete survey about your experience interacting with the system</li>
 						</ol>
-
-						<p>
-							After completing the study, you will be given a special code at the end of the study to facilitate
-							payment of $2.00. You will need to go back to MTurk to put in that code. You should keep the MTurk page
-							with the HIT open.</p>
-						<br />
 
 						<p>Thanks,<br />
 							Research Team</p>
