@@ -9,7 +9,7 @@ class SidePanelItem extends Component {
 		let itemClassStr = '';
 		let btnVariant = '';
 		let btnText = '';
-		
+
 		if (this.props.selectedid === movie.movie_id) {
 			itemClassStr = 'list-group-item-selected';
 			btnVariant = 'success';
@@ -19,14 +19,19 @@ class SidePanelItem extends Component {
 			btnVariant = 'secondary';
 			btnText = 'Choose';
 		}
-		
+
 		return <>
 			<ListGroup.Item as="li"
 				className={itemClassStr + " d-flex justify-content-between align-items-center"}
 				onMouseEnter={() => this.props.hoverHandler(true, movie)}
 			>
-				<div style={{ position: "relative", boxSizing: "border-box", display: "inline-block", verticalAlign: "middle" }}>
-					<p style={{ marginBottom: "0", marginTop: "0.25rem" }}> {movie.title} </p>
+				<div style={{
+					position: "relative", boxSizing: "border-box", width: "63%",
+					display: "inline-block", verticalAlign: "middle"
+				}}>
+					<p style={{ marginBottom: "0", marginTop: "0.25rem" }}>
+						{movie.title + " (" + movie.year + ")"}
+					</p>
 				</div>
 				{!this.props.pick ?
 					<StarRatings

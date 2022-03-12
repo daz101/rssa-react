@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { Component } from 'react';
-import { API } from "../utils/constants";
+import { Button, Card, Container } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import { Container, Card, Button } from "react-bootstrap";
-// import { withMousePositionHook } from "../hooks/useMousePosition";
+import { API } from "../utils/constants";
+import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
 
-import LoadingAnimation from '../widgets/loadingView';
 
 class RecommendationPage extends Component {
+
     constructor(props) {
         super(props);
 
@@ -158,7 +158,6 @@ class RecommendationPage extends Component {
 
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
-        // let pageid = this.state.pageid;
 
         if (this.state.updateSuccess) {
             return (
@@ -180,8 +179,6 @@ class RecommendationPage extends Component {
         let rightCondition = this.state.rightPanel.condition;
         let rightbyline = this.state.rightPanel.byline;
 
-        console.log(leftItems);
-
         let buttonDisabled = ((leftItems.length + rightItems.length) !==
             this.state.visited.length) && selectedid === undefined;
 
@@ -198,7 +195,7 @@ class RecommendationPage extends Component {
                 <div className="row g-0">
                     <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
-                        selectionHandler={this.handleSelect} selectedid={selectedid} 
+                        selectionHandler={this.handleSelect} selectedid={selectedid}
                         panelByline={leftbyline} />
                     {this.state.setIsShown && (this.state.activeMovie != null) ? (
                         <div className="col-sm-4 gx-sm-4">
@@ -223,7 +220,7 @@ class RecommendationPage extends Component {
                     }
                     <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick}
-                        selectionHandler={this.handleSelect} selectedid={selectedid} 
+                        selectionHandler={this.handleSelect} selectedid={selectedid}
                         panelByline={rightbyline} />
                 </div>
                 <div className="jumbotron jumbotron-footer">

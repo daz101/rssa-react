@@ -86,20 +86,20 @@ class App extends Component {
                                 <Route path="/raterecommendations1" render={(props) => <RecommendationPage {...props}
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                     waitMsg={"Please hang on while we find the recommendations for you."}
-                                    pageHeader={"Rating Recommendations: Step 1 of 2"}
-                                    headerSubtitle={"Please rate the following recommendations to help us fine tune recommendations for you."}
+                                    pageHeader={"Refine your recommendations: Step 1 of 2"}
+                                    headerSubtitle={"Please rate the following recommendations and alternative items to help us fine-tune our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
                                     dest="/raterecommendations2" key={1} />} />
                                 <Route path="/raterecommendations2" render={(props) => <RecommendationPage {...props}
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                     waitMsg={"Please hang on while we fine tune your recommendations."}
-                                    pageHeader={"Rating Recommendations: Step 2 of 2"}
-                                    headerSubtitle={"Please rate the following recommendations to help us finalize your recommendations."}
+                                    pageHeader={"Refine your recommendations: Step 2 of 2"}
+                                    headerSubtitle={"Please rate the following recommendations and alternative items to help us finalize our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
                                     dest="/raterecommendations3" key={2} />} />
                                 <Route path="/raterecommendations3" render={(props) => <RecommendationPage {...props}
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                     waitMsg={"Please hang on while we build your final recommendations."}
-                                    pageHeader={"Choosing A Recommendation"}
-                                    headerSubtitle={"Please pick one movie that you would watch right now if you could."}
+                                    pageHeader={"Select a movie to watch"}
+                                    headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like these 7 movies the best."}
                                     dest="/survey" pick={true} key={3} />} />
                                 <Route path="/survey" render={(props) => <SurveyPage {...props}
                                     activitySync={this.activitySync}
