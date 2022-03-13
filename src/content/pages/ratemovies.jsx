@@ -39,7 +39,7 @@ class RatingPage extends Component {
                 },
                 {
                     element: ".next-button",
-                    intro: "Click the Next button to proceed to the next stage."
+                    intro: "Once you have rated enough movies, you can click here to continue."
                 }
             ],
             count: 0,

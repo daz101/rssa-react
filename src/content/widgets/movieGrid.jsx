@@ -70,6 +70,7 @@ class MovieGrid extends Component {
 	}
 
 	changeRating = (newRating, movieid) => {
+		let level = this.state.currentPage;
 		let movieLst = [...this.state.movies];
 		let vstdLst = [...this.state.visited];
 		let ratedItm = movieLst.map(movie => (
@@ -79,7 +80,12 @@ class MovieGrid extends Component {
 		));
 		let isNew = !vstdLst.some(item => item.item_id === movieid);
 		if (isNew) {
-			vstdLst.push({ "item_id": movieid, "rating": newRating });
+			vstdLst.push({ 
+				"item_id": movieid, 
+				"rating": newRating,
+				"loc": "gallery", 
+				"level": level
+			});
 		} else {
 			vstdLst = vstdLst.map(movie => (
 				movie.item_id === movieid ? {

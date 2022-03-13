@@ -14,8 +14,8 @@ class RecommendationPage extends Component {
 
         this.state = {
             ready: false,
-            leftPanel: { items: [], condition: '', byline: '' },
-            rightPanel: { items: [], condition: '', byline: '' },
+            leftPanel: { items: [], condition: '', byline: '', tag: '' },
+            rightPanel: { items: [], condition: '', byline: '', tag: '' },
             visited: [],
             setIsShown: false,
             activeMovie: null,
@@ -55,17 +55,18 @@ class RecommendationPage extends Component {
                     'Access-Control-Allow-Credentials': true,
                     'Access-Control-Allow-Origin': '*'
                 }
-
             })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
                         leftPanel: {
+                            tag: response.data['recommendations']['left']['tag'],
                             condition: response.data['recommendations']['left']['label'],
                             byline: response.data['recommendations']['left']['byline'],
                             items: response.data['recommendations']['left']['items']
                         },
                         rightPanel: {
+                            tag: response.data['recommendations']['right']['tag'],
                             condition: response.data['recommendations']['right']['label'],
                             byline: response.data['recommendations']['left']['byline'],
                             items: response.data['recommendations']['right']['items']
@@ -120,6 +121,13 @@ class RecommendationPage extends Component {
         });
     }
 
+    /**
+     * TODO Split up the vstdLst into separate list to keep track
+     * Update rating on each panel separately
+     * @param {string} panelid refers to the id of the MovieSidePanel for callback
+     * @param {int} newRating the user updated rating for a movie
+     * @param {string} movieid the id of the movie to be updated
+     */
     handleRating(panelid, newRating, movieid) {
         let panel = this.state[panelid];
         let movieLst = [...panel.items];
@@ -131,7 +139,12 @@ class RecommendationPage extends Component {
         ));
         let isNew = !vstdLst.some(item => item.item_id === movieid);
         if (isNew) {
-            vstdLst.push({ "item_id": movieid, "rating": newRating });
+            vstdLst.push({ 
+                "item_id": movieid, 
+                "rating": newRating,
+                "loc": panel.tag,
+                "level": this.props.level
+            });
         } else {
             vstdLst = vstdLst.map(movie => (
                 movie.item_id === movieid ? {
@@ -159,21 +172,23 @@ class RecommendationPage extends Component {
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
 
+        let leftItems = this.state.leftPanel.items;
+        let leftCondition = this.state.leftPanel.condition;
+        let leftbyline = this.state.leftPanel.byline;
+        
         if (this.state.updateSuccess) {
             return (
                 <Redirect to={{
                     pathname: this.props.dest,
                     state: {
                         userid: userid,
-                        ratings: ratings
+                        ratings: ratings,
+                        recs: leftItems
                     }
                 }} />
             );
         }
 
-        let leftItems = this.state.leftPanel.items;
-        let leftCondition = this.state.leftPanel.condition;
-        let leftbyline = this.state.leftPanel.byline;
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
@@ -203,8 +218,10 @@ class RecommendationPage extends Component {
                                 backgroundColor: '#333', borderColor: '#333'
                             }}>
                                 <Card.Body style={{ height: '700px' }}>
-                                    <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail" src={this.state.activeMovie.poster} alt={"Poster of the movie " +
-                                        this.state.activeMovie.title} style={{ maxHeight: "63%", minHeight: "63%", width: "auto" }} />
+                                    <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail"
+                                        src={this.state.activeMovie.poster} alt={"Poster of the movie " +
+                                            this.state.activeMovie.title}
+                                        style={{ maxHeight: "63%", minHeight: "63%", width: "auto" }} />
                                     <Card.Title style={{ marginTop: "0.5rem" }}>
                                         {this.state.activeMovie.title}
                                     </Card.Title>
