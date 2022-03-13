@@ -16,6 +16,7 @@ class SurveyPage extends Component {
 		this.state = {
 			userid: props.location.state.userid,
 			pickid: props.location.state.selectedid,
+			finalRecommendations: props.location.state.recs,
 			pageid: 8,
 			surveyPageCount: 6,
 			currentStep: 1,
@@ -165,7 +166,7 @@ class SurveyPage extends Component {
 		return (
 			<>
 				<div className="jumbotron">
-					<h4>Scenario {currentStep} out of {maxPanes}:</h4>
+					<h4>{qSet.title}</h4>
 					<p>{ReactHtmlParser(qSet.instruction)}</p>
 				</div>
 				<div className="survey-page">

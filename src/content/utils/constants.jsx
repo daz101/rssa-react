@@ -1,18 +1,24 @@
 export const API = process.env.NODE_ENV === "production" ? "https://rssa.recsys.dev/rssa/api/v1/"
-	: "https://rssa.recsys.dev/rssa/api/v1/";
+	: "http://127.0.0.1:5001/";
 
 export const likertVals = ['Strongly<br>Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly<br>Agree'];
 
 // FIXME this should go to the server with an edit API
 export const qBank = {
 	1: {
-		instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
+		title: 'Questions about the final list of “movies you may like”',
+		instruction: 'Please rate your agreement with the following' + 
+			' statements about your final recommendations <strong>the leftmost' + 
+			' list of 7 “movies you may like” on the last page of the' +
+			' system.</strong><br>As a reminder, this list contained the' +
+			' following movies:',
 		qType: 'Diversity',
+		displayRecs: true,
 		qData: [
 			{ 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'None of the movies in the recommended list were alike', 'flag': false },
-			{ 'qId': 'q3', 'text': 'Most movies were from the same genre', 'flag': false },
-			{ 'qId': 'q4', 'text': 'The recommended list of movies suits a broad set of tastes', 'flag': false },
+			{ 'qId': 'q2', 'text': 'None of the movies in the final list of recommendations were alike.', 'flag': false },
+			{ 'qId': 'q3', 'text': 'Most movies in the final list of recommendations were from the same genre.', 'flag': false },
+			{ 'qId': 'q4', 'text': 'The final list of recommended movies suits a broad set of tastes.', 'flag': false },
 			{ 'qId': 'q5', 'text': 'The recommended movies were from many different genres', 'flag': false },
 			{ 'qId': 'q6', 'text': 'The recommendations contained a lot of variety', 'flag': false }
 		]
