@@ -48,7 +48,8 @@ class RecommendationPage extends Component {
 
         axios.post(API + 'recommendations', {
             userid: userid,
-            ratings: ratings
+            ratings: ratings,
+            count: 7
         },
             {
                 headers: {
@@ -139,8 +140,8 @@ class RecommendationPage extends Component {
         ));
         let isNew = !vstdLst.some(item => item.item_id === movieid);
         if (isNew) {
-            vstdLst.push({ 
-                "item_id": movieid, 
+            vstdLst.push({
+                "item_id": movieid,
                 "rating": newRating,
                 "loc": panel.tag,
                 "level": this.props.level
@@ -175,7 +176,7 @@ class RecommendationPage extends Component {
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
         let leftbyline = this.state.leftPanel.byline;
-        
+
         if (this.state.updateSuccess) {
             return (
                 <Redirect to={{
@@ -188,7 +189,6 @@ class RecommendationPage extends Component {
                 }} />
             );
         }
-
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
@@ -212,8 +212,8 @@ class RecommendationPage extends Component {
                         ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
                         selectionHandler={this.handleSelect} selectedid={selectedid}
                         panelByline={leftbyline} />
-                    {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                        <div className="col-sm-4 gx-sm-4">
+                    <div className="col-sm-4 gx-sm-4">
+                        {this.state.setIsShown && (this.state.activeMovie != null) ? (
                             <Card bg="dark" text="white" style={{
                                 backgroundColor: '#333', borderColor: '#333'
                             }}>
@@ -232,9 +232,9 @@ class RecommendationPage extends Component {
                                     </Container>
                                 </Card.Body>
                             </Card>
-                        </div>
-                    ) : (<div className="col-sm-4 gx-sm-4" />)
-                    }
+                        ) : (<div style={{ height: "700px" }} />)
+                        }
+                    </div>
                     <MovieSidePanel id="rightPanel" movieList={rightItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={rightCondition} pick={pick}
                         selectionHandler={this.handleSelect} selectedid={selectedid}
