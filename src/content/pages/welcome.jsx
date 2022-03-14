@@ -78,7 +78,8 @@ class WelcomePage extends Component {
 				<Redirect to={{
 					pathname: "/instructions",
 					state: {
-						userid: userid
+						userid: userid,
+						pageid: 2
 					}
 				}} />
 			);

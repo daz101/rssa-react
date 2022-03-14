@@ -5,8 +5,8 @@ import SurveyPane from '../widgets/surveyPanes';
 import { qBank, likertVals, API } from '../utils/constants';
 import { Redirect } from 'react-router-dom';
 import { withMousePositionHook } from "../hooks/useMousePosition";
-
 import ReactHtmlParser from 'react-html-parser';
+const defaultMovieIco = require("../res/default_movie_icon.svg");
 
 
 class SurveyPage extends Component {
@@ -17,14 +17,16 @@ class SurveyPage extends Component {
 			userid: props.location.state.userid,
 			pickid: props.location.state.selectedid,
 			finalRecommendations: props.location.state.recs,
-			pageid: 8,
+			pageid: props.location.state.pageid + 1,
 			surveyPageCount: 6,
 			currentStep: 1,
 			surveyDateTime: new Date(),
 			disabled: true,
 			responses: [],
 			seen_set: [],
-			done: false
+			selectedmovie: props.location.state.selectedmovie,
+			done: false,
+			recs: props.location.state.recs
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
@@ -47,7 +49,9 @@ class SurveyPage extends Component {
 			endtime: surveyEndTime.toUTCString(),
 			pageid: pageid,
 			userid: userid,
-			response: { responses: responses }
+			response: {
+				responses: responses
+			}
 		},
 			{
 				headers: {
@@ -77,6 +81,7 @@ class SurveyPage extends Component {
 		if (!responses.some(res => res.id === qId)) {
 			response = {
 				id: qId,
+				type: 'likert',
 				text: qText,
 				val: likertVals.indexOf(likertVal) + 1
 			};
@@ -145,10 +150,13 @@ class SurveyPage extends Component {
 		let done = this.state.done;
 		let qSet = this.getQuestions(currentStep);
 		let pageid = this.state.pageid;
+		let recs = this.state.recs;
 
 		const mousePos = this.props.mousePositionHook;
 		const pageHeight = document.body.scrollHeight;
 		const pageWidth = document.body.scrollWidth;
+
+		let selectedmovie = this.state.selectedmovie;
 
 		if (done) {
 			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
@@ -168,6 +176,33 @@ class SurveyPage extends Component {
 				<div className="jumbotron">
 					<h4>{qSet.title}</h4>
 					<p>{ReactHtmlParser(qSet.instruction)}</p>
+					{qSet.displayRecs ? (
+						<div style={{ display: "flex" }}>
+							{
+								recs.map((currentMovie) => (
+									<div key={"TN_" + currentMovie.movie_id} id={"TN_" + currentMovie.movie_id}
+										className={"grid-item"} style={{
+											margin: "0 3px",
+											backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
+										}}>
+										<div className="grid-item-label" style={{ position: "absolute" }}>
+											{currentMovie.title + " (" + currentMovie.year + ")"}
+										</div>
+									</div>
+								))
+							}
+						</div>
+					) : qSet.showSelected ? (
+						<div id={"TN_" + selectedmovie.id}
+							className={"grid-item"} style={{
+								margin: "0 3px",
+								backgroundImage: "url(" + selectedmovie.poster + "), url('" + defaultMovieIco + "')",
+							}}>
+							<div className="grid-item-label" style={{ position: "absolute" }}>
+								{selectedmovie.title + " (" + selectedmovie.year + ")"}
+							</div>
+						</div>
+					) : <></>}
 				</div>
 				<div className="survey-page">
 					<SurveyPane

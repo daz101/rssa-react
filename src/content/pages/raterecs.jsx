@@ -21,7 +21,7 @@ class RecommendationPage extends Component {
             activeMovie: null,
             pick: this.props.pick || false,
             recDateTime: new Date(),
-            pageid: 5,
+            pageid: this.props.location.state.pageid + 1,
             ratings: this.props.location.state.ratings,
             userid: this.props.location.state.userid,
             updateSuccess: false,
@@ -172,27 +172,34 @@ class RecommendationPage extends Component {
 
         let userid = this.state.userid;
         let ratings = this.state.visited.concat(this.state.ratings);
+        let pageid = this.state.pageid;
 
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
         let leftbyline = this.state.leftPanel.byline;
-
+        
+        let rightItems = this.state.rightPanel.items;
+        let rightCondition = this.state.rightPanel.condition;
+        let rightbyline = this.state.rightPanel.byline;
         if (this.state.updateSuccess) {
+            
+            let selectedmovie = [...leftItems, ...rightItems].find((movie) => (
+                movie.movie_id === selectedid
+            ));
             return (
                 <Redirect to={{
                     pathname: this.props.dest,
                     state: {
                         userid: userid,
                         ratings: ratings,
-                        recs: leftItems
+                        recs: leftItems,
+                        pageid: pageid,
+                        selectedmovie: selectedmovie
                     }
                 }} />
             );
         }
 
-        let rightItems = this.state.rightPanel.items;
-        let rightCondition = this.state.rightPanel.condition;
-        let rightbyline = this.state.rightPanel.byline;
 
         let buttonDisabled = ((leftItems.length + rightItems.length) !==
             this.state.visited.length) && selectedid === undefined;

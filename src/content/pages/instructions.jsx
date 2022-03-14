@@ -14,7 +14,7 @@ class InstructionPage extends Component {
 		super(props);
 		this.state = {
 			instructionDateTime: undefined,
-			pageid: 3,
+			pageid: props.location.state.pageid + 1,
 			userid: props.location.state.userid,
 			updateSuccess: false
 		}
@@ -70,7 +70,8 @@ class InstructionPage extends Component {
 				<Redirect to={{
 					pathname: this.props.dest,
 					state: {
-						userid: userid
+						userid: userid,
+						pageid: pageid
 					}
 				}} />
 			);

@@ -7,13 +7,14 @@ export const likertVals = ['Strongly<br>Disagree', 'Disagree', 'Neutral', 'Agree
 export const qBank = {
 	1: {
 		title: 'Questions about the final list of “movies you may like”',
-		instruction: 'Please rate your agreement with the following' + 
-			' statements about your final recommendations <strong>the leftmost' + 
+		instruction: 'Please rate your agreement with the following' +
+			' statements about your final recommendations <strong>the leftmost' +
 			' list of 7 “movies you may like” on the last page of the' +
 			' system.</strong><br>As a reminder, this list contained the' +
 			' following movies:',
 		qType: 'Diversity',
 		displayRecs: true,
+		showSelected: false,
 		qData: [
 			{ 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
 			{ 'qId': 'q2', 'text': 'None of the movies in the final list of recommendations were alike.', 'flag': false },
@@ -24,11 +25,18 @@ export const qBank = {
 		]
 	},
 	2: {
-		instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
+		title: 'Questions about the final list of “movies you may like”',
+		instruction: 'Please rate your agreement with the following' +
+			' statements about your final recommendations <strong>the leftmost' +
+			' list of 7 “movies you may like” on the last page of the' +
+			' system.</strong><br>As a reminder, this list contained the' +
+			' following movies:',
 		qType: 'RecQual',
+		displayRecs: true,
+		showSelected: false,
 		qData: [
-			{ 'qId': 'q1', 'text': 'I liked the movies recommended by the movie recommender', 'flag': false },
-			{ 'qId': 'q2', 'text': 'I found the recommended movies appealing', 'flag': false },
+			{ 'qId': 'q1', 'text': 'I liked the movies in the final list of recommendations', 'flag': false },
+			{ 'qId': 'q2', 'text': 'I found the movies in the final list of recommendations appealing', 'flag': false },
 			{ 'qId': 'q3', 'text': 'The recommended movies fit my preference', 'flag': false },
 			{ 'qId': 'q4', 'text': 'The recommended movies were relevant', 'flag': false },
 			{ 'qId': 'q5', 'text': 'The system recommended too many bad movies.', 'flag': false },
@@ -36,8 +44,31 @@ export const qBank = {
 		]
 	},
 	3: {
-		instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
+		title: 'Questions about the final list of “movies you may like”',
+		instruction: 'Please rate your agreement with the following' +
+			' statements about your final recommendations <strong>the leftmost' +
+			' list of 7 “movies you may like” on the last page of the' +
+			' system.</strong><br>As a reminder, this list contained the' +
+			' following movies:',
+		qType: 'recConformity',
+		displayRecs: true,
+		showSelected: false,
+		qData: [
+			{ 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
+			{ 'qId': 'q2', 'text': 'I think the recommendations are unique to me.', 'flag': false },
+			{ 'qId': 'q3', 'text': 'I believe that the system is giving me a one of a kind experience.', 'flag': false },
+			{ 'qId': 'q4', 'text': 'I believe that the movies recommended to me are rather different from the movies recommended to others.', 'flag': false },
+			{ 'qId': 'q5', 'text': 'I would not be surprised if the system recommended the same movies to many other users', 'flag': false }
+		]
+	},
+	4: {
+		title: 'Questions about the movie you selected',
+		instruction: 'Please rate your agreement with the following statements' +
+		' about the movie you selected on the final page of the system.' + 
+		'<br>As a reminder, you selected the following movie:',
 		qType: 'choiceSat',
+		displayRecs: false,
+		showSelected: true,
 		qData: [
 			{ 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.', 'flag': false },
 			{ 'qId': 'q2', 'text': 'The chosen movie fits my preference.', 'flag': false },
@@ -48,23 +79,17 @@ export const qBank = {
 			{ 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected', 'flag': false }
 		]
 	},
-	4: {
-		instruction: 'Please rate your agreement with the statements about your experience with your <strong> LAST </strong> movie option:',
-		qType: 'recConformity',
-		qData: [
-			{ 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'I think the recommendations are unique to me.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'I believe that the system is giving me a one of a kind experience.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'I believe that the movies recommended to me are rather different from the movies recommended to others.', 'flag': false },
-			{ 'qId': 'q5', 'text': 'I would not be surprised if the system recommended the same movies to many other users', 'flag': false }
-		]
-	},
 	5: {
-		instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
+		title: 'Questions about the movie recommender system as a whole',
+		instruction: 'Please rate your agreement with the statements about your' +
+		' <strong>overall</strong> experience with the movie recommender:',
 		qType: 'tasteCov',
+		displayRecs: false,
+		showSelected: false,
 		qData: [
 			{ 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests', 'flag': false },
-			{ 'qId': 'q2', 'text': 'The movies that were recommended did not reflect my diverse taste in movies.', 'flag': false },
+			{ 'qId': 'q2', 'text': 'The movies that were recommended did' + 
+			' <span style="color:red"><strong>not</strong></span> reflect my diverse taste in movies.', 'flag': false },
 			{ 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.', 'flag': false },
 			{ 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.', 'flag': false },
 			{ 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.', 'flag': false },
@@ -73,7 +98,9 @@ export const qBank = {
 		]
 	},
 	6: {
-		instruction: 'Please rate your agreement with the statements about your <strong> OVERALL </strong> experience with the movie recommender:',
+		title: 'Questions about the movie recommender system as a whole',
+		instruction: 'Please rate your agreement with the statements about your' +
+		' <strong>overall</strong> experience with the movie recommender:',
 		qType: 'sysSat',
 		qData: [
 			{ 'qId': 'q1', 'text': 'I like using the system.', 'flag': false },

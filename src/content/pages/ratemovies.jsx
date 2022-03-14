@@ -20,7 +20,7 @@ class RatingPage extends Component {
         this.state = {
             raterDateTime: undefined,
             userid: this.props.location.state.userid,
-            pageid: 4,
+            pageid: this.props.location.state.pageid + 1,
             stepsEnabled: true,
             initialStep: 0,
             steps: [
@@ -108,7 +108,8 @@ class RatingPage extends Component {
                     pathname: "/raterecommendations1",
                     state: {
                         userid: userid,
-                        ratings: ratings
+                        ratings: ratings,
+                        pageid: pageid
                     }
                 }} />
             );

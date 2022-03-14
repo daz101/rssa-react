@@ -13,6 +13,7 @@ import RecommendationPage from './content/pages/raterecs';
 import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
 import ProgressBarComponent from "./content/widgets/progressBar";
+import ClosingRecommendationPage from './content/pages/closingRecs';
 import axios from 'axios';
 
 class App extends Component {
@@ -51,11 +52,11 @@ class App extends Component {
             pageHeight: pageHeight,
             mouseActivity: posData
         })
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response.data);
-            }
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                }
+            })
     }
 
     render() {
@@ -101,7 +102,11 @@ class App extends Component {
                                     waitMsg={"Please hang on while we build your final recommendations."}
                                     pageHeader={"Select a movie to watch"}
                                     headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like these 7 movies the best."}
-                                    dest="/survey" pick={true} key={3} level={3} />} />
+                                    dest="/endrecommendations" pick={true} key={3} level={3} />} />
+
+                                <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}
+                                    progressUpdater={this.progressUpdater}
+                                    dest="/survey" />} />
 
                                 <Route path="/survey" render={(props) => <SurveyPage {...props}
                                     activitySync={this.activitySync}
