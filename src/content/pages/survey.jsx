@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import SurveyPane from '../widgets/surveyPanes';
-import { qBank, likertVals, API } from '../utils/constants';
-import { Redirect } from 'react-router-dom';
-import { withMousePositionHook } from "../hooks/useMousePosition";
 import ReactHtmlParser from 'react-html-parser';
+import { Redirect } from 'react-router-dom';
+import { API, likertVals, qBank } from '../utils/constants';
+import SurveyPane from '../widgets/surveyPanes';
 const defaultMovieIco = require("../res/default_movie_icon.svg");
 
 
@@ -42,8 +41,6 @@ class SurveyPage extends Component {
 		let userid = this.state.userid;
 		let responses = this.state.responses;
 
-
-
 		axios.put(API + 'add_survey_response', {
 			starttime: surveyDateTime.toUTCString(),
 			endtime: surveyEndTime.toUTCString(),
@@ -74,22 +71,25 @@ class SurveyPage extends Component {
 			})
 	}
 
-	handleChange(event, qId, qText, likertVal, numQuestions) {
+	handleChange(event, qId, qText, qType, resVal, numQuestions) {
 		let responses = this.state.responses;
 		let response = {};
+		console.log(responses);
+
+		let val = qType === "likert" ? resVal.indexOf(resVal) + 1 : resVal;
 
 		if (!responses.some(res => res.id === qId)) {
 			response = {
 				id: qId,
-				type: 'likert',
+				type: qType,
 				text: qText,
-				val: likertVals.indexOf(likertVal) + 1
+				val: val
 			};
 			responses.push(response);
 		} else {
 			responses = responses.map(res => (
 				res.id === qId ? {
-					...res, val: likertVals.indexOf(likertVal) + 1
+					...res, val: val
 				} : res
 			));
 		}
@@ -109,6 +109,7 @@ class SurveyPage extends Component {
 		let surveyDateTime = new Date();
 		let responses = [];
 		currentStep++;
+		window.scrollTo(0, 0);
 		this.setState({
 			currentStep: currentStep,
 			disabled: true,
@@ -173,15 +174,17 @@ class SurveyPage extends Component {
 
 		return (
 			<>
-				<div className="jumbotron">
+				<div className="jumbotron sticky-top">
 					<h4>{qSet.title}</h4>
-					<p>{ReactHtmlParser(qSet.instruction)}</p>
+					<p style={{ marginBottom: "0" }}>{ReactHtmlParser(qSet.instruction)}</p>
 					{qSet.displayRecs ? (
 						<div style={{ display: "flex" }}>
 							{
 								recs.map((currentMovie) => (
 									<div key={"TN_" + currentMovie.movie_id} id={"TN_" + currentMovie.movie_id}
 										className={"grid-item"} style={{
+											width: "135px",
+											height: "171px",
 											margin: "0 3px",
 											backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
 										}}>
@@ -211,7 +214,8 @@ class SurveyPage extends Component {
 						currentStep={currentStep}
 						handleChange={this.handleChange}
 						stepFlag={currentStep}
-						questions={qSet} />
+						questions={qSet}
+						recList={recs} />
 					<div className="jumbotron jumbotron-footer">
 						{this.nextButton()}
 					</div>
@@ -221,4 +225,4 @@ class SurveyPage extends Component {
 	}
 }
 
-export default withMousePositionHook(SurveyPage);
+export default SurveyPage;

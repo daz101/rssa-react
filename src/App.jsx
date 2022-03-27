@@ -71,7 +71,7 @@ class App extends Component {
                 <div className="contentWrapper">
 
                     <div style={{ margin: "0 3em" }}>
-                        <div className={progBarVisibility}>
+                        <div className={progBarVisibility} style={{ zIndex: "2048" }}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
                         <Router basename='/rssa'>

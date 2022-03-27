@@ -1,42 +1,44 @@
 import React, { Component } from 'react';
-import { Card, FormGroup, FormLabel } from 'react-bootstrap';
-import ReactHtmlParser from 'react-html-parser';
+import { Card } from 'react-bootstrap';
 import { likertVals } from '../utils/constants';
+import SurveyMovieGroup from './SurveyMovieGroup';
+import SurveyQuestionGroup from './surveyQuestionGroup';
 
 class SurveyPane extends Component {
 
 	render() {
-		let qNums = this.props.questions.qData.length;
 		let qType = this.props.questions.qType;
-		return (
-			<>
-				<Card bg="light" className="mb-3 justify-content-center">
-					{this.props.questions.qData.map((likert, i) => (
-						<FormGroup className="survey-question-block" key={qType + "_" + i} >
-							<div className="font-weight-bold surveyQuestion">
-								<p className="lead">{ReactHtmlParser(likert.text)}</p></div>
-							<div className="checkboxGroup">
-								{likertVals.map((strVal, j) =>
-									<FormLabel htmlFor={qType + "_" + likert.qId + "_" + j}
-										key={qType + "_" + i + "_" + j} className="checkboxBtn">
-										<p className="checkboxLbl">{ReactHtmlParser(strVal)}</p>
-										<input className="radio-margin" type="radio"
-											name={qType + "_" + likert.qId}
-											id={qType + "_" + likert.qId + "_" + j}
-											onChange={(evt) => this.props.handleChange(
-												evt, i, likert.text, strVal,
-												qNums
-											)}
-										/>
-									</FormLabel>
-								)}
-							</div>
-						</FormGroup>
-					))}
-				</Card>
-			</>
 
-		);
+		if (qType !== 'recFamiliarity') {
+			let qNums = this.props.questions.qData.length;
+			return (
+				<>
+					<Card bg="light" className="mb-3 justify-content-center">
+						{this.props.questions.qData.map((likert, i) => (
+							<SurveyQuestionGroup qText={likert.text} key={qType + "_" + i}
+								qVals={likertVals} id={qType + "_" + likert.qId} qIndex={i} qNums={qNums}
+								handleChange={this.props.handleChange} />
+						))}
+					</Card>
+				</>
+			);
+		} else {
+			let recs = this.props.recList;
+			let qNums = recs.length*2;
+			let reqQ1 = this.props.questions.qData[0];
+			let reqQ2 = this.props.questions.qData[1];
+			return (
+				<>
+					<Card bg="light" className="mb-3 justify-content-center">
+						{recs.map((currentMovie, i) => (
+							<SurveyMovieGroup key={qType + "_" + i} id={qType + "_" + i}
+								movie={currentMovie} binaryQuestion={reqQ1} ratingQuestion={reqQ2}
+								qIndex={i} qNums={qNums} handleChange={this.props.handleChange} />
+						))}
+					</Card>
+				</>
+			);
+		}
 	}
 }
 

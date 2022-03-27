@@ -16,12 +16,12 @@ export const qBank = {
 		displayRecs: true,
 		showSelected: false,
 		qData: [
-			{ 'qId': 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'None of the movies in the final list of recommendations were alike.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'Most movies in the final list of recommendations were from the same genre.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'The final list of recommended movies suits a broad set of tastes.', 'flag': false },
-			{ 'qId': 'q5', 'text': 'The recommended movies were from many different genres', 'flag': false },
-			{ 'qId': 'q6', 'text': 'The recommendations contained a lot of variety', 'flag': false }
+			{ qId: 'q1', 'text': 'All the recommended movies in the final list were similar to each other.', 'flag': false },
+			{ qId: 'q2', 'text': 'None of the movies in the final list of recommendations were alike.', 'flag': false },
+			{ qId: 'q3', 'text': 'Most movies in the final list of recommendations were from the same genre.', 'flag': false },
+			{ qId: 'q4', 'text': 'The final list of recommended movies suits a broad set of tastes.', 'flag': false },
+			{ qId: 'q5', 'text': 'The recommended movies were from many different genres', 'flag': false },
+			{ qId: 'q6', 'text': 'The recommendations contained a lot of variety', 'flag': false }
 		]
 	},
 	2: {
@@ -35,12 +35,12 @@ export const qBank = {
 		displayRecs: true,
 		showSelected: false,
 		qData: [
-			{ 'qId': 'q1', 'text': 'I liked the movies in the final list of recommendations', 'flag': false },
-			{ 'qId': 'q2', 'text': 'I found the movies in the final list of recommendations appealing', 'flag': false },
-			{ 'qId': 'q3', 'text': 'The recommended movies fit my preference', 'flag': false },
-			{ 'qId': 'q4', 'text': 'The recommended movies were relevant', 'flag': false },
-			{ 'qId': 'q5', 'text': 'The system recommended too many bad movies.', 'flag': false },
-			{ 'qId': 'q6', 'text': 'I did not like any of the recommended movies.', 'flag': false }
+			{ qId: 'q1', 'text': 'I liked the movies in the final list of recommendations', 'flag': false },
+			{ qId: 'q2', 'text': 'I found the movies in the final list of recommendations appealing', 'flag': false },
+			{ qId: 'q3', 'text': 'The recommended movies fit my preference', 'flag': false },
+			{ qId: 'q4', 'text': 'The recommended movies were relevant', 'flag': false },
+			{ qId: 'q5', 'text': 'The system recommended too many bad movies.', 'flag': false },
+			{ qId: 'q6', 'text': 'I did not like any of the recommended movies.', 'flag': false }
 		]
 	},
 	3: {
@@ -54,61 +54,77 @@ export const qBank = {
 		displayRecs: true,
 		showSelected: false,
 		qData: [
-			{ 'qId': 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'I think the recommendations are unique to me.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'I believe that the system is giving me a one of a kind experience.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'I believe that the movies recommended to me are rather different from the movies recommended to others.', 'flag': false },
-			{ 'qId': 'q5', 'text': 'I would not be surprised if the system recommended the same movies to many other users', 'flag': false }
+			{ qId: 'q1', 'text': 'I feel like I was recommended the same movies as everyone else.', 'flag': false },
+			{ qId: 'q2', 'text': 'I think the recommendations are unique to me.', 'flag': false },
+			{ qId: 'q3', 'text': 'I believe that the system is giving me a one of a kind experience.', 'flag': false },
+			{ qId: 'q4', 'text': 'I believe that the movies recommended to me are rather different from the movies recommended to others.', 'flag': false },
+			{ qId: 'q5', 'text': 'I would not be surprised if the system recommended the same movies to many other users', 'flag': false }
+		]	},	4: {
+		title: 'Questions about the final list of "movies you may like"',
+		instruction: 'Please indicate if you watched any of the movies from' +
+			' the final recommendations <strong>the leftmost list of 7' +
+			' "movies you may like" on the last page of the system.',
+		qType: 'recFamiliarity',
+		displayRecs: false,
+		showSlected: false,
+		qData: [
+			{ qId: 'q1', text: 'Did you watch this movie before?', flag: false},
+			{ qId: 'q2', text: 'How would you rate this movie?', flag: false }
 		]
+
 	},
-	4: {
+	5: {
 		title: 'Questions about the movie you selected',
 		instruction: 'Please rate your agreement with the following statements' +
-		' about the movie you selected on the final page of the system.' + 
-		'<br>As a reminder, you selected the following movie:',
+			' about the movie you selected on the final page of the system.' +
+			'<br>As a reminder, you selected the following movie:',
 		qType: 'choiceSat',
 		displayRecs: false,
 		showSelected: true,
 		qData: [
-			{ 'qId': 'q1', 'text': 'I like the movie I’ve chosen from the final recommendation list.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'The chosen movie fits my preference.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'I would recommend my chosen movie to others/friends.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'I was excited about my chosen movie', 'flag': false },
-			{ 'qId': 'q5', 'text': 'I think I chose the best movie from the options', 'flag': false },
-			{ 'qId': 'q6', 'text': 'I know several items that are better than the one I selected', 'flag': false },
-			{ 'qId': 'q7', 'text': 'I would rather watch a different movie from the one I selected', 'flag': false }
-		]
-	},
-	5: {
-		title: 'Questions about the movie recommender system as a whole',
-		instruction: 'Please rate your agreement with the statements about your' +
-		' <strong>overall</strong> experience with the movie recommender:',
-		qType: 'tasteCov',
-		displayRecs: false,
-		showSelected: false,
-		qData: [
-			{ 'qId': 'q1', 'text': 'The movie recommender catered to all of my potential interests', 'flag': false },
-			{ 'qId': 'q2', 'text': 'The movies that were recommended did' + 
-			' <span style="color:red"><strong>not</strong></span> reflect my diverse taste in movies.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.', 'flag': false },
-			{ 'qId': 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.', 'flag': false },
-			{ 'qId': 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.', 'flag': false },
-			{ 'qId': 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.', 'flag': false }
+			{ qId: 'q1', text: 'I like the movie I’ve chosen from the final recommendation list.', flag: false },
+			{ qId: 'q2', text: 'The chosen movie fits my preference.', flag: false },
+			{ qId: 'q3', text: 'I would recommend my chosen movie to others/friends.', flag: false },
+			{ qId: 'q4', text: 'I was excited about my chosen movie', flag: false },
+			{ qId: 'q5', text: 'I think I chose the best movie from the options', flag: false },
+			{ qId: 'q6', text: 'I know several items that are better than the one I selected', flag: false },
+			{ qId: 'q7', text: 'I would rather watch a different movie from the one I selected', flag: false}
 		]
 	},
 	6: {
 		title: 'Questions about the movie recommender system as a whole',
-		instruction: 'Please rate your agreement with the statements about your' +
-		' <strong>overall</strong> experience with the movie recommender:',
-		qType: 'sysSat',
+		instruction: 'Please rate your agreement with the statements about your' + 
+			' <strong>overall</strong> experience with the movie recommender:',
+		qType: 'tasteCov',
+		displayRecs: false,
+		showSelected: false,
 		qData: [
-			{ 'qId': 'q1', 'text': 'I like using the system.', 'flag': false },
-			{ 'qId': 'q2', 'text': 'Using the system is a pleasant experience.', 'flag': false },
-			{ 'qId': 'q3', 'text': 'I would recommend the system to others.', 'flag': false },
-			{ 'qId': 'q4', 'text': 'I can find better movies using the system.', 'flag': false },
-			{ 'qId': 'q5', 'text': 'I would quickly abandon using the system.', 'flag': false },
-			{ 'qId': 'q6', 'text': 'I would use the system more often if possible.', 'flag': false }
+			{ qId: 'q1', 'text': 'The movie recommender catered to all of my potential interests', 'flag': false },
+			{
+				qId: 'q2', 'text': 'The movies that were recommended did' +
+					' <span style="color:red"><strong>not</strong></span> reflect my diverse taste in movies.', 'flag': false
+			},
+			{ qId: 'q4', 'text': 'The movie recommender treated me as a one-dimensional person.', 'flag': false },
+			{ qId: 'q5', 'text': 'The lists of recommendations matched a diversity of my preferences.', 'flag': false },
+			{ qId: 'q3', 'text': 'The movie recommender seemed to target only a small subset of my interests.', 'flag': false },
+			{ qId: 'q6', 'text': 'The recommended movies were a perfect fit for me on many different levels.', 'flag': false },
+			{ qId: 'q7', 'text': 'The movie recommender seemed to stereotype me in a particular category of viewers.', 'flag': false }
+		]
+	},
+	7: {
+		title: 'Questions about the movie recommender system as a whole',
+		instruction: 'Please rate your agreement with the statements about your' +
+			' <strong>overall</strong> experience with the movie recommender:',
+		qType: 'sysSat',
+		displayRecs: false,
+		showSelected: false,
+		qData: [
+			{ qId: 'q1', 'text': 'I like using the system.', 'flag': false },
+			{ qId: 'q2', 'text': 'Using the system is a pleasant experience.', 'flag': false },
+			{ qId: 'q3', 'text': 'I would recommend the system to others.', 'flag': false },
+			{ qId: 'q4', 'text': 'I can find better movies using the system.', 'flag': false },
+			{ qId: 'q5', 'text': 'I would quickly abandon using the system.', 'flag': false },
+			{ qId: 'q6', 'text': 'I would use the system more often if possible.', 'flag': false }
 		]
 	}
 };

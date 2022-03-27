@@ -4,9 +4,11 @@ export const useMousePosition = () => {
 	const [positions, setPositions] = useState([]);
 	useEffect(() => {
 		const setFromEvent = (e) => setPositions(positions =>
-			[...positions, { clientX: e.clientX, clientY: e.clientY, 
-				pageX: e.pageX, pageY: e.pageY, timestamp: e.timeStamp }]
-			);
+			[...positions, {
+				clientX: e.clientX, clientY: e.clientY,
+				pageX: e.pageX, pageY: e.pageY, timestamp: e.timeStamp
+			}]
+		);
 		window.addEventListener("mousemove", setFromEvent);
 
 		return () => {

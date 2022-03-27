@@ -5,9 +5,9 @@ import { Redirect } from "react-router-dom";
 import { withMousePositionHook } from '../hooks/useMousePosition';
 import { API } from '../utils/constants';
 
-const surveyRssa = require("../res/survey-rssa.png");
-const prefRssa = require("../res/Preference-rssa.png");
-const recommendationRssa = require("../res/recommendation-rssa.png");
+const prefRssa = require("../res/rssa-preferences.png");
+const recommendationRssa = require("../res/rssa-ratingrecs.png");
+const finalRssa = require("../res/rssa-finalrecs.png");
 
 class InstructionPage extends Component {
 	constructor(props) {
@@ -113,7 +113,7 @@ class InstructionPage extends Component {
 						</div>
 						<div className="col-sm">
 							<div className="card">
-								<img src={recommendationRssa} className="card-img-top" alt="..." />
+								<img src={finalRssa} className="card-img-top" alt="..." />
 								<div className="card-body">
 									<h5 className="card-title">Select A Movie to Watch</h5>
 									<p className="card-text">
