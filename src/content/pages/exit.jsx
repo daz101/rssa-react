@@ -7,16 +7,24 @@ class ExitPage extends Component {
 
 	constructor(props) {
 		super(props);
+		let userid = undefined;
+		let completed = false;
+		if (this.props.location.state !== undefined){
+			userid = this.props.location.state.userid;
+			completed = this.props.location.state.completed;
+		}
 		this.state = {
 			pageid: 14,
-			userid: this.props.location.state.userid,
-			completed: this.props.location.state.completed,
+			userid: userid,
+			completed: completed,
 			code: undefined
 		}
 	}
 
 	componentDidMount() {
-		this.getCompletionCode();
+		if (this.state.completed){
+			this.getCompletionCode();
+		}
 	}
 
 	getCompletionCode() {
