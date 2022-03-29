@@ -74,14 +74,15 @@ class ExitPage extends Component {
 							{completed ? (
 								<Card.Body>
 									<p>
-										Your Amazon Mechanical Turk code to claim your payment is:
+										You will now be redirected back to Prolific. If you are not redirected 
+										automatically in more than 15 seconds click the link below.
 									</p>
 									<div style={{
 										margin: "1em 3em", padding: "1.25em 1.5em 0.25em",
-										backgroundColor: "silver", width: "fit-content"
+										width: "fit-content"
 									}}>
 										<p style={{ fontSize: "larger" }}>
-											<strong>{code}</strong>
+											<strong>link</strong>
 										</p>
 									</div>
 									<p>
