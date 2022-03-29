@@ -66,7 +66,7 @@ class ClosingRecommendationPage extends Component {
 	}
 
 	render() {
-		let buttonDisabled = ((true) !== true);
+		// let buttonDisabled = ((true) !== true);
 
 		let userid = this.state.userid;
 		let ratings = this.state.ratings;
@@ -74,7 +74,7 @@ class ClosingRecommendationPage extends Component {
 		let pageid = this.state.pageid;
 		let selectedmovie = this.state.selectedmovie;
 
-		let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
+		// let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
 		if (this.state.updateSuccess) {
 			return (
@@ -109,8 +109,8 @@ class ClosingRecommendationPage extends Component {
 					</Card.Body>
 				</Card>
 				<div className="jumbotron jumbotron-footer">
-					<Button className="footer-btn" variant={buttonVariant} size="lg"
-						disabled={buttonDisabled}
+					<Button className="footer-btn" variant="primary" size="lg"
+						// disabled={buttonDisabled}
 						onClick={this.updateSurvey}>
 						Next
 					</Button>

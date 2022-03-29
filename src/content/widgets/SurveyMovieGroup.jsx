@@ -16,9 +16,7 @@ class SurveyMovieGroup extends Component {
 	}
 
 	updateWatched(evt, watched, movie_id, qIndex, qText, strVal, qNums) {
-		console.log(strVal);
 		let val = strVal + ";" + movie_id;
-		console.log(val);
 		this.setState({
 			watched: watched
 		});
@@ -63,10 +61,6 @@ class SurveyMovieGroup extends Component {
 										<input className="radio-margin" type="radio"
 											name={this.props.id + "_" + reqQ1.qId}
 											id={this.props.id + "_" + reqQ1.qId + "_" + j}
-											// onChange={(evt) => this.props.handleChange(
-											// 	evt, this.props.qIndex, reqQ1.text, strVal,
-											// 	this.props.qNums
-											// )}
 											onChange={(evt) => this.updateWatched(evt, j, currentMovie.movie_id, 
 												this.props.qIndex*2, reqQ1.text, strVal, this.props.qNums)}
 										/>
@@ -108,10 +102,6 @@ class SurveyMovieGroup extends Component {
 										<input className="radio-margin" type="radio"
 											name={this.props.id + "_" + reqQ2.qId + "_" + j}
 											id={this.props.id + "_" + reqQ2.qId + "_" + j}
-											// onChange={(evt) => this.props.handleChange(
-											// 	evt, this.props.qIndex, reqQ1.text, j,
-											// 	this.props.qNums
-											// )}
 											onChange={(evt) => this.updateRating(evt, j, currentMovie.movie_id, 
 												this.props.qIndex*2+1, reqQ2.text, j, this.props.qNums)}
 										/>

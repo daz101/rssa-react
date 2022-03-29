@@ -8,243 +8,6 @@ body {
 	text-align: left;
 }
 
-.App-logo {
-	height: 40vmin;
-	pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
-}
-
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
-
-.App-link {
-	color: #61dafb;
-}
-
-.header_block {
-	width:65%;
-	height:180px;
-	margin: 15px auto 20px;
-	box-shadow: 1px 1px 10px #888888;
-    background-color: #ffffff;
-	align-content: center;
-}
-
-.headerText {
-	width:100%;
-	padding: 10px;
-	float: left;
-	text-align: center;
-}
-
-.headerText span {
-	width:100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-	font-size: 2em;
-	float: left;
-	text-align: center;
-	letter-spacing: 2px;
-}
-
-#introBackground {
-    background-color: #eaeaea;
-}
-
-.vertical-center {
-	min-height: 10%;  /* Fallback for browsers do NOT support vh unit */
-	min-height: 10vh;
-	display: flex;
-	align-items: center;
-}
-
-.theContainer {
-	float:left;
-}
-
-.listContainer {
-	float: left;
-    z-index: 3;
-    display: table-footer-group;
-    padding-left: 140px;
-    margin: auto;
-}
-
-.mainContainer {
-	max-width: 1000px;
-	margin: auto;
-} 
-
-@media (min-width: 576px) {
-	.bodyContainer {
-		max-width: 530px;
-	}
-}
-
-.parent_container input[type="radio"] {
-	cursor:pointer;
-}
-
-.parent_container .mainBody span {
-	width: 100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-    font-size: 2em;
-    float: left;
-    text-align: left;
-	color: black;
-	padding: 2em 10px 10px;
-}
-
-.parent_container .mainBody span:last-child {
-	width: 100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-    font-size: 1.3em;
-    float: left;
-    text-align: left;
-	color: black;
-	padding: 3PX 10px 10px;
-}
-
-.parent_container .intro {
-	width:100%;
-	padding: 10px;
-	margin-top: 5px;
-	float: left;
-	text-align: center;
-}
-
-.parent_container .intro span {
-	width:100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-	font-size: 1.5em;
-	float: left;
-	text-align: center;
-	letter-spacing: 2px;
-}
-
-.parent_container .intro span:last-child {
-	width:100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-	font-size: 1em;
-	float: left;
-	text-align: center;
-	padding:10px 10px 10px 10px;
-	color: #62656b;
-	letter-spacing: 5px;	
-}
-
-.parent_container .intro .mainQuestion {
-	width:100%;
-	font-family: "Calibri", Georgia, Serif, serif;
-	font-size: 2em;
-	float: left;
-	text-align: left;
-	padding:20px 10px 10px 10px; 
-}
-
-#movie_ribbon {
-	width:80%;
-	margin:auto;
-}
-
-#movie_ribbon_choices {
-	width: 72%;
-	margin: auto; 
-}
-
-.parent_container .block_holder {
-	width:80em;
-	padding:0 7px 7px 7px;
-	box-shadow: 1px 1px 10px #888888;
-    background-color: #ffffff;
-	height:470px;
-	margin: auto;
-}
-
-.parent_container .survey_block_holder {
-	width:80em;
-	padding:0 7px 7px 7px;
-	box-shadow: 1px 1px 10px #888888;
-    background-color: #ffffff;
-	height:550px;
-	margin: auto;
-}
-
-.parent_container .movieHolder {
-	float:left;
-	width:100em;
-	padding:0 7px 7px 7px;
-	box-shadow: 1px 1px 10px #888888;
-    background-color: #ffffff;
-	height:630px;
-	margin: auto;
-}
-
-.parent_container .prefHolder {
-	width:100em;
-	padding:0 7px 7px 7px;
-	box-shadow: 1px 1px 10px #888888;
-    background-color: #ffffff;
-	height:250px;
-	margin: auto;
-}
-
-.parent_container .movie-block {	
-	width: 15%;
-	float: left;
-	margin-left: 2.5%;
-	margin-right: 2.5%;
-	margin-top: 30px; 
-	cursor: pointer;
-	 display: -webkit-flex; /* Safari */
-    -webkit-justify-content: space-around; /* Safari 6.1+ */
-    display: flex;
-    justify-content: space-around;
-}
-
-.parent_container .movie-block .wrapper-block {
-	float:left;
-	width:100%;
-}
-
-.parent_container .movie-block .img-block {
-	float:left;
-	width:100%;
-}
-
-.parent_container .movie-block .img-block img {
-	width:100%;
-	height:180px;
-}
-
-.parent_container .movie-block .row_holder {
-	margin: auto;
-	display: block;
-	float:left;
-	width:100%;
-}
-
-.container:hover .imageTrans {
-	opacity: 0.5;
-}
-
-.container:hover .middle {
-	opacity: 0.9;
-}
-
-
 .star-div {
 	height: 27px;
 	justify-content: center;
@@ -273,97 +36,6 @@ body {
 .container-visited .star-div-visited {
 	z-index: 2;
 	display: flex;
-}
-
-/*progress bar*/ 
-.parent_container .progressbar {
-	margin-top: 20px;
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
-}
-
-.parent_container .progressbar li {
-	list-style-type: none;
-	color: #a1a2a3;
-	text-align: center; 
-	text-transform: uppercase;
-	font-size: 14px;
-	width: 33.33%;
-	float: left;
-	position: relative;
-}
-
-.parent_container .progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 14px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
-}
-
-/*progressbar connectors*/
-.parent_container .progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background-color: #a1a2a3;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
-}
-
-.parent_container .progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none; 
-}
-
-/*marking active/completed steps blue*/
-/*The number of the step and the connector before it*/
-.parent_container .progressbar li.active:before,  #progressbar li.active:after{
-	background: #357df2;
-	color: white;
-}
-
-.parent_container .next-button {
-	float:right;
-	border-radius:12px; 
-    padding-top: 20px;
-	padding-left: 1000px; 
-	position: relative;
-    width: 100%;
-	height: 30px;
-	cursor: pointer; 
-}
-
-.parent_container .mainNextbutton {
-	float: right;
-    border-radius: 12px;
-    padding-top: 20px;
-    padding-left: 200px;
-    padding-right: 250px;
-    position: relative;	
-}
-
-.parent_container .safe-button {
-	float:left;
-	border-radius:12px; 
-    padding-top: 20px;
-	padding-left: 1000px; 
-	position: relative;
-    width: 100%;
-	cursor: pointer; 
-}
-
-#footer-container {
-	background-color: inherit;
 }
 
 .rankHolder {
@@ -410,7 +82,7 @@ body {
 	background-color: #f3ba6a;
 }
 
-div.card {
+div .card {
 	background-color: #f3ba6a;
 }
 
@@ -426,15 +98,6 @@ div.card {
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
     cursor: pointer;
-}
-
-@keyframes App-logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
 }
 
 .app {
@@ -461,136 +124,10 @@ div.card {
     }
 }
 
-.custom-control-inline {
-	display: inline !important;
-}
-
-.form-row {
-	display: block !important;
-}
-
-.form-row > .col{
-	padding-top:7px;
-}
-
 .radio-margin {
 	/* margin-right: 1em; */
 	margin: auto;
 	margin-bottom: 9px;
-}
-
-.button-holder {
-    padding-top:30px;
-}
-
-.rec-holder {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-}
-
-.movie-card {
-    float:left;
-    width:20%;
-    padding:0 1%;
-    font-size:14px;
-    color:#3C3C3F;
-}
-
-.movieShadow {
-    width: 130px;
-    height:400px;
-    -webkit-box-shadow: 6px 6px 10px -6px rgba(0,0,0,0.55);
-    -moz-box-shadow: 6px 6px 10px -6px rgba(0,0,0,0.55);
-    box-shadow: 6px 6px 10px -6px rgba(0,0,0,0.55);
-    border-radius: 2px;
-    margin: 0 auto 10px auto;
-}
-
-.movieTitle, .movieRating, .moviePoster {
-	text-align: center;
-}
-
-.movieTitle {
-    border-bottom: 1px solid #D0D0D0;
-    padding:10px 0;
-    font-size: 10px;
-}
-
-.movieDetails {
-    font-size: 10px;
-    padding:5px;
-}
-
-.movieRating img {
-    width:20px;
-}
-
-.movieRating {
-    margin-bottom:10px;
-}
-
-.clear-it {
-    clear:both;
-}
-
-.cap {
-    text-transform: capitalize;
-}
-
-.movieBtn  .btn {
-    text-align: center;
-    font-size: 0.85vmax;
-}
-
-.movie-options button {
-    margin-right: 10px;
-}
-
-.bold-ques {
-	font-weight: 700;
-}
-
-div.box {
-	width:200px;
-	height:200px;
-	display:inline-block;
-	vertical-align:top;
-	box-sizing:border-box;
-	padding:10px;
-	color:#999;
-	position:relative;
-}
-
-div.box.sample:after {
-    content:"NOT RECOMMENDED";
-    position:absolute;
-    top:100px;
-    left:10px;
-    z-index:1;
-    font-size:2.5vmax;
-    color:#c00;
-    background:#fff;
-    border:solid 4px #c00;
-    padding:5px;
-    border-radius:5px;
-    zoom:1;
-    filter:alpha(opacity=20);
-    opacity:0.2;
-    text-shadow: 0 0 2px #c00;
-    font-family:Arial,sans-serif;
-    box-shadow: 0 0 2px #c00;
-    -webkit-text-shadow: 0 0 2px #c00;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg); /* Safari */
-    -moz-transform: rotate(-45deg); /* Firefox */
-    -ms-transform: rotate(-45deg); /* IE */
-    -o-transform: rotate(-45deg); /* Opera */
-}
-
-.survey-highlight {
-	color: red;
-	font-weight: bold;
 }
 
 .survey-question-block {
@@ -701,7 +238,6 @@ div.box.sample:after {
 }
 
 .checkboxBtn input[type="radio"] {
-    
 	/*-ms-transform: scale(1.4); /* IE 9 */
     /*-webkit-transform: scale(1.4); /* Chrome, Safari, Opera */
     /*transform: scale(1.4);*/
@@ -721,7 +257,7 @@ div.box.sample:after {
 	margin-top: 18px;
 }
 
-.movieSurvey.checkboxLbl {
+.movieSurvey .checkboxLbl {
 	height: 9px;
     width: 99px;
 	margin-bottom: 3px;
@@ -755,7 +291,6 @@ div.box.sample:after {
 }
 
 .grid-item-label {
-	/* background-color: #357df2; */
 	background-color: black;
 	color: white;
 	opacity: 0.8;

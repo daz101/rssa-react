@@ -1,15 +1,13 @@
-import 'intro.js/introjs.css';
-import { Redirect } from "react-router-dom";
-import React, { Component } from 'react';
-import { Steps } from "intro.js-react";
-import MovieGrid from "../widgets/movieGrid";
-import { API } from "../utils/constants";
 import axios from "axios";
-import { Container, Button } from 'react-bootstrap';
-// import { withMousePositionHook } from '../hooks/useMousePosition';
+import { Steps } from "intro.js-react";
+import 'intro.js/introjs.css';
+import React, { Component } from 'react';
+import { Button, Container } from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
+import { API } from "../utils/constants";
+import MovieGrid from "../widgets/movieGrid";
 
 class RatingPage extends Component {
-    // _isMounted = false;
 
     moviesRatingCount = 10;
 
@@ -50,14 +48,9 @@ class RatingPage extends Component {
     }
 
     componentDidMount() {
-        // this._isMounted = true;
         this.setState({
             raterDateTime: new Date()
         });
-    }
-
-    componentWillUnmount() {
-        // this._isMounted = false;
     }
 
     updateSurveyResponse() {
@@ -92,7 +85,7 @@ class RatingPage extends Component {
     }
 
     onBeforeChange = nextStepIndex => {
-        if (nextStepIndex === 1){
+        if (nextStepIndex === 1) {
             this.steps.updateStepElement(nextStepIndex);
         }
     }
@@ -141,8 +134,8 @@ class RatingPage extends Component {
                 />
                 <div className="jumbotron">
                     <h1 className="header">Indicate your preferences</h1>
-                    <p>Use the blue button on the right to scroll through 
-                        the gallery of movies and rate at least 10 movies 
+                    <p>Use the blue button on the right to scroll through
+                        the gallery of movies and rate at least 10 movies
                         that you have already watched</p>
                 </div>
                 <Container>
@@ -169,5 +162,4 @@ class RatingPage extends Component {
     };
 }
 
-// export default withMousePositionHook(RatingPage);
 export default RatingPage;

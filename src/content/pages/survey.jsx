@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import ReactHtmlParser from 'react-html-parser';
 import { Redirect } from 'react-router-dom';
-import { API, likertVals, qBank } from '../utils/constants';
+import { API, qBank } from '../utils/constants';
 import SurveyPane from '../widgets/surveyPanes';
 const defaultMovieIco = require("../res/default_movie_icon.svg");
 
@@ -74,7 +74,6 @@ class SurveyPage extends Component {
 	handleChange(event, qId, qText, qType, resVal, numQuestions) {
 		let responses = this.state.responses;
 		let response = {};
-		console.log(responses);
 
 		let val = qType === "likert" ? resVal.indexOf(resVal) + 1 : resVal;
 
@@ -99,7 +98,6 @@ class SurveyPage extends Component {
 			disabled: !(responses.length === numQuestions)
 		})
 	}
-
 
 	/*
 	functions to handle next and previous buttons 
@@ -150,17 +148,11 @@ class SurveyPage extends Component {
 		let userid = this.state.userid;
 		let done = this.state.done;
 		let qSet = this.getQuestions(currentStep);
-		let pageid = this.state.pageid;
 		let recs = this.state.recs;
-
-		const mousePos = this.props.mousePositionHook;
-		const pageHeight = document.body.scrollHeight;
-		const pageWidth = document.body.scrollWidth;
-
+		
 		let selectedmovie = this.state.selectedmovie;
 
 		if (done) {
-			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
 				<Redirect to={{
 					pathname: "/exit",
@@ -198,6 +190,8 @@ class SurveyPage extends Component {
 					) : qSet.showSelected ? (
 						<div id={"TN_" + selectedmovie.id}
 							className={"grid-item"} style={{
+								width: "135px",
+								height: "171px",
 								margin: "0 3px",
 								backgroundImage: "url(" + selectedmovie.poster + "), url('" + defaultMovieIco + "')",
 							}}>

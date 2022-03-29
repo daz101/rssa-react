@@ -177,12 +177,12 @@ class RecommendationPage extends Component {
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
         let leftbyline = this.state.leftPanel.byline;
-        
+
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
         let rightbyline = this.state.rightPanel.byline;
         if (this.state.updateSuccess) {
-            
+
             let selectedmovie = [...leftItems, ...rightItems].find((movie) => (
                 movie.movie_id === selectedid
             ));
