@@ -4,10 +4,12 @@ import Button from 'react-bootstrap/Button';
 import { Redirect } from "react-router-dom";
 import { withMousePositionHook } from '../hooks/useMousePosition';
 import { API } from '../utils/constants';
+import { Card } from 'react-bootstrap';
 
 const prefRssa = require("../res/rssa-preferences.png");
 const recommendationRssa = require("../res/rssa-ratingrecs.png");
 const finalRssa = require("../res/rssa-finalrecs.png");
+const survey = require("../res/rssa-survey.png")
 
 class InstructionPage extends Component {
 	constructor(props) {
@@ -85,44 +87,55 @@ class InstructionPage extends Component {
 				</div>
 				<div className="instructions-page">
 					<div className="row">
-						<div className="col-sm">
-							<div className="card ">
+						<div className="col-sm d-flex align-self-stretch">
+							<Card>
 								<img src={prefRssa} className="card-img-top" alt="..." />
-								<div className="card-body">
-									<h5 className="card-title">Indicate Your Preference</h5>
-									<p className="card-text">
+								<Card.Body className="d-flex flex-column">
+									<Card.Title>Indicate Your Preference</Card.Title>
+									<Card.Text>
 										Please navigate through the endless list of movies and rate the
 										ones you have watched on a 5-point scale. The system will use these
 										ratings to learn about your preferences. Please rate at least 10 movies.
-									</p>
-								</div>
-							</div>
+									</Card.Text>
+								</Card.Body>
+							</Card>
 						</div>
-						<div className="col-sm">
-							<div className="card">
+						<div className="col-sm d-flex align-self-stretch">
+							<Card>
 								<img src={recommendationRssa} className="card-img-top" alt="..." />
-								<div className="card-body">
-									<h5 className="card-title">Refine Your Recommendations</h5>
-									<p className="card-text">
+								<Card.Body className="d-flex flex-column">
+									<Card.Title>Refine Your Recommendations</Card.Title>
+									<Card.Text>
 										The system will give you a first list of 7 recommendations and a list of 7
 										alternative items. Please rate all 14 items to refine the recommendations.
 										You will do this step <strong>twice</strong>.
-									</p>
-								</div>
-							</div>
+									</Card.Text>
+								</Card.Body>
+							</Card>
 						</div>
-						<div className="col-sm">
-							<div className="card">
+						<div className="col-sm d-flex align-self-stretch">
+							<Card>
 								<img src={finalRssa} className="card-img-top" alt="..." />
-								<div className="card-body">
-									<h5 className="card-title">Select A Movie to Watch</h5>
-									<p className="card-text">
+								<Card.Body className="d-flex flex-column">
+									<Card.Title>Select A Movie to Watch</Card.Title>
+									<Card.Text>
 										Once you have refined the recommendations twice, you will receive a final
 										set of 7 recommendations and 7 alternative items. Please select the one item
 										on this page that you are most interested in watching right now
-									</p>
-								</div>
-							</div>
+									</Card.Text>
+								</Card.Body>
+							</Card>
+						</div>
+						<div className="col-sm d-flex align-self-stretch">
+							<Card>
+								<img src={survey} className="card-img-top" alt="..." />
+								<Card.Body className="d-flex flex-column">
+									<Card.Title>Complete Survey</Card.Title>
+									<Card.Text>
+										Complete a survey about your experience interacting with the system.
+									</Card.Text>
+								</Card.Body>
+							</Card>
 						</div>
 					</div>
 				</div>
