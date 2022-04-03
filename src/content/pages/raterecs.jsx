@@ -42,6 +42,11 @@ class RecommendationPage extends Component {
         }
     }
 
+    componentWillUnmount(){
+        document.body.style.backgroundColor = "white";
+    }
+
+
     getRecommendations() {
         let userid = this.state.userid;
         let ratings = this.state.ratings;

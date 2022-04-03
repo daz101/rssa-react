@@ -76,7 +76,7 @@ class WelcomePage extends Component {
 			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Redirect to={{
-					pathname: "/instructions",
+					pathname: this.props.dest,
 					state: {
 						userid: userid,
 						pageid: 2

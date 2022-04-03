@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormGroup, FormLabel } from "react-bootstrap";
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 
 const defaultMovieIco = require("../res/default_movie_icon.svg");
@@ -50,14 +50,14 @@ class SurveyMovieGroup extends Component {
 						</div>
 						<div>
 							<div className="font-weight-bold movieSurvey surveyQuestion">
-								<p className="lead" style={{ marginLeft: "9px" }}>{ReactHtmlParser(reqQ1.text)}</p>
+								<p className="lead" style={{ marginLeft: "9px" }}>{parse(reqQ1.text)}</p>
 							</div>
 							<div className="movieSurvey checkboxGroup">
 								{['Yes', 'No'].map((strVal, j) =>
 									<FormLabel htmlFor={this.props.id + "_" + reqQ1.qId + "_" + j}
 										key={this.props.id + "_" + reqQ1.qId + "_" + j} className="movieSurvey checkboxBtn"
 										style={this.state.watched === j ? { backgroundColor: "#55AA55" } : {}} >
-										<p className="movieSurvey checkboxLbl">{ReactHtmlParser(strVal)}</p>
+										<p className="movieSurvey checkboxLbl">{parse(strVal)}</p>
 										<input className="radio-margin" type="radio"
 											name={this.props.id + "_" + reqQ1.qId}
 											id={this.props.id + "_" + reqQ1.qId + "_" + j}
@@ -68,7 +68,7 @@ class SurveyMovieGroup extends Component {
 								)}
 							</div>
 							<div className="font-weight-bold movieSurvey surveyQuestion" style={{ marginTop: "27px" }}>
-								<p className="lead" style={{ marginLeft: "9px" }}>{ReactHtmlParser(reqQ2.text)}</p>
+								<p className="lead" style={{ marginLeft: "9px" }}>{parse(reqQ2.text)}</p>
 							</div>
 							<div className="movieSurvey checkboxGroup">
 								{[1, 2, 3, 4, 5].map(j =>

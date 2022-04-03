@@ -15,7 +15,8 @@ class ClosingRecommendationPage extends Component {
 			pageid: props.location.state.pageid + 1,
 			selectedmovie: props.location.state.selectedmovie,
 			starttime: undefined,
-			userText: ''
+			userText: '',
+			userResponded: false
 		};
 
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
@@ -61,12 +62,13 @@ class ClosingRecommendationPage extends Component {
 	onValueChange = (event) => {
 		let responseText = event.target.value;
 		this.setState({
-			userText: responseText
+			userText: responseText,
+			userResponded: responseText.length > 1
 		});
 	}
 
 	render() {
-		// let buttonDisabled = ((true) !== true);
+		let buttonDisabled = !this.state.userResponded;
 
 		let userid = this.state.userid;
 		let ratings = this.state.ratings;
@@ -74,7 +76,7 @@ class ClosingRecommendationPage extends Component {
 		let pageid = this.state.pageid;
 		let selectedmovie = this.state.selectedmovie;
 
-		// let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
+		let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
 		if (this.state.updateSuccess) {
 			return (
@@ -109,8 +111,8 @@ class ClosingRecommendationPage extends Component {
 					</Card.Body>
 				</Card>
 				<div className="jumbotron jumbotron-footer">
-					<Button className="footer-btn" variant="primary" size="lg"
-						// disabled={buttonDisabled}
+					<Button className="footer-btn" variant={buttonVariant} size="lg"
+						disabled={buttonDisabled}
 						onClick={this.updateSurvey}>
 						Next
 					</Button>

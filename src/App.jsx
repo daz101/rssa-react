@@ -2,7 +2,7 @@ import './App.css';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import { API } from './content/utils/constants';
+import { API, qBank, preSurveyBank } from './content/utils/constants';
 import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import SurveyPage from './content/pages/survey';
 import ExitPage from './content/pages/exit';
 import ProgressBarComponent from "./content/widgets/progressBar";
 import ClosingRecommendationPage from './content/pages/closingRecs';
+import DemographicInfoPage from './content/pages/demography';
 import axios from 'axios';
 
 class App extends Component {
@@ -63,6 +64,7 @@ class App extends Component {
         let loaderActive = this.state.loaderActive;
         let prog = this.state.progress;
         let progBarVisibility = loaderActive ? "pb_invisible" : "pb_visible";
+
         return (
             <div className="App">
                 <Navbar bg="light">
@@ -78,12 +80,18 @@ class App extends Component {
                             <Switch>
                                 <Route exact path="/" render={(props) => <WelcomePage {...props}
                                     activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest="/instructions" />} />
+                                    progressUpdater={this.progressUpdater} dest="/presurvey" />} />
+
+                                <Route path="/presurvey" render={(props) => <SurveyPage {...props}
+                                    questionBank={preSurveyBank}
+                                    progressUpdater={this.progressUpdater} dest="/instructions" />} key={1} />
+
                                 <Route path="/instructions" render={(props) => <InstructionPage {...props}
                                     activitySync={this.activitySync}
                                     progressUpdater={this.progressUpdater} dest="/ratemovies" />} />
+                                
                                 <Route path="/ratemovies" render={(props) => <RatingPage {...props}
-                                    progressUpdater={this.progressUpdater} dest="/raterecommendation1" />} />
+                                    progressUpdater={this.progressUpdater} dest="/raterecommendations1" />} />
 
                                 <Route path="/raterecommendations1" render={(props) => <RecommendationPage {...props}
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
@@ -109,8 +117,12 @@ class App extends Component {
                                     dest="/survey" />} />
 
                                 <Route path="/survey" render={(props) => <SurveyPage {...props}
-                                    activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest="/exit" key={3} />} />
+                                    questionBank={qBank} progressUpdater={this.progressUpdater} 
+                                    dest="/demographicinfo" />} key={2} />
+
+                                <Route path="/demographicinfo" render={(props) => <DemographicInfoPage { ...props}
+                                    progressUpdater={this.progressUpdater} finalPage={true}
+                                    dest="/exit" />} />
                                 <Route path="/exit" component={ExitPage} />
                             </Switch>
                         </Router>

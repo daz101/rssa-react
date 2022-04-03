@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormLabel } from "react-bootstrap";
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 
 class SurveyQuestionGroup extends Component {
@@ -25,14 +25,14 @@ class SurveyQuestionGroup extends Component {
 			<>
 				<FormGroup className="survey-question-block"  >
 					<div className="font-weight-bold surveyQuestion">
-						<p className="lead">{ReactHtmlParser(this.props.qText)}</p></div>
+						<p className="lead">{parse(this.props.qText)}</p></div>
 					<div className="checkboxGroup">
 						{this.props.qVals.map((strVal, j) => {
 							return (
 								<FormLabel htmlFor={this.props.qType + "_" + this.props.qIndex + "_" + j}
 									key={this.props.qType + "_" + this.props.qIndex + "_" + j} className="checkboxBtn"
 									style={this.state.selected === j ? { backgroundColor: "#55AA55" } : {}}>
-									<p className="checkboxLbl">{ReactHtmlParser(strVal)}</p>
+									<p className="checkboxLbl">{parse(strVal)}</p>
 									<input className="radio-margin" type="radio"
 										name={this.props.id}
 										value={j}

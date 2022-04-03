@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 import { Redirect } from 'react-router-dom';
-import { API, qBank } from '../utils/constants';
+import { API } from '../utils/constants';
 import SurveyPane from '../widgets/surveyPanes';
 const defaultMovieIco = require("../res/default_movie_icon.svg");
 
@@ -17,7 +17,7 @@ class SurveyPage extends Component {
 			pickid: props.location.state.selectedid,
 			finalRecommendations: props.location.state.recs,
 			pageid: props.location.state.pageid + 1,
-			surveyPageCount: 6,
+			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length - 1,
 			currentStep: 1,
 			surveyDateTime: new Date(),
 			disabled: true,
@@ -62,7 +62,7 @@ class SurveyPage extends Component {
 						this.setState({
 							done: true
 						});
-						this.props.progressUpdater(100);
+						this.props.progressUpdater();
 					} else {
 						this._next();
 						this.props.progressUpdater();
@@ -118,8 +118,9 @@ class SurveyPage extends Component {
 
 	nextButton() {
 		const currentStep = this.state.currentStep;
+		let isFinalPage = this.props.finalPage || false;
 		let buttonVariant = this.state.disabled ? 'secondary' : 'primary';
-		if (currentStep < 6) {
+		if (currentStep < this.state.surveyPageCount || !isFinalPage) {
 			return (
 				<Button disabled={this.state.disabled}
 					className="footer-btn"
@@ -139,7 +140,7 @@ class SurveyPage extends Component {
 	}
 
 	getQuestions(idx) {
-		return qBank[idx];
+		return this.props.questionBank[idx];
 	};
 
 	render() {
@@ -155,10 +156,10 @@ class SurveyPage extends Component {
 		if (done) {
 			return (
 				<Redirect to={{
-					pathname: "/exit",
+					pathname: this.props.dest,
 					state: {
-						completed: done,
-						userid: userid
+						userid: userid,
+						pageid: this.state.pageid + currentStep - 1
 					}
 				}} />
 			)
@@ -168,7 +169,7 @@ class SurveyPage extends Component {
 			<>
 				<div className="jumbotron sticky-top">
 					<h4>{qSet.title}</h4>
-					<p style={{ marginBottom: "0" }}>{ReactHtmlParser(qSet.instruction)}</p>
+					<p style={{ marginBottom: "0" }}>{parse(qSet.instruction)}</p>
 					{qSet.displayRecs ? (
 						<div style={{ display: "flex" }}>
 							{

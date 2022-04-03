@@ -98,7 +98,7 @@ class RatingPage extends Component {
         if (this.state.updateSuccess) {
             return (
                 <Redirect to={{
-                    pathname: "/raterecommendations1",
+                    pathname: this.props.dest,
                     state: {
                         userid: userid,
                         ratings: ratings,
