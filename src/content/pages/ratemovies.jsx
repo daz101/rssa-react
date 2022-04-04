@@ -1,7 +1,7 @@
 import axios from "axios";
+import React, { Component } from 'react';
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
-import React, { Component } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";

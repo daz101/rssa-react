@@ -121,7 +121,7 @@ class WelcomePage extends Component {
 					</Button>
 				</div>
 
-				<Modal show={show} dialogClassName="modal-70w" style={{ zIndex: "2050" }}>
+				<Modal show={show} dialogClassName="modal-80w" style={{ zIndex: "2050" }}>
 					<Modal.Header>
 						<Modal.Title>Consent: taking part in the study</Modal.Title>
 					</Modal.Header>

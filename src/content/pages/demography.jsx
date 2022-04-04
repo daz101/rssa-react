@@ -69,7 +69,7 @@ class DemographicInfoPage extends Component {
 					this.setState({
 						updateSuccess: true
 					});
-					this.props.progressUpdater(100);
+					this.props.progressUpdater(10);
 				}
 			})
 	}

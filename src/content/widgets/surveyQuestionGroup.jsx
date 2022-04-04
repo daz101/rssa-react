@@ -25,7 +25,7 @@ class SurveyQuestionGroup extends Component {
 			<>
 				<FormGroup className="survey-question-block"  >
 					<div className="font-weight-bold surveyQuestion">
-						<p className="lead">{parse(this.props.qText)}</p></div>
+						<p className="lead" style={{marginBottom: "3px"}}>{parse(this.props.qText)}</p></div>
 					<div className="checkboxGroup">
 						{this.props.qVals.map((strVal, j) => {
 							return (

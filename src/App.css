@@ -122,6 +122,10 @@ div .card {
 		max-width: 800px;
 		margin: 1.75rem auto;
     }
+	.modal-80w {
+		max-width: 80%;
+		margin: 1.75rem auto;
+    }
 }
 
 .radio-margin {
@@ -159,7 +163,7 @@ div .card {
 }
 
 .surveyQuestion {
-	margin: 9px 0 9px 18px;
+	margin: 9px 0 0 18px;
 }
 
 .movieSurvey.surveyQuestion {
@@ -172,7 +176,8 @@ div .card {
 }
 
 .checkboxGroup{
-	margin: 0 0 9px 18px;
+	margin: 0 0 3px 18px;
+	display: inline-flex;
 }
 
 .movieSurvey.checkboxGroup {
@@ -225,16 +230,20 @@ div .card {
 
 .checkboxBtn {
 	cursor: pointer;
-    display: inline-grid;
+    /* display: inline-grid; */
     padding: 3px;
 	background-color: #c9cccf;
-	margin: 3px 9px 9px 9px;
+	margin: 3px 9px 3px 9px;
 	border-radius: 3px;
+	height: 63px;
+    width: 108px;
+	display: inline-flex;
 }
 
 .movieSurvey.checkboxBtn{
 	padding: 0;
 	margin: 0 0 0 3px;
+	height: fit-content;
 }
 
 .checkboxBtn input[type="radio"] {
@@ -244,6 +253,7 @@ div .card {
 	visibility: hidden;
 	width: 0;
 	height: 0;
+	margin: 0;
 }
 
 .checkboxBtn:hover {
@@ -251,17 +261,18 @@ div .card {
 }
 
 .checkboxLbl {
-    height: 36px;
-    width: 108px;
+    /* height: 36px;
+    width: 108px; */
     text-align: center;
-	margin-top: 18px;
+	margin: auto;
+	/* margin-bottom: 3px; */
 }
 
-.movieSurvey .checkboxLbl {
-	height: 9px;
+.movieSurvey.checkboxLbl {
+	/* height: 9px; */
     width: 99px;
-	margin-bottom: 3px;
-	margin-top: 3px;
+	/* margin-bottom: 3px;
+	margin-top: 3px; */
 }
 
 /* Bootstrap Overrides and add-ons */
