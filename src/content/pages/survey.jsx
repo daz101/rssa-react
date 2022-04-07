@@ -19,6 +19,7 @@ class SurveyPage extends Component {
 			pageid: props.location.state.pageid + 1,
 			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length - 1,
 			currentStep: 1,
+			prevStep: 1,
 			surveyDateTime: new Date(),
 			disabled: true,
 			responses: [],
@@ -71,6 +72,16 @@ class SurveyPage extends Component {
 			})
 	}
 
+	componentDidUpdate() {
+		let prevStep = this.state.prevStep;
+		if (prevStep !== this.state.currentStep) {
+			window.scrollTo({top: 0, behavior: 'smooth'});
+			this.setState({
+				prevStep: prevStep + 1
+			});
+		}
+	}
+
 	handleChange(event, qId, qText, qType, resVal, numQuestions) {
 		let responses = this.state.responses;
 		let response = {};
@@ -107,7 +118,6 @@ class SurveyPage extends Component {
 		let surveyDateTime = new Date();
 		let responses = [];
 		currentStep++;
-		window.scrollTo(0, 0);
 		this.setState({
 			currentStep: currentStep,
 			disabled: true,
@@ -150,7 +160,7 @@ class SurveyPage extends Component {
 		let done = this.state.done;
 		let qSet = this.getQuestions(currentStep);
 		let recs = this.state.recs;
-		
+
 		let selectedmovie = this.state.selectedmovie;
 
 		if (done) {

@@ -9,7 +9,7 @@ class ExitPage extends Component {
 		super(props);
 		let userid = undefined;
 		let completed = false;
-		if (this.props.location.state !== undefined){
+		if (this.props.location.state !== undefined) {
 			userid = this.props.location.state.userid;
 			completed = this.props.location.state.completed;
 		}
@@ -22,7 +22,7 @@ class ExitPage extends Component {
 	}
 
 	componentDidMount() {
-		if (this.state.completed){
+		if (this.state.completed) {
 			this.getCompletionCode();
 		}
 	}
@@ -33,7 +33,7 @@ class ExitPage extends Component {
 		let pageid = this.state.pageid;
 		let requestTime = new Date();
 
-		axios.post(API + 'completionCode', {
+		axios.post(API + 'redirect', {
 			pageid: pageid,
 			requestime: requestTime.toUTCString(),
 			userid: userid,
@@ -47,15 +47,13 @@ class ExitPage extends Component {
 			})
 			.then(response => {
 				if (response.status === 200) {
-					this.setState({
-						code: response.data['user_code']
-					})
+					window.location.href = response.data['redirect_url'];
 				}
 			});
 	}
 
 	render() {
-		let code = this.state.code;
+		let redirect_url = this.state.redirect_url;
 		let completed = this.state.completed;
 
 		return (
@@ -74,21 +72,17 @@ class ExitPage extends Component {
 							{completed ? (
 								<Card.Body>
 									<p>
-										You will now be redirected back to Prolific. If you are not redirected 
+										You will now be redirected back to Prolific. If you are not redirected
 										automatically in more than 15 seconds click the link below.
 									</p>
 									<div style={{
 										margin: "1em 3em", padding: "1.25em 1.5em 0.25em",
 										width: "fit-content"
 									}}>
-										<p style={{ fontSize: "larger" }}>
-											<strong>link</strong>
-										</p>
+										<a href={redirect_url}>
+											Take me back.
+										</a>
 									</div>
-									<p>
-										Please save this safely so you can claim your payment. We will endevour to validate
-										the codes as soon as possible.
-									</p>
 								</Card.Body>
 							) : (
 								<Card.Body>

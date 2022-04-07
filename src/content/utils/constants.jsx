@@ -40,7 +40,7 @@ export const qBank = {
 			{ qId: 'q3', text: 'The recommended movies fit my preference', flag: false },
 			{ qId: 'q4', text: 'The recommended movies were relevant', flag: false },
 			{ qId: 'q5', text: 'The system recommended too many bad movies.', flag: false },
-			{ qId: 'q6', text: 'I did not like any of the recommended movies.', flag: false }
+			{ qId: 'q6', text: 'I did <u><strong>not</strong></u> like any of the recommended movies.', flag: false }
 		]
 	},
 	3: {
@@ -58,7 +58,7 @@ export const qBank = {
 			{ qId: 'q2', text: 'I think the recommendations are unique to me.', flag: false },
 			{ qId: 'q3', text: 'I believe that the system is giving me a one of a kind experience.', flag: false },
 			{ qId: 'q4', text: 'I believe that the movies recommended to me are rather different from the movies recommended to others.', flag: false },
-			{ qId: 'q5', text: 'I would not be surprised if the system recommended the same movies to many other users', flag: false }
+			{ qId: 'q5', text: 'I would <u><strong>not</strong></u> be surprised if the system recommended the same movies to many other users', flag: false }
 		]
 	}, 4: {
 		title: 'Questions about the final list of "movies you may like"',
@@ -103,7 +103,7 @@ export const qBank = {
 			{ qId: 'q1', text: 'The movie recommender catered to all of my potential interests', flag: false },
 			{
 				qId: 'q2', text: 'The movies that were recommended did' +
-					' <span style="color:red"><strong>not</strong></span> reflect my diverse taste in movies.', flag: false
+					' <u><strong>not</strong></u> reflect my diverse taste in movies.', flag: false
 			},
 			{ qId: 'q4', text: 'The movie recommender treated me as a one-dimensional person.', flag: false },
 			{ qId: 'q5', text: 'The lists of recommendations matched a diversity of my preferences.', flag: false },
@@ -133,12 +133,12 @@ export const qBank = {
 export const preSurveyBank = {
 	1: {
 		title: 'Questions about your movie exploration style.',
-		instruction: 'Please rate your agreement with the following statements.',
+		instruction: 'Please reflect on the process through which you find new movies.',
 		qType: 'fomo',
 		displayRecs: false,
 		showSlected: false,
 		qData: [
-			{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones that were recommended.', flag: false },
+			{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones recommended to me in the past.', flag: false },
 			{ qId: 'q2', text: 'I fear others may find more entertaining movies than me.', flag: false },
 			{ qId: 'q3', text: 'I get worried when I find out others are finding better movies than me.', flag: false },
 			{ qId: 'q4', text: 'I get anxious when I think about all the possible movies that are out there.', flag: false },

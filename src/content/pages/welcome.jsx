@@ -23,8 +23,23 @@ class WelcomePage extends Component {
 	}
 
 	componentDidMount() {
+		const windowUrl = window.location.search;
+		const query = new URLSearchParams(windowUrl);
+		const prolific_pid = query.get('PROLIFIC_PID') || '';
+		const study_id = query.get('STUDY_ID') || '';
+		const session_id = query.get('SESSION_ID') || '';
+		const surveyStartTime = new Date();
+
+		let platform_info = {
+			prolific_pid: prolific_pid,
+			study_id: study_id,
+			session_id: session_id,
+			start_time: surveyStartTime.toUTCString()
+		};
+		console.log(platform_info);
 		this.setState({
-			welcomeDateTime: new Date()
+			welcomeDateTime: surveyStartTime,
+			platformInfo: platform_info
 		});
 	}
 
@@ -39,11 +54,13 @@ class WelcomePage extends Component {
 		let consentEndTime = new Date();
 		let welcomeDateTime = this.state.welcomeDateTime;
 		let consentStartTime = this.state.consentStartTime;
+		let platformInfo = this.state.platformInfo;
 
 		axios.post(API + 'new_user', {
 			welcomeTime: welcomeDateTime.toUTCString(),
 			consentStartTime: consentStartTime.toUTCString(),
-			consentEndTime: consentEndTime.toUTCString()
+			consentEndTime: consentEndTime.toUTCString(),
+			platformInfo: platformInfo
 		},
 			{
 				headers: {

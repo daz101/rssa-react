@@ -30,6 +30,10 @@ class App extends Component {
         this.activitySync = this.syncMouseActivity.bind(this);
     }
 
+    // componentDidMount() {
+
+    // }
+
     toggleLoader(toggle) {
         this.setState({
             loaderActive: toggle
@@ -67,7 +71,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Navbar bg="light">
+                <Navbar id="topnav" bg="light">
                     <Navbar.Brand style={{ marginLeft: "1em", fontWeight: "450" }}>Movie Recommender Study</Navbar.Brand>
                 </Navbar>
                 <div className="contentWrapper">
@@ -89,7 +93,7 @@ class App extends Component {
                                 <Route path="/instructions" render={(props) => <InstructionPage {...props}
                                     activitySync={this.activitySync}
                                     progressUpdater={this.progressUpdater} dest="/ratemovies" />} />
-                                
+
                                 <Route path="/ratemovies" render={(props) => <RatingPage {...props}
                                     progressUpdater={this.progressUpdater} dest="/raterecommendations1" />} />
 
@@ -109,7 +113,7 @@ class App extends Component {
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                     waitMsg={"Please hang on while we build your final recommendations."}
                                     pageHeader={"Select a movie to watch"}
-                                    headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like these 7 movies the best."}
+                                    headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like the 7 movies (on the left) the best. Please select one move that you would like to watch right now if you could."}
                                     dest="/endrecommendations" pick={true} key={3} level={3} />} />
 
                                 <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}
@@ -117,10 +121,10 @@ class App extends Component {
                                     dest="/survey" />} />
 
                                 <Route path="/survey" render={(props) => <SurveyPage {...props}
-                                    questionBank={qBank} progressUpdater={this.progressUpdater} 
+                                    questionBank={qBank} progressUpdater={this.progressUpdater}
                                     dest="/demographicinfo" />} key={2} />
 
-                                <Route path="/demographicinfo" render={(props) => <DemographicInfoPage { ...props}
+                                <Route path="/demographicinfo" render={(props) => <DemographicInfoPage {...props}
                                     progressUpdater={this.progressUpdater} finalPage={true}
                                     dest="/exit" />} />
                                 <Route path="/exit" component={ExitPage} />

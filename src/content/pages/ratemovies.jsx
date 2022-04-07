@@ -136,7 +136,11 @@ class RatingPage extends Component {
                     <h1 className="header">Indicate your preferences</h1>
                     <p>Use the blue button on the right to scroll through
                         the gallery of movies and rate at least 10 movies
-                        that you have already watched</p>
+                        that you have already watched. Once you have rated 10 
+                        movies, the system will be able to give you 
+                        recommendations.
+                        Keep in mind, you can click on the blue button on the 
+                        right to get more movies to rate!</p>
                 </div>
                 <Container>
                     <MovieGrid handler={this.rateMoviesHandler} userid={userid} pageid={pageid} />

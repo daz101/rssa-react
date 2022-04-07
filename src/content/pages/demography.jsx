@@ -18,12 +18,13 @@ class DemographicInfoPage extends Component {
 			selectedmovie: props.location.state.selectedmovie,
 			starttime: undefined,
 			userResponded: false,
-			age: undefined,
-			education: undefined,
-			race: undefined,
-			gender: undefined,
+			age: -1,
+			education: -1,
+			race: [],
+			gender: -1,
 			country: undefined,
-			region: undefined
+			region: undefined,
+			customRace: false
 		};
 
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
@@ -36,17 +37,20 @@ class DemographicInfoPage extends Component {
 	}
 
 	updateSurveyResponse() {
-		let startime = this.state.starttime;
-		let endtime = new Date();
-		let pageid = this.state.pageid;
-		let userid = this.state.userid;
-		let userText = this.state.userText;
-		let age = this.state.age;
-		let country = this.state.country;
-		let gender = this.state.gender;
-		let race = this.state.race;
-		let education = this.state.education;
-		let region = this.state.region || '';
+		const startime = this.state.starttime;
+		const endtime = new Date();
+		const pageid = this.state.pageid;
+		const userid = this.state.userid;
+		const age = this.state.age;
+		const education = this.state.education;
+		const country = this.state.country;
+		const region = this.state.region || '';
+		const gender = this.state.gender;
+		const customGen = gender === 4;
+		const genText = this.state.genText;
+		const race = this.state.race;
+		const customRac = this.state.customRace || false;
+		const racText = this.state.racText;
 
 		axios.put(API + 'add_survey_response', {
 			pageid: pageid,
@@ -60,7 +64,8 @@ class DemographicInfoPage extends Component {
 					gender: gender,
 					race: race,
 					education: education,
-					textgen: userText === undefined ? '' : userText
+					textgen: genText === undefined || !customGen ? '' : genText,
+					textrac: racText === undefined || !customRac ? '' : racText
 				}
 			}
 		})
@@ -75,7 +80,22 @@ class DemographicInfoPage extends Component {
 	}
 
 	paramFromEvent = (evt, key) => {
-		this.updateParam(evt.target.value, key);
+		let val = +evt.target.value;
+		if (key === 'race') {
+			const checked = evt.target.checked;
+			let racval = this.state.race;
+			const racidx = racval.indexOf(val);
+			!racidx > -1 && !checked ? racval.splice(racidx, 1) : racval.push(val);
+			if (racval[0] === 7 && val !== 7) {
+				racval.splice(0, 1);
+			}
+			this.setState({
+				[key]: val === 7 && checked ? [7] : racval,
+				customRace: (val === 6 && checked)
+			});
+		} else {
+			this.updateParam(val, key);
+		}
 	}
 
 	updateParam = (val, key) => {
@@ -84,22 +104,25 @@ class DemographicInfoPage extends Component {
 		})
 	}
 
-	onValueChange = (event) => {
+	onValueChange = (event, key) => {
 		let responseText = event.target.value;
 		this.setState({
-			userText: responseText
+			[key]: responseText
 		});
 	}
 
 	render() {
-		let buttonDisabled = !(this.state.gender && this.state.age &&
-			this.state.race && this.state.education && this.state.country);
+		// console.log(this.state.race.length);
+		let buttonDisabled = !(this.state.gender > -1 && this.state.age > -1 &&
+			this.state.race.length > 0 && this.state.education > -1 && this.state.country);
 
 		let userid = this.state.userid;
 		let pageid = this.state.pageid;
 
-		let genderPref = this.state.gender === '4' ? 'text' : 'hidden';
+		let genderPref = this.state.gender === 4 ? 'text' : 'hidden';
 		let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
+		let customRace = this.state.customRace;
+		let race = this.state.race;
 
 		if (this.state.updateSuccess) {
 			return (
@@ -127,7 +150,7 @@ class DemographicInfoPage extends Component {
 							<Form.Label>What is your age?</Form.Label>
 							<Form.Select variant="outline-secondary" title="Dropdown" id="input-group-dropdown-1"
 								onChange={(evt) => this.paramFromEvent(evt, "age")} value={this.state.age}>
-								<option>Please choose an option</option>
+								<option value="-1">Please choose an option</option>
 								<option value="0">18 - 24 years old</option>
 								<option value="1">25 - 29 years old</option>
 								<option value="2">30 - 34 years old</option>
@@ -142,20 +165,21 @@ class DemographicInfoPage extends Component {
 							<Form.Label>What is your gender?</Form.Label>
 							<Form.Select variant="outline-secondary" title="Dropdown" id="input-group-dropdown-2"
 								onChange={(evt) => this.paramFromEvent(evt, "gender")} value={this.state.gender}>
-								<option>Please choose an option</option>
+								<option value="-1">Please choose an option</option>
 								<option value="0">Woman</option>
 								<option value="1">Man</option>
 								<option value="2">Non-binary</option>
 								<option value="3">Prefer not to disclose</option>
 								<option value="4">Prefer to self-describe</option>
 							</Form.Select>
-							<Form.Control type={genderPref} style={{ marginTop: "9px" }} onChange={this.onValueChange} />
+							<Form.Control type={genderPref} style={{ marginTop: "9px" }}
+								onChange={(evt) => this.onValueChange(evt, "genText")} />
 							<br />
 							<Form.Label>Choose one or more races that you consider yourself to be:</Form.Label>
-							<Form.Select variant="outline-secondary" title="Dropdown" id="input-group-dropdown-3"
+							{/* <Form.Check variant="outline-secondary" title="Dropdown" id="input-group-dropdown-3"
 								onChange={(evt) => this.paramFromEvent(evt, "race")} value={this.state.race}>
 								<option >Please choose an option</option>
-								<option value="0">White</option>
+								<option value="0">White                    </option>
 								<option value="1">Black or African American</option>
 								<option value="2">American Indian or Alaskan Native</option>
 								<option value="3">Asian</option>
@@ -164,12 +188,28 @@ class DemographicInfoPage extends Component {
 								<option value="6">Two or more races</option>
 								<option value="7">Not listed (Please specify)</option>
 								<option value="8">Prefer not to answer</option>
-							</Form.Select>
+							</Form.Check> */}
+							{
+								['White', 'Black or African American', 'Asian', 'Native Hawaiian or Pacific Islander',
+									'Hispanic', 'Two or more races', 'Not listed (Please specify)',
+									'Prefer not to answer'].map((raceVal, i) => (
+										<div key={"race-chck-" + i}>
+											<Form.Check type="checkbox" id={"race-chck-" + i}
+												label={raceVal} value={i} checked={race.indexOf(i) > -1}
+												onChange={(evt) => this.paramFromEvent(evt, "race")} />
+											{customRace && i === 6 ?
+												<Form.Control type="text" style={{ marginTop: "9px", marginBottom: "9px" }}
+													onChange={(evt) => this.onValueChange(evt, "racText")} /> :
+												<></>
+											}
+										</div>
+									))
+							}
 							<br />
 							<Form.Label>What is the highest degree or level of education you have completed?</Form.Label>
 							<Form.Select variant="outline-secondary" title="Dropdown" id="input-group-dropdown-4"
 								onChange={(evt) => this.paramFromEvent(evt, "education")} value={this.state.education}>
-								<option>Please choose an option</option>
+								<option value="-1">Please choose an option</option>
 								<option value="0">Some high school</option>
 								<option value="1">High school</option>
 								<option value="2">Some college</option>
