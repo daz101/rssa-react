@@ -8,9 +8,9 @@ export const qBank = {
 	1: {
 		title: 'Questions about the final list of “movies you may like”',
 		instruction: 'Please rate your agreement with the following' +
-			' statements about your final recommendations <strong>the leftmost' +
+			' statements about your final recommendations <u><strong>the leftmost' +
 			' list of 7 “movies you may like” on the last page of the' +
-			' system.</strong><br>As a reminder, this list contained the' +
+			' system.</strong></u><br>As a reminder, this list contained the' +
 			' following movies:',
 		qType: 'Diversity',
 		displayRecs: true,
@@ -27,9 +27,9 @@ export const qBank = {
 	2: {
 		title: 'Questions about the final list of “movies you may like”',
 		instruction: 'Please rate your agreement with the following' +
-			' statements about your final recommendations <strong>the leftmost' +
+			' statements about your final recommendations <u><strong>the leftmost' +
 			' list of 7 “movies you may like” on the last page of the' +
-			' system.</strong><br>As a reminder, this list contained the' +
+			' system.</strong></u><br>As a reminder, this list contained the' +
 			' following movies:',
 		qType: 'RecQual',
 		displayRecs: true,
@@ -46,9 +46,9 @@ export const qBank = {
 	3: {
 		title: 'Questions about the final list of “movies you may like”',
 		instruction: 'Please rate your agreement with the following' +
-			' statements about your final recommendations <strong>the leftmost' +
+			' statements about your final recommendations <u><strong>the leftmost' +
 			' list of 7 “movies you may like” on the last page of the' +
-			' system.</strong><br>As a reminder, this list contained the' +
+			' system.</strong></u><br>As a reminder, this list contained the' +
 			' following movies:',
 		qType: 'recConformity',
 		displayRecs: true,
@@ -63,8 +63,8 @@ export const qBank = {
 	}, 4: {
 		title: 'Questions about the final list of "movies you may like"',
 		instruction: 'Please indicate if you watched any of the movies from' +
-			' the final recommendations <strong>the leftmost list of 7' +
-			' "movies you may like" on the last page of the system.',
+			' the final recommendations <u><strong>the leftmost list of 7' +
+			' "movies you may like" on the last page of the system.</strong></u>',
 		qType: 'recFamiliarity',
 		displayRecs: false,
 		showSlected: false,
@@ -95,7 +95,7 @@ export const qBank = {
 	6: {
 		title: 'Questions about the movie recommender system as a whole',
 		instruction: 'Please rate your agreement with the statements about your' +
-			' <strong>overall</strong> experience with the movie recommender:',
+			' <u><strong>overall</strong></u> experience with the movie recommender:',
 		qType: 'tasteCov',
 		displayRecs: false,
 		showSelected: false,
@@ -139,13 +139,13 @@ export const preSurveyBank = {
 		showSlected: false,
 		qData: [
 			//{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones recommended to me in the past.', flag: false },
-			{ qId: 'q2', text: 'I fear others may find more entertaining movies than me.', flag: false },
-			{ qId: 'q3', text: 'I get worried when I find out others are finding better movies than me.', flag: false },
-			{ qId: 'q4', text: 'I get anxious when I think about all the possible movies that are out there.', flag: false },
-			{ qId: 'q5', text: 'Sometimes, I wonder if I spend too much time trying to make sure I have checked out every interesting movie.', flag: false },
-			{ qId: 'q6', text: 'It bothers me when I miss an opportunity to learn about new available movies.', flag: false },
-			{ qId: 'q7', text: 'When I miss out on an opportunity to watch a good movie, it bothers me.', flag: false },
-			{ qId: 'q8', text: 'Once I decide to go watch a certain movie, I still check on other movies that are playing to see if there is anything better available.', flag: false }
+			{ qId: 'q1', text: 'I fear others may find more entertaining movies than me.', flag: false },
+			{ qId: 'q2', text: 'I get worried when I find out others are finding better movies than me.', flag: false },
+			{ qId: 'q3', text: 'I get anxious when I think about all the possible movies that are out there.', flag: false },
+			{ qId: 'q4', text: 'Sometimes, I wonder if I spend too much time trying to make sure I have checked out every interesting movie.', flag: false },
+			{ qId: 'q5', text: 'It bothers me when I miss an opportunity to learn about new available movies.', flag: false },
+			{ qId: 'q6', text: 'When I miss out on an opportunity to watch a good movie, it bothers me.', flag: false },
+			{ qId: 'q7', text: 'Once I decide to go watch a certain movie, I still check on other movies that are playing to see if there is anything better available.', flag: false }
 		]
 	},
 	2: {
