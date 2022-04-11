@@ -17,6 +17,7 @@ class RecommendationPage extends Component {
             leftPanel: { items: [], condition: '', byline: '', tag: '' },
             rightPanel: { items: [], condition: '', byline: '', tag: '' },
             visited: [],
+            ratingHistory: [],
             setIsShown: false,
             activeMovie: null,
             pick: this.props.pick || false,
@@ -25,7 +26,8 @@ class RecommendationPage extends Component {
             ratings: this.props.location.state.ratings,
             userid: this.props.location.state.userid,
             updateSuccess: false,
-            selectedid: undefined
+            selection: {},
+            hoverHistory: []
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
@@ -42,10 +44,9 @@ class RecommendationPage extends Component {
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.body.style.backgroundColor = "white";
     }
-
 
     getRecommendations() {
         let userid = this.state.userid;
@@ -102,13 +103,19 @@ class RecommendationPage extends Component {
         let pageid = this.state.pageid;
         let userid = this.state.userid;
         let ratedLst = this.state.visited;
+        let hoverHistory = this.state.hoverHistory;
+        let ratingHistory = this.state.ratingHistory;
 
         axios.put(API + 'add_survey_response', {
             pageid: pageid,
             userid: userid,
             starttime: recDateTime.toUTCString(),
             endtime: recEndTime.toUTCString(),
-            response: { ratings: ratedLst }
+            response: {
+                ratings: ratedLst,
+                rating_history: ratingHistory,
+                hover_history: hoverHistory
+            }
         })
             .then(response => {
                 if (response.status === 200) {
@@ -120,10 +127,21 @@ class RecommendationPage extends Component {
             })
     }
 
-    handleHover(isShown, activeMovie) {
+    handleHover(isShown, activeMovie, action, panelid) {
+        let history = [...this.state.hoverHistory];
+        let panel = this.state[panelid];
+		history.push({
+			'item_id': activeMovie.movie_id,
+			time: new Date().toUTCString(),
+			action: action,
+			loc: panel.tag,
+			level: this.props.level
+
+		});
         this.setState({
             setIsShown: isShown,
-            activeMovie: activeMovie
+            activeMovie: activeMovie,
+            hoverHistory: history
         });
     }
 
@@ -143,31 +161,50 @@ class RecommendationPage extends Component {
                 ...movie, rating: newRating
             } : movie
         ));
+        let ratingHistory = [...this.state.ratingHistory];
+        let rated = {
+            item_id: movieid,
+            rating: newRating,
+            rating_date: new Date().toUTCString(),
+            loc: panel.tag,
+            level: this.props.level
+        };
+        ratingHistory.push(rated);
         let isNew = !vstdLst.some(item => item.item_id === movieid);
         if (isNew) {
-            vstdLst.push({
-                "item_id": movieid,
-                "rating": newRating,
-                "loc": panel.tag,
-                "level": this.props.level
-            });
+            vstdLst.push(rated);
         } else {
             vstdLst = vstdLst.map(movie => (
                 movie.item_id === movieid ? {
-                    ...movie, rating: newRating
+                    ...movie,
+                    rating: newRating,
+                    rating_date: new Date().toUTCString()
                 } : movie
             ));
         }
         panel.items = ratedItm;
         this.setState({
             panelid: panel,
-            visited: vstdLst
+            visited: vstdLst,
+            ratingHistory: ratingHistory
         });
     }
 
-    handleSelect(movieid) {
+    handleSelect(panelid, movieid) {
+        let panel = this.state[panelid];
+        let ratingHistory = [...this.state.ratingHistory];
+        let rated = {
+            item_id: movieid,
+            rating: 99,
+            rating_date: new Date().toUTCString(),
+            loc: panel.tag,
+            level: this.props.level
+        };
+        ratingHistory.push(rated);
+
         this.setState({
-            selectedid: movieid
+            selectedid: movieid,
+            ratingHistory: ratingHistory
         });
     }
 
@@ -204,7 +241,6 @@ class RecommendationPage extends Component {
                 }} />
             );
         }
-
 
         let buttonDisabled = ((leftItems.length + rightItems.length) !==
             this.state.visited.length) && selectedid === undefined;

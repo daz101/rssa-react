@@ -36,7 +36,6 @@ class WelcomePage extends Component {
 			session_id: session_id,
 			start_time: surveyStartTime.toUTCString()
 		};
-		console.log(platform_info);
 		this.setState({
 			welcomeDateTime: surveyStartTime,
 			platformInfo: platform_info
@@ -120,8 +119,9 @@ class WelcomePage extends Component {
 							It will take you about 10-15 minutes to complete the four steps of the study:
 						</p>
 						<ol>
-							<li>Instructions for the study</li>
-							<li>Interact with movie recommender system</li>
+							<li>Pre-survey on your preference profile.</li>
+							<li>Rate a few movies you are familiar with.</li>
+							<li>Interact with movie recommender system by rating movies and picking a movie from the recommendations</li>
 							<li>Complete survey about your experience interacting with the system</li>
 						</ol>
 

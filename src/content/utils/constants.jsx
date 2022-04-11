@@ -20,8 +20,8 @@ export const qBank = {
 			{ qId: 'q2', text: 'None of the movies in the final list of recommendations were alike.', flag: false },
 			{ qId: 'q3', text: 'Most movies in the final list of recommendations were from the same genre.', flag: false },
 			{ qId: 'q4', text: 'The final list of recommended movies suits a broad set of tastes.', flag: false },
-			{ qId: 'q5', text: 'The recommended movies were from many different genres', flag: false },
-			{ qId: 'q6', text: 'The recommendations contained a lot of variety', flag: false }
+			{ qId: 'q5', text: 'The recommended movies were from many different genres.', flag: false },
+			{ qId: 'q6', text: 'The recommendations contained a lot of variety.', flag: false }
 		]
 	},
 	2: {
@@ -35,10 +35,10 @@ export const qBank = {
 		displayRecs: true,
 		showSelected: false,
 		qData: [
-			{ qId: 'q1', text: 'I liked the movies in the final list of recommendations', flag: false },
-			{ qId: 'q2', text: 'I found the movies in the final list of recommendations appealing', flag: false },
-			{ qId: 'q3', text: 'The recommended movies fit my preference', flag: false },
-			{ qId: 'q4', text: 'The recommended movies were relevant', flag: false },
+			{ qId: 'q1', text: 'I liked the movies in the final list of recommendations.', flag: false },
+			{ qId: 'q2', text: 'I found the movies in the final list of recommendations appealing.', flag: false },
+			{ qId: 'q3', text: 'The recommended movies fit my preference.', flag: false },
+			{ qId: 'q4', text: 'The recommended movies were relevant.', flag: false },
 			{ qId: 'q5', text: 'The system recommended too many bad movies.', flag: false },
 			{ qId: 'q6', text: 'I did <u><strong>not</strong></u> like any of the recommended movies.', flag: false }
 		]
@@ -86,10 +86,10 @@ export const qBank = {
 			{ qId: 'q1', text: 'I like the movie I’ve chosen from the final recommendation list.', flag: false },
 			{ qId: 'q2', text: 'The chosen movie fits my preference.', flag: false },
 			{ qId: 'q3', text: 'I would recommend my chosen movie to others/friends.', flag: false },
-			{ qId: 'q4', text: 'I was excited about my chosen movie', flag: false },
-			{ qId: 'q5', text: 'I think I chose the best movie from the options', flag: false },
-			{ qId: 'q6', text: 'I know several items that are better than the one I selected', flag: false },
-			{ qId: 'q7', text: 'I would rather watch a different movie from the one I selected', flag: false }
+			{ qId: 'q4', text: 'I was excited about my chosen movie.', flag: false },
+			{ qId: 'q5', text: 'I think I chose the best movie from the options.', flag: false },
+			{ qId: 'q6', text: 'I know several items that are better than the one I selected.', flag: false },
+			{ qId: 'q7', text: 'I would rather watch a different movie from the one I selected.', flag: false }
 		]
 	},
 	6: {
@@ -100,7 +100,7 @@ export const qBank = {
 		displayRecs: false,
 		showSelected: false,
 		qData: [
-			{ qId: 'q1', text: 'The movie recommender catered to all of my potential interests', flag: false },
+			{ qId: 'q1', text: 'The movie recommender catered to all of my potential interests.', flag: false },
 			{
 				qId: 'q2', text: 'The movies that were recommended did' +
 					' <u><strong>not</strong></u> reflect my diverse taste in movies.', flag: false
@@ -138,7 +138,7 @@ export const preSurveyBank = {
 		displayRecs: false,
 		showSlected: false,
 		qData: [
-			{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones recommended to me in the past.', flag: false },
+			//{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones recommended to me in the past.', flag: false },
 			{ qId: 'q2', text: 'I fear others may find more entertaining movies than me.', flag: false },
 			{ qId: 'q3', text: 'I get worried when I find out others are finding better movies than me.', flag: false },
 			{ qId: 'q4', text: 'I get anxious when I think about all the possible movies that are out there.', flag: false },
@@ -183,13 +183,13 @@ export const preSurveyBank = {
 		displayRecs: false,
 		showSlected: false,
 		qData: [
-			{ qId: 'q1', text: 'No matter what I do, I have the highest standards for myself', flag: false },
-			{ qId: 'q2', text: 'I never settle for second best', flag: false },
+			{ qId: 'q1', text: 'No matter what I do, I have the highest standards for myself.', flag: false },
+			{ qId: 'q2', text: 'I never settle for second best.', flag: false },
 			{ qId: 'q3', text: 'No matter what it takes, I always try to choose the best thing.', flag: false },
 			{ qId: 'q4', text: 'I dont like having to settle for “good enough.”', flag: false },
 			{ qId: 'q5', text: 'I am a maximizer.', flag: false },
 			{ qId: 'q6', text: 'I will wait for the best option, no matter how long it takes.', flag: false },
-			{ qId: 'q7', text: 'I never settle', flag: false }
+			{ qId: 'q7', text: 'I never settle.', flag: false }
 		]
 	}
 };

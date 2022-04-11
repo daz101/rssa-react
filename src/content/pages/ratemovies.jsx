@@ -14,6 +14,7 @@ class RatingPage extends Component {
     constructor(props) {
         super(props);
         this.rateMoviesHandler = this.rateMovies.bind(this);
+        this.hoverTrackingHandler = this.trackHover.bind(this);
 
         this.state = {
             raterDateTime: undefined,
@@ -59,13 +60,19 @@ class RatingPage extends Component {
         let pageid = this.state.pageid;
         let userid = this.state.userid;
         let ratedLst = this.state.ratedLst;
+        let ratingHistory = this.state.ratingHistory;
+        let hoverHistory = this.state.hoverHistory;
 
         axios.put(API + 'add_survey_response', {
             pageid: pageid,
             userid: userid,
             starttime: raterDateTime.toUTCString(),
             endtime: raterEndTime.toUTCString(),
-            response: { ratings: ratedLst }
+            response: {
+                ratings: ratedLst,
+                rating_history: ratingHistory,
+                hover_history: hoverHistory
+            }
         })
             .then(response => {
                 if (response.status === 200) {
@@ -77,10 +84,17 @@ class RatingPage extends Component {
             })
     }
 
-    rateMovies(ratedLst, isNew) {
+    rateMovies(ratedLst, isNew, ratingHistory) {
         this.setState({
             count: isNew ? this.state.count + 1 : this.state.count,
-            ratedLst: ratedLst
+            ratedLst: ratedLst,
+            ratingHistory: ratingHistory
+        });
+    }
+
+    trackHover(hoverHistory) {
+        this.setState({
+            hoverHistory: hoverHistory
         });
     }
 
@@ -136,14 +150,15 @@ class RatingPage extends Component {
                     <h1 className="header">Indicate your preferences</h1>
                     <p>Use the blue button on the right to scroll through
                         the gallery of movies and rate at least 10 movies
-                        that you have already watched. Once you have rated 10 
-                        movies, the system will be able to give you 
+                        that you have already watched. Once you have rated 10
+                        movies, the system will be able to give you
                         recommendations.
-                        Keep in mind, you can click on the blue button on the 
+                        Keep in mind, you can click on the blue button on the
                         right to get more movies to rate!</p>
                 </div>
                 <Container>
-                    <MovieGrid handler={this.rateMoviesHandler} userid={userid} pageid={pageid} />
+                    <MovieGrid ratingHandler={this.rateMoviesHandler} userid={userid} pageid={pageid}
+                        hoverHandler={this.hoverTrackingHandler} />
                 </Container>
                 <div className="jumbotron jumbotron-footer" style={{ display: "flex" }}>
                     <div className="rankHolder">

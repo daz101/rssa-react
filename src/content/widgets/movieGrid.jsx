@@ -13,7 +13,9 @@ class MovieGrid extends Component {
 		this.state = {
 			movies: [],
 			visited: [],
-			currentPage: 1
+			currentPage: 1,
+			ratingHistory: [],
+			hoverHistory: []
 		}
 		this.renderNext = this.renderNextSet.bind(this);
 		this.renderPrev = this.renderPrevSet.bind(this);
@@ -78,26 +80,49 @@ class MovieGrid extends Component {
 				...movie, rating: newRating
 			} : movie
 		));
+		let ratingHistory = [...this.state.ratingHistory];
+		let rated = {
+			item_id: movieid,
+			rating: newRating,
+			rating_date: new Date().toUTCString(),
+			loc: "gallery",
+			level: level
+		};
+		ratingHistory.push(rated);
 		let isNew = !vstdLst.some(item => item.item_id === movieid);
 		if (isNew) {
-			vstdLst.push({ 
-				"item_id": movieid, 
-				"rating": newRating,
-				"loc": "gallery", 
-				"level": level
-			});
+			vstdLst.push(rated);
 		} else {
 			vstdLst = vstdLst.map(movie => (
 				movie.item_id === movieid ? {
-					...movie, rating: newRating
+					...movie, rating: newRating,
+					rating_date: new Date().toUTCString()
 				} : movie
 			));
 		}
 		this.setState({
 			movies: ratedItm,
-			visited: vstdLst
+			visited: vstdLst,
+			ratingHistory: ratingHistory
 		});
-		this.props.handler(vstdLst, isNew);
+		this.props.ratingHandler(vstdLst, isNew, ratingHistory);
+	}
+
+	trackHover = (evt, movieid, action) => {
+		let level = this.state.currentPage;
+		let history = [...this.state.hoverHistory];
+		history.push({
+			'item_id': movieid,
+			time: new Date().toUTCString(),
+			action: action,
+			loc: "gallery",
+			level: level
+
+		});
+		this.setState({
+			hoverHistory: history
+		});
+		this.props.hoverHandler(history);
 	}
 
 	render() {
@@ -114,7 +139,8 @@ class MovieGrid extends Component {
 					{((startIdx + this.itemsPerPage) <= itemsInCache) ?
 						<div className="grid-container">
 							{this.state.movies.slice(startIdx, startIdx + this.itemsPerPage).map(currentMovie => (
-								<MovieGridItem key={"TN_" + currentMovie.id} movieItem={currentMovie} ratingCallback={this.changeRating} />
+								<MovieGridItem key={"TN_" + currentMovie.id} movieItem={currentMovie}
+									ratingCallback={this.changeRating} hoverTracker={this.trackHover} />
 							))}
 						</div>
 						: <div style={{ minWidth: "918px", minHeight: "656px" }}>

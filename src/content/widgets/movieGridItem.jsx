@@ -14,7 +14,9 @@ class MovieGridItem extends Component {
 		let starDivClass = currentMovie.rating > 0 ? 'star-div-rated' : 'star-div';
 
 		return (
-			<div id={"TN_" + currentMovie.movie_id}
+			<div id={"TN_" + currentMovie.movie_id} 
+				onMouseEnter={(evt) => this.props.hoverTracker(evt, currentMovie.movie_id, 'enter')}
+				onMouseLeave={(evt) => this.props.hoverTracker(evt, currentMovie.movie_id, 'leave')}
 				className={"grid-item " + containerClass} style={{
 					backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
 				}}>

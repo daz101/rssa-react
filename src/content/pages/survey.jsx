@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import parse from 'html-react-parser';
 import { Redirect } from 'react-router-dom';
-import { API } from '../utils/constants';
+import { API, likertVals } from '../utils/constants';
 import SurveyPane from '../widgets/surveyPanes';
 const defaultMovieIco = require("../res/default_movie_icon.svg");
 
@@ -75,7 +75,7 @@ class SurveyPage extends Component {
 	componentDidUpdate() {
 		let prevStep = this.state.prevStep;
 		if (prevStep !== this.state.currentStep) {
-			window.scrollTo({top: 0, behavior: 'smooth'});
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 			this.setState({
 				prevStep: prevStep + 1
 			});
@@ -86,7 +86,7 @@ class SurveyPage extends Component {
 		let responses = this.state.responses;
 		let response = {};
 
-		let val = qType === "likert" ? resVal.indexOf(resVal) + 1 : resVal;
+		let val = qType === "likert" ? likertVals.indexOf(resVal) + 1 : resVal;
 
 		if (!responses.some(res => res.id === qId)) {
 			response = {
@@ -115,6 +115,7 @@ class SurveyPage extends Component {
 	*/
 	_next = () => {
 		let currentStep = this.state.currentStep;
+		let pageid = this.state.pageid;
 		let surveyDateTime = new Date();
 		let responses = [];
 		currentStep++;
@@ -122,7 +123,8 @@ class SurveyPage extends Component {
 			currentStep: currentStep,
 			disabled: true,
 			surveyDateTime: surveyDateTime,
-			responses: responses
+			responses: responses,
+			papgeid: pageid + 1
 		});
 	}
 

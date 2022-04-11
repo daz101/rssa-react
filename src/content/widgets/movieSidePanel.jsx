@@ -10,8 +10,14 @@ class MovieSidePanel extends Component {
 	}
 
 	onValueChange = (event) => {
+		let panelid = this.props.id;
 		let movieid = event.target.value;
-		this.props.selectionHandler(movieid);
+		this.props.selectionHandler(panelid, movieid);
+	}
+
+	onHover = (evt, isShown, activeMovie, action) => {
+		let panelid = this.props.id;
+		this.props.hoverHandler(isShown, activeMovie, action, panelid);
 	}
 
 	render() {
@@ -33,7 +39,7 @@ class MovieSidePanel extends Component {
 						<SidePanelItem key={movie.movie_id} movie={movie}
 							pick={this.props.pick || false}
 							selectedid={this.props.selectedid}
-							hoverHandler={this.props.hoverHandler}
+							hoverHandler={this.onHover}
 							ratingsHandler={this.changeRating}
 							selectStateHandler={this.onValueChange} />
 					))}

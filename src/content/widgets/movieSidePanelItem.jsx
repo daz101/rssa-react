@@ -21,9 +21,9 @@ class SidePanelItem extends Component {
 		}
 
 		return <>
-			<ListGroup.Item as="li"
+			<ListGroup.Item as="div"
 				className={itemClassStr + " d-flex justify-content-between align-items-center"}
-				onMouseEnter={() => this.props.hoverHandler(true, movie)}
+				onMouseEnter={(evt) => this.props.hoverHandler(evt, true, movie, "enter")}
 			>
 				<div style={{
 					position: "relative", boxSizing: "border-box", width: "63%",
