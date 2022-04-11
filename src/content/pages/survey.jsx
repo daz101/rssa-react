@@ -17,7 +17,7 @@ class SurveyPage extends Component {
 			pickid: props.location.state.selectedid,
 			finalRecommendations: props.location.state.recs,
 			pageid: props.location.state.pageid + 1,
-			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length - 1,
+			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length,
 			currentStep: 1,
 			prevStep: 1,
 			surveyDateTime: new Date(),
@@ -41,6 +41,7 @@ class SurveyPage extends Component {
 		let pageid = this.state.pageid + currentStep - 1;
 		let userid = this.state.userid;
 		let responses = this.state.responses;
+		console.log(pageid);
 
 		axios.put(API + 'add_survey_response', {
 			starttime: surveyDateTime.toUTCString(),
