@@ -15,7 +15,8 @@ class MovieGrid extends Component {
 			visited: [],
 			currentPage: 1,
 			ratingHistory: [],
-			hoverHistory: []
+			hoverHistory: [],
+			actionHistory: []
 		}
 		this.renderNext = this.renderNextSet.bind(this);
 		this.renderPrev = this.renderPrevSet.bind(this);
@@ -51,23 +52,43 @@ class MovieGrid extends Component {
 	renderNextSet() {
 		// console.log("Next Button Clicked");
 		let curr = this.state.currentPage;
+		let actionHistory = [...this.state.actionHistory];
 		curr += 1;
 		if (curr % 2 === 0) {
 			this.getMovies();
 		}
+		let action = {
+			target_label: 'gallery next',
+			target_type: 'button',
+			action_type: 'click',
+			timestamp: new Date().toUTCString()
+		}
+		actionHistory.push(action);
 		this.setState({
-			currentPage: curr
+			currentPage: curr,
+			actionHistory: actionHistory
 		});
+		this.props.actionHandler(actionHistory);
 	}
 
 	renderPrevSet() {
 		// console.log("Previous Button Clicked");
 		let curr = this.state.currentPage;
 		if (curr > 0) {
+			let actionHistory = [...this.state.actionHistory];
 			curr -= 1;
+			let action = {
+				target_label: 'gallery prev',
+				target_type: 'button',
+				action_type: 'click',
+				timestamp: new Date().toUTCString()
+			}
+			actionHistory.push(action);
 			this.setState({
-				currentPage: curr
+				currentPage: curr,
+				actionHistory: actionHistory
 			});
+			this.props.actionHandler(actionHistory);
 		}
 	}
 

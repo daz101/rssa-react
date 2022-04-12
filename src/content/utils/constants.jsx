@@ -58,7 +58,7 @@ export const qBank = {
 			{ qId: 'q2', text: 'I think the recommendations are unique to me.', flag: false },
 			{ qId: 'q3', text: 'I believe that the system is giving me a one of a kind experience.', flag: false },
 			{ qId: 'q4', text: 'I believe that the movies recommended to me are rather different from the movies recommended to others.', flag: false },
-			{ qId: 'q5', text: 'I would <u><strong>not</strong></u> be surprised if the system recommended the same movies to many other users', flag: false }
+			{ qId: 'q5', text: 'I would <u><strong>not</strong></u> be surprised if the system recommended the same movies to many other users.', flag: false }
 		]
 	}, 4: {
 		title: 'Questions about the final list of "movies you may like"',
@@ -138,7 +138,6 @@ export const preSurveyBank = {
 		displayRecs: false,
 		showSlected: false,
 		qData: [
-			//{ qId: 'q1', text: 'I fear other movies may be more entertaining than the ones recommended to me in the past.', flag: false },
 			{ qId: 'q1', text: 'I fear others may find more entertaining movies than me.', flag: false },
 			{ qId: 'q2', text: 'I get worried when I find out others are finding better movies than me.', flag: false },
 			{ qId: 'q3', text: 'I get anxious when I think about all the possible movies that are out there.', flag: false },
@@ -170,10 +169,10 @@ export const preSurveyBank = {
 		displayRecs: false,
 		showSlected: false,
 		qData: [
-			{ qId: 'q1', text: 'I am a movie lover', flag: false },
-			{ qId: 'q2', text: 'Compared to my peers I watch a lot of movies', flag: false },
-			{ qId: 'q3', text: 'Compared to my peers I am an expert on movie', flag: false },
-			{ qId: 'q4', text: 'I only know a few movies', flag: false }
+			{ qId: 'q1', text: 'I am a movie lover.', flag: false },
+			{ qId: 'q2', text: 'Compared to my peers I watch a lot of movies.', flag: false },
+			{ qId: 'q3', text: 'Compared to my peers I am an expert on movie.', flag: false },
+			{ qId: 'q4', text: 'I only know a few movies.', flag: false }
 		]
 	},
 	4: {

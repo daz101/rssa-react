@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import { API } from '../utils/constants';
 
@@ -16,7 +16,8 @@ class ClosingRecommendationPage extends Component {
 			selectedmovie: props.location.state.selectedmovie,
 			starttime: undefined,
 			userText: '',
-			userResponded: false
+			userResponded: false,
+			loading: false
 		};
 
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
@@ -29,6 +30,10 @@ class ClosingRecommendationPage extends Component {
 	}
 
 	updateSurveyResponse() {
+		this.setState({
+			loading: true
+		});
+
 		let startime = this.state.starttime;
 		let endtime = new Date();
 		let pageid = this.state.pageid;
@@ -52,7 +57,8 @@ class ClosingRecommendationPage extends Component {
 			.then(response => {
 				if (response.status === 200) {
 					this.setState({
-						updateSuccess: true
+						updateSuccess: true,
+						loading: false
 					});
 				}
 				this.props.progressUpdater(10);
@@ -112,9 +118,22 @@ class ClosingRecommendationPage extends Component {
 				</Card>
 				<div className="jumbotron jumbotron-footer">
 					<Button className="footer-btn" variant={buttonVariant} size="lg"
-						disabled={buttonDisabled}
+						disabled={buttonDisabled && !this.state.loading}
 						onClick={this.updateSurvey}>
-						Next
+						{!this.state.loading ? 'Next'
+							:
+							<>
+
+								<Spinner
+									as="span"
+									animation="grow"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+								Loading...
+							</>
+						}
 					</Button>
 				</div>
 			</>

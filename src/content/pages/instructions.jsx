@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button, Spinner } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import { withMousePositionHook } from '../hooks/useMousePosition';
 import { API } from '../utils/constants';
@@ -18,7 +18,8 @@ class InstructionPage extends Component {
 			instructionDateTime: undefined,
 			pageid: props.location.state.pageid + 1,
 			userid: props.location.state.userid,
-			updateSuccess: false
+			updateSuccess: false,
+			loading: false
 		}
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
 	}
@@ -30,6 +31,10 @@ class InstructionPage extends Component {
 	}
 
 	updateSurveyResponse() {
+		this.setState({
+			loading: true
+		});
+
 		let instructionDateTime = this.state.instructionDateTime;
 		let instructionEndTime = new Date();
 		let pageid = this.state.pageid;
@@ -51,7 +56,8 @@ class InstructionPage extends Component {
 			.then(response => {
 				if (response.status === 200) {
 					this.setState({
-						updateSuccess: true
+						updateSuccess: true,
+						loading: false
 					});
 					this.props.progressUpdater();
 				}
@@ -141,8 +147,21 @@ class InstructionPage extends Component {
 				</div>
 				<div className="jumbotron jumbotron-footer">
 					<Button variant="primary" size="lg" className="footer-btn"
+						disabled={this.state.loading}
 						onClick={this.updateSurvey}>
-						Next
+						{!this.state.loading ? 'Next'
+							:
+							<>
+								<Spinner
+									as="span"
+									animation="grow"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+								Loading...
+							</>
+						}
 					</Button>
 				</div>
 			</>

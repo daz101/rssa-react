@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component } from 'react';
-import { Button, Card, Container } from "react-bootstrap";
+import { Button, Card, Container, Spinner } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
@@ -27,7 +27,8 @@ class RecommendationPage extends Component {
             userid: this.props.location.state.userid,
             updateSuccess: false,
             selection: {},
-            hoverHistory: []
+            hoverHistory: [],
+            loading: false
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
@@ -98,6 +99,10 @@ class RecommendationPage extends Component {
     }
 
     updateSurveyResponse() {
+        this.setState({
+            loading: true
+        });
+
         let recDateTime = this.state.recDateTime;
         let recEndTime = new Date();
         let pageid = this.state.pageid;
@@ -120,7 +125,8 @@ class RecommendationPage extends Component {
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
-                        updateSuccess: true
+                        updateSuccess: true,
+                        loading: false
                     });
                 }
                 this.props.progressUpdater(10);
@@ -130,14 +136,14 @@ class RecommendationPage extends Component {
     handleHover(isShown, activeMovie, action, panelid) {
         let history = [...this.state.hoverHistory];
         let panel = this.state[panelid];
-		history.push({
-			'item_id': activeMovie.movie_id,
-			time: new Date().toUTCString(),
-			action: action,
-			loc: panel.tag,
-			level: this.props.level
+        history.push({
+            'item_id': activeMovie.movie_id,
+            time: new Date().toUTCString(),
+            action: action,
+            loc: panel.tag,
+            level: this.props.level
 
-		});
+        });
         this.setState({
             setIsShown: isShown,
             activeMovie: activeMovie,
@@ -290,9 +296,21 @@ class RecommendationPage extends Component {
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="footer-btn" variant={buttonVariant} size="lg"
-                        disabled={buttonDisabled}
+                        disabled={buttonDisabled && !this.state.loading}
                         onClick={this.updateSurvey}>
-                        Next
+                        {!this.state.loading ? 'Next'
+                            :
+                            <>
+                                <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                                Loading...
+                            </>
+                        }
                     </Button>
                 </div>
             </>

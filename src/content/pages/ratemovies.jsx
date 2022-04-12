@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from 'react';
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import MovieGrid from "../widgets/movieGrid";
@@ -15,6 +15,7 @@ class RatingPage extends Component {
         super(props);
         this.rateMoviesHandler = this.rateMovies.bind(this);
         this.hoverTrackingHandler = this.trackHover.bind(this);
+        this.actionTrackingHandler = this.updateActionHistory.bind(this);
 
         this.state = {
             raterDateTime: undefined,
@@ -43,7 +44,8 @@ class RatingPage extends Component {
             ],
             count: 0,
             ratedLst: [],
-            updateSuccess: false
+            updateSuccess: false,
+            loading: false
         };
         this.updateSurvey = this.updateSurveyResponse.bind(this);
     }
@@ -55,6 +57,10 @@ class RatingPage extends Component {
     }
 
     updateSurveyResponse() {
+        this.setState({
+            loading: true
+        });
+
         let raterDateTime = this.state.raterDateTime;
         let raterEndTime = new Date();
         let pageid = this.state.pageid;
@@ -62,6 +68,7 @@ class RatingPage extends Component {
         let ratedLst = this.state.ratedLst;
         let ratingHistory = this.state.ratingHistory;
         let hoverHistory = this.state.hoverHistory;
+        let actionHistory = this.state.actionHistory;
 
         axios.put(API + 'add_survey_response', {
             pageid: pageid,
@@ -71,13 +78,15 @@ class RatingPage extends Component {
             response: {
                 ratings: ratedLst,
                 rating_history: ratingHistory,
-                hover_history: hoverHistory
+                hover_history: hoverHistory,
+                action_history: actionHistory
             }
         })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
-                        updateSuccess: true
+                        updateSuccess: true,
+                        loading: false
                     });
                     this.props.progressUpdater(10);
                 }
@@ -102,6 +111,12 @@ class RatingPage extends Component {
         if (nextStepIndex === 1) {
             this.steps.updateStepElement(nextStepIndex);
         }
+    }
+
+    updateActionHistory(actionHistory) {
+        this.setState({
+            actionHistory: actionHistory
+        })
     }
 
     render() {
@@ -158,7 +173,7 @@ class RatingPage extends Component {
                 </div>
                 <Container>
                     <MovieGrid ratingHandler={this.rateMoviesHandler} userid={userid} pageid={pageid}
-                        hoverHandler={this.hoverTrackingHandler} />
+                        hoverHandler={this.hoverTrackingHandler} actionHandler={this.actionTrackingHandler} />
                 </Container>
                 <div className="jumbotron jumbotron-footer" style={{ display: "flex" }}>
                     <div className="rankHolder">
@@ -167,9 +182,21 @@ class RatingPage extends Component {
                         <span><i>of {this.moviesRatingCount}</i></span>
                     </div>
                     <Button variant={buttonVariant} size="lg" style={{ height: "fit-content", marginTop: "1em" }}
-                        className="next-button footer-btn" disabled={disabled}
+                        className="next-button footer-btn" disabled={disabled && !this.state.loading}
                         onClick={this.updateSurvey}>
-                        Next
+                        {!this.state.loading ? 'Next'
+                            :
+                            <>
+                                <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                                Loading...
+                            </>
+                        }
                     </Button>
                 </div>
             </>

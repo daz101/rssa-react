@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import { API } from '../utils/constants';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
@@ -24,7 +24,8 @@ class DemographicInfoPage extends Component {
 			gender: -1,
 			country: undefined,
 			region: undefined,
-			customRace: false
+			customRace: false,
+			loading: false
 		};
 
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
@@ -37,6 +38,10 @@ class DemographicInfoPage extends Component {
 	}
 
 	updateSurveyResponse() {
+		this.setState({
+			loading: true
+		});
+
 		const startime = this.state.starttime;
 		const endtime = new Date();
 		const pageid = this.state.pageid;
@@ -72,7 +77,8 @@ class DemographicInfoPage extends Component {
 			.then(response => {
 				if (response.status === 200) {
 					this.setState({
-						updateSuccess: true
+						updateSuccess: true,
+						loading: false
 					});
 					this.props.progressUpdater(10);
 				}
@@ -112,7 +118,6 @@ class DemographicInfoPage extends Component {
 	}
 
 	render() {
-		// console.log(this.state.race.length);
 		let buttonDisabled = !(this.state.gender > -1 && this.state.age > -1 &&
 			this.state.race.length > 0 && this.state.education > -1 && this.state.country);
 
@@ -176,19 +181,6 @@ class DemographicInfoPage extends Component {
 								onChange={(evt) => this.onValueChange(evt, "genText")} />
 							<br />
 							<Form.Label>Choose one or more races that you consider yourself to be:</Form.Label>
-							{/* <Form.Check variant="outline-secondary" title="Dropdown" id="input-group-dropdown-3"
-								onChange={(evt) => this.paramFromEvent(evt, "race")} value={this.state.race}>
-								<option >Please choose an option</option>
-								<option value="0">White                    </option>
-								<option value="1">Black or African American</option>
-								<option value="2">American Indian or Alaskan Native</option>
-								<option value="3">Asian</option>
-								<option value="4">Native Hawaiian or Pacific Islander</option>
-								<option value="5">Hispanic</option>
-								<option value="6">Two or more races</option>
-								<option value="7">Not listed (Please specify)</option>
-								<option value="8">Prefer not to answer</option>
-							</Form.Check> */}
 							{
 								['White', 'Black or African American', 'Asian', 'Native Hawaiian or Pacific Islander',
 									'Hispanic', 'Two or more races', 'Not listed (Please specify)',
@@ -234,9 +226,21 @@ class DemographicInfoPage extends Component {
 				</Card>
 				<div className="jumbotron jumbotron-footer">
 					<Button className="footer-btn" variant={buttonVariant} size="lg"
-						disabled={buttonDisabled}
+						disabled={buttonDisabled && !this.state.loading}
 						onClick={this.updateSurvey}>
-						Next
+						{!this.state.loading ? 'Next'
+							:
+							<>
+								<Spinner
+									as="span"
+									animation="grow"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+								Loading...
+							</>
+						}
 					</Button>
 				</div>
 			</>

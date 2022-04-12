@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button, Spinner } from 'react-bootstrap';
 import parse from 'html-react-parser';
 import { Redirect } from 'react-router-dom';
 import { API, likertVals } from '../utils/constants';
@@ -26,13 +26,18 @@ class SurveyPage extends Component {
 			seen_set: [],
 			selectedmovie: props.location.state.selectedmovie,
 			done: false,
-			recs: props.location.state.recs
+			recs: props.location.state.recs,
+			loading: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
 	}
 
 	updateSurveyResponse() {
+		this.setState({
+			loading: true
+		});
+
 		let currentStep = this.state.currentStep;
 		let surveyPageCount = this.state.surveyPageCount;
 
@@ -41,7 +46,6 @@ class SurveyPage extends Component {
 		let pageid = this.state.pageid + currentStep - 1;
 		let userid = this.state.userid;
 		let responses = this.state.responses;
-		console.log(pageid);
 
 		axios.put(API + 'add_survey_response', {
 			starttime: surveyDateTime.toUTCString(),
@@ -62,10 +66,14 @@ class SurveyPage extends Component {
 				if (response.status === 200) {
 					if (surveyPageCount === currentStep) {
 						this.setState({
-							done: true
+							done: true,
+							loading: false
 						});
 						this.props.progressUpdater();
 					} else {
+						this.setState({
+							loading: false
+						})
 						this._next();
 						this.props.progressUpdater();
 					}
@@ -135,10 +143,22 @@ class SurveyPage extends Component {
 		let buttonVariant = this.state.disabled ? 'secondary' : 'primary';
 		if (currentStep < this.state.surveyPageCount || !isFinalPage) {
 			return (
-				<Button disabled={this.state.disabled}
+				<Button disabled={this.state.disabled && !this.state.loading}
 					className="footer-btn"
 					variant={buttonVariant} size="lg" onClick={this.updateSurvey}>
-					Next
+					{!this.state.loading ? 'Next'
+						:
+						<>
+							<Spinner
+								as="span"
+								animation="grow"
+								size="sm"
+								role="status"
+								aria-hidden="true"
+							/>
+							Loading...
+						</>
+					}
 				</Button>
 			);
 		} else {

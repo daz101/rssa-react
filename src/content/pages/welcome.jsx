@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, Card, Form, Modal } from 'react-bootstrap';
+import { Button, Card, Form, Modal, Spinner } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import { withMousePositionHook } from "../hooks/useMousePosition";
 import { API } from '../utils/constants';
@@ -16,7 +16,8 @@ class WelcomePage extends Component {
 			consentStartTime: undefined,
 			userid: undefined,
 			userCreated: false,
-			mousePosHist: []
+			mousePosHist: [],
+			loading: false
 		};
 		this.displaySurvey = this.showSurvey.bind(this);
 		this.createNewUser = this.createUser.bind(this);
@@ -50,6 +51,10 @@ class WelcomePage extends Component {
 	}
 
 	createUser() {
+		this.setState({
+			loading: true
+		});
+
 		let consentEndTime = new Date();
 		let welcomeDateTime = this.state.welcomeDateTime;
 		let consentStartTime = this.state.consentStartTime;
@@ -213,9 +218,21 @@ class WelcomePage extends Component {
 								Exit
 							</Button>
 						</Link>
-						<Button variant="primary" disabled={this.state.disabled}
+						<Button variant="primary" disabled={this.state.disabled && !this.state.loading}
 							onClick={this.createNewUser}>
-							Continue
+							{!this.state.loading ? 'Continue'
+								:
+								<>
+									<Spinner
+										as="span"
+										animation="grow"
+										size="sm"
+										role="status"
+										aria-hidden="true"
+									/>
+									Loading...
+								</>
+							}
 						</Button>
 					</Modal.Footer>
 				</Modal>
