@@ -119,6 +119,10 @@ class RatingPage extends Component {
         })
     }
 
+    onExit = () => {
+        this.setState(() => ({ stepsEnabled: false }));
+    };
+
     render() {
         let userid = this.state.userid;
         let ratings = this.state.ratedLst;
@@ -202,10 +206,6 @@ class RatingPage extends Component {
             </>
         );
     }
-
-    onExit = () => {
-        this.setState(() => ({ stepsEnabled: false }));
-    };
 }
 
 export default RatingPage;

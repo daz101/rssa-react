@@ -89,7 +89,7 @@ class InstructionPage extends Component {
 			<>
 				<div className="jumbotron">
 					<h1 className="header">Instructions on how to use the system</h1>
-					<p>Using the movie recommender system consists of three steps.</p>
+					<p>Using the movie recommender system consists of four steps.</p>
 				</div>
 				<div className="instructions-page">
 					<div className="row">

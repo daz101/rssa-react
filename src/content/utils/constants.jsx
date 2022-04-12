@@ -132,8 +132,8 @@ export const qBank = {
 
 export const preSurveyBank = {
 	1: {
-		title: 'Questions about your movie exploration style.',
-		instruction: 'Please reflect on the process through which you find new movies.',
+		title: 'The following relate to how you find movies online.',
+		instruction: 'Please rate your level of agreement with the statements.',
 		qType: 'fomo',
 		displayRecs: false,
 		showSlected: false,
@@ -148,7 +148,7 @@ export const preSurveyBank = {
 		]
 	},
 	2: {
-		title: 'Questions about how you discover new things.',
+		title: 'The following relate to how you discover new things.',
 		instruction: 'Please rate your agreement with the following statements.',
 		qType: 'needNov',
 		displayRecs: false,
@@ -163,7 +163,7 @@ export const preSurveyBank = {
 		]
 	},
 	3: {
-		title: 'Questions about your movie watching behavior.',
+		title: 'The following relate to your movie watching behavior.',
 		instruction: 'Please rate your agreement with the following statements.',
 		qType: 'movieEx',
 		displayRecs: false,
@@ -176,7 +176,7 @@ export const preSurveyBank = {
 		]
 	},
 	4: {
-		title: 'Questions about your aspirations.',
+		title: 'The following relate to your goals and aspirations.',
 		instruction: 'Please rate your agreement with the following statements.',
 		qType: 'maxTen',
 		displayRecs: false,

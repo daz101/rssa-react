@@ -22,7 +22,7 @@ class MovieSidePanel extends Component {
 
 	render() {
 		return (
-			<div className="col-sm-4 gy-sm-0">
+			<div className="col-sm-4 gy-sm-0" id={this.props.id}>
 				<div className="align-items-center justify-content-center"
 					style={{
 						height: "108px", padding: "27px 18px",

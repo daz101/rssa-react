@@ -126,7 +126,7 @@ class WelcomePage extends Component {
 						<ol>
 							<li>Pre-survey on your preference profile.</li>
 							<li>Rate a few movies you are familiar with.</li>
-							<li>Interact with movie recommender system by rating movies and picking a movie from the recommendations</li>
+							<li>Interact with the movie recommender system by rating movies and picking a movie from the recommendations</li>
 							<li>Complete survey about your experience interacting with the system</li>
 						</ol>
 

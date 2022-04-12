@@ -289,6 +289,12 @@ div .card {
 	border-radius: 0.3rem;
 }
 
+.surveytronShadow{
+	-moz-box-shadow:    1px 1px 1px 1px #ccc;
+	-webkit-box-shadow: 1px 1px 1px 1px #ccc;
+	box-shadow:         1px 1px 1px 1px #ccc;
+}
+
 .btn-primary :disabled {
 	background-color: #62656b;
 }

@@ -200,7 +200,7 @@ class SurveyPage extends Component {
 
 		return (
 			<>
-				<div className="jumbotron sticky-top">
+				<div className="jumbotron sticky-top surveytronShadow">
 					<h4>{qSet.title}</h4>
 					<p style={{ marginBottom: "0" }}>{parse(qSet.instruction)}</p>
 					{qSet.displayRecs ? (

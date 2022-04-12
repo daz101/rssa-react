@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
+import { Steps } from "intro.js-react";
+import 'intro.js/introjs.css';
 
 
 class RecommendationPage extends Component {
@@ -14,8 +16,8 @@ class RecommendationPage extends Component {
 
         this.state = {
             ready: false,
-            leftPanel: { items: [], condition: '', byline: '', tag: '' },
-            rightPanel: { items: [], condition: '', byline: '', tag: '' },
+            leftPanel: { items: [], condition: '', byline: '', tag: '', vstd: [] },
+            rightPanel: { items: [], condition: '', byline: '', tag: '', vstd: [] },
             visited: [],
             ratingHistory: [],
             setIsShown: false,
@@ -28,7 +30,33 @@ class RecommendationPage extends Component {
             updateSuccess: false,
             selection: {},
             hoverHistory: [],
-            loading: false
+            loading: false,
+            stepsEnabled: true,
+            initialStep: 0,
+            steps: [
+                {
+                    element: ".jumbotron",
+                    intro: this.props.headerSubtitle
+                },
+                {
+                    element: "#leftPanel",
+                    intro: "These are your movie recommendations.",
+                    position: "right"
+                },
+                {
+                    element: "#rightPanel",
+                    intro: "This list contains movies based on a different criterion.",
+                    position: "left"
+                },
+                {
+                    element: "#moviePosterPreview",
+                    intro: "You can hover over movies to see a preview of the poster and a short synopsis."
+                },
+                {
+                    element: '.next-button',
+                    intro: this.props.finalhint
+                }
+            ],
         };
         this.handleHover = this.handleHover.bind(this);
         this.handleRating = this.handleRating.bind(this);
@@ -71,13 +99,15 @@ class RecommendationPage extends Component {
                             tag: response.data['recommendations']['left']['tag'],
                             condition: response.data['recommendations']['left']['label'],
                             byline: response.data['recommendations']['left']['byline'],
-                            items: response.data['recommendations']['left']['items']
+                            items: response.data['recommendations']['left']['items'],
+                            vstd: []
                         },
                         rightPanel: {
                             tag: response.data['recommendations']['right']['tag'],
                             condition: response.data['recommendations']['right']['label'],
                             byline: response.data['recommendations']['left']['byline'],
-                            items: response.data['recommendations']['right']['items']
+                            items: response.data['recommendations']['right']['items'],
+                            vstd: []
                         }
                     });
                 }
@@ -162,11 +192,13 @@ class RecommendationPage extends Component {
         let panel = this.state[panelid];
         let movieLst = [...panel.items];
         let vstdLst = [...this.state.visited];
+        let panelvstd = [...panel.vstd];
         let ratedItm = movieLst.map(movie => (
             movie.movie_id === movieid ? {
                 ...movie, rating: newRating
             } : movie
         ));
+
         let ratingHistory = [...this.state.ratingHistory];
         let rated = {
             item_id: movieid,
@@ -176,9 +208,12 @@ class RecommendationPage extends Component {
             level: this.props.level
         };
         ratingHistory.push(rated);
+        if (!panelvstd.some(item => item.item_id === movieid)) panelvstd.push(movieid);
+
         let isNew = !vstdLst.some(item => item.item_id === movieid);
         if (isNew) {
             vstdLst.push(rated);
+
         } else {
             vstdLst = vstdLst.map(movie => (
                 movie.item_id === movieid ? {
@@ -189,6 +224,7 @@ class RecommendationPage extends Component {
             ));
         }
         panel.items = ratedItm;
+        panel.vstd = panelvstd;
         this.setState({
             panelid: panel,
             visited: vstdLst,
@@ -214,23 +250,35 @@ class RecommendationPage extends Component {
         });
     }
 
+    onBeforeChange = nextStepIndex => {
+        if (nextStepIndex === 1) {
+            this.steps.updateStepElement(nextStepIndex);
+        }
+    }
+
+    onExit = () => {
+        this.setState(() => ({ stepsEnabled: false }));
+    };
+
     render() {
         let pick = this.state.pick;
         let selectedid = this.state.selectedid;
 
         let userid = this.state.userid;
-        let ratings = this.state.visited.concat(this.state.ratings);
         let pageid = this.state.pageid;
 
         let leftItems = this.state.leftPanel.items;
         let leftCondition = this.state.leftPanel.condition;
         let leftbyline = this.state.leftPanel.byline;
+        let leftvstd = this.state.leftPanel.vstd;
 
         let rightItems = this.state.rightPanel.items;
         let rightCondition = this.state.rightPanel.condition;
         let rightbyline = this.state.rightPanel.byline;
+        let rightvstd = this.state.rightPanel.vstd;
         if (this.state.updateSuccess) {
 
+            let ratings = this.state.visited.concat(this.state.ratings);
             let selectedmovie = [...leftItems, ...rightItems].find((movie) => (
                 movie.movie_id === selectedid
             ));
@@ -249,12 +297,32 @@ class RecommendationPage extends Component {
         }
 
         let buttonDisabled = ((leftItems.length + rightItems.length) !==
-            this.state.visited.length) && selectedid === undefined;
+            leftvstd.length + rightvstd.length) && selectedid === undefined;
 
         let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
+        const {
+            stepsEnabled,
+            steps,
+            initialStep,
+        } = this.state;
+
         return this.state.ready ? (
             <>
+                <Steps
+                    enabled={stepsEnabled}
+                    steps={steps}
+                    initialStep={initialStep}
+                    onExit={this.onExit}
+                    options={{
+                        showStepNumbers: true,
+                        scrollToElement: true,
+                        hideNext: false,
+                        nextToDone: true
+                    }}
+                    ref={steps => (this.steps = steps)}
+                    onBeforeChange={this.onBeforeChange}
+                />
                 <div className="jumbotron">
                     <h1 className="header">{this.props.pageHeader}</h1>
                     <p>{this.props.headerSubtitle}
@@ -266,7 +334,7 @@ class RecommendationPage extends Component {
                         ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
                         selectionHandler={this.handleSelect} selectedid={selectedid}
                         panelByline={leftbyline} />
-                    <div className="col-sm-4 gx-sm-4">
+                    <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
                             <Card bg="dark" text="white" style={{
                                 backgroundColor: '#333', borderColor: '#333'
@@ -295,7 +363,7 @@ class RecommendationPage extends Component {
                         panelByline={rightbyline} />
                 </div>
                 <div className="jumbotron jumbotron-footer">
-                    <Button className="footer-btn" variant={buttonVariant} size="lg"
+                    <Button className="next-button footer-btn" variant={buttonVariant} size="lg"
                         disabled={buttonDisabled && !this.state.loading}
                         onClick={this.updateSurvey}>
                         {!this.state.loading ? 'Next'
