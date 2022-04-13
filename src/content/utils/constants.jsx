@@ -87,6 +87,7 @@ export const qBank = {
 			{ qId: 'q2', text: 'The chosen movie fits my preference.', flag: false },
 			{ qId: 'q3', text: 'I would recommend my chosen movie to others/friends.', flag: false },
 			{ qId: 'q4', text: 'I was excited about my chosen movie.', flag: false },
+			{ qId: 'a1', text: 'Regardless of your answer, choose "disagree" to the following.', flag: false},
 			{ qId: 'q5', text: 'I think I chose the best movie from the options.', flag: false },
 			{ qId: 'q6', text: 'I know several items that are better than the one I selected.', flag: false },
 			{ qId: 'q7', text: 'I would rather watch a different movie from the one I selected.', flag: false }
