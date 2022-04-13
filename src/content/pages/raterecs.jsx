@@ -208,7 +208,7 @@ class RecommendationPage extends Component {
             level: this.props.level
         };
         ratingHistory.push(rated);
-        if (!panelvstd.some(item => item.item_id === movieid)) panelvstd.push(movieid);
+        if (!panelvstd.some(itemid => itemid === movieid)) panelvstd.push(movieid);
 
         let isNew = !vstdLst.some(item => item.item_id === movieid);
         if (isNew) {
