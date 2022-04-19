@@ -87,7 +87,6 @@ class App extends Component {
                     <Navbar.Brand style={{ marginLeft: "1em", fontWeight: "450" }}>Movie Recommender Study</Navbar.Brand>
                 </Navbar>
                 <div className="contentWrapper">
-   
                         <div style={{
                             position: "absolute", display: "flex", flexDirection: "column", height: "360px",
                             width: "1300px", pointerEvents: "auto", backgroundColor: "#fff", backgroundClip: "padding-box",
@@ -142,7 +141,7 @@ class App extends Component {
                                         progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                         waitMsg={"Please hang on while we build your final recommendations."}
                                         pageHeader={"Select a movie to watch"}
-                                        headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like the 7 movies (on the left) the best. Please select one move that you would like to watch right now if you could."}
+                                        headerSubtitle={"These are your final recommendations. Among the movies in our system, we predict that you will like the 7 movies (on the left) the best. Please select one movie that you would like to watch right now if you could."}
                                         finalhint={"Once you made your choice about selecting a movie to watch, click next to exit the recommender system."} 
                                         dest="/endrecommendations" pick={true} key={3} level={3} />} 
                                         />
