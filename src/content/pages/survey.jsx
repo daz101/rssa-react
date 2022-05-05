@@ -1,35 +1,43 @@
-import React, { Component } from 'react';
-import 'react-step-progress-bar/styles.css';
-import ProgressBarComponent from '../widgets/progressBar';
-import Button from 'react-bootstrap/Button';
-import SurveyPane from '../widgets/surveyPanes';
-import { qBank, likertVals, API } from '../utils/constants';
 import axios from 'axios';
+import React, { Component } from 'react';
+import { Button, Spinner } from 'react-bootstrap';
+import parse from 'html-react-parser';
 import { Redirect } from 'react-router-dom';
+import { API, likertVals } from '../utils/constants';
+import SurveyPane from '../widgets/surveyPanes';
+const defaultMovieIco = require("../res/default_movie_icon.svg");
 
 
 class SurveyPage extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			userid: props.location.state.userid,
 			pickid: props.location.state.selectedid,
-			pageid: 8,
-			surveyPageCount: 6,
+			finalRecommendations: props.location.state.recs,
+			pageid: props.location.state.pageid + 1,
+			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length,
 			currentStep: 1,
+			prevStep: 1,
 			surveyDateTime: new Date(),
 			disabled: true,
 			responses: [],
 			seen_set: [],
-			done: false
+			selectedmovie: props.location.state.selectedmovie,
+			done: false,
+			recs: props.location.state.recs,
+			loading: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.updateSurvey = this.updateSurveyResponse.bind(this);
 	}
 
 	updateSurveyResponse() {
+		this.setState({
+			loading: true
+		});
+
 		let currentStep = this.state.currentStep;
 		let surveyPageCount = this.state.surveyPageCount;
 
@@ -39,43 +47,68 @@ class SurveyPage extends Component {
 		let userid = this.state.userid;
 		let responses = this.state.responses;
 
-
-
 		axios.put(API + 'add_survey_response', {
-			pageid: pageid,
-			userid: userid,
 			starttime: surveyDateTime.toUTCString(),
 			endtime: surveyEndTime.toUTCString(),
-			response: { responses: responses }
-		})
+			pageid: pageid,
+			userid: userid,
+			response: {
+				responses: responses
+			}
+		},
+			{
+				headers: {
+					'Access-Control-Allow-Credentials': true,
+					'Access-Control-Allow-Origin': '*'
+				}
+			})
 			.then(response => {
 				if (response.status === 200) {
 					if (surveyPageCount === currentStep) {
 						this.setState({
-							done: true
+							done: true,
+							loading: false
 						});
+						this.props.progressUpdater();
 					} else {
+						this.setState({
+							loading: false
+						})
 						this._next();
+						this.props.progressUpdater();
 					}
 				}
 			})
 	}
 
-	handleChange(event, qId, qText, likertVal, numQuestions) {
+	componentDidUpdate() {
+		let prevStep = this.state.prevStep;
+		if (prevStep !== this.state.currentStep) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			this.setState({
+				prevStep: prevStep + 1
+			});
+		}
+	}
+
+	handleChange(event, qId, qText, qType, resVal, numQuestions) {
 		let responses = this.state.responses;
 		let response = {};
+
+		let val = qType === "likert" ? likertVals.indexOf(resVal) + 1 : resVal;
 
 		if (!responses.some(res => res.id === qId)) {
 			response = {
 				id: qId,
+				type: qType,
 				text: qText,
-				val: likertVals.indexOf(likertVal) + 1
+				val: val
 			};
 			responses.push(response);
 		} else {
 			responses = responses.map(res => (
 				res.id === qId ? {
-					...res, val: likertVals.indexOf(likertVal) + 1
+					...res, val: val
 				} : res
 			));
 		}
@@ -86,12 +119,12 @@ class SurveyPage extends Component {
 		})
 	}
 
-
 	/*
 	functions to handle next and previous buttons 
 	*/
 	_next = () => {
 		let currentStep = this.state.currentStep;
+		let pageid = this.state.pageid;
 		let surveyDateTime = new Date();
 		let responses = [];
 		currentStep++;
@@ -99,64 +132,48 @@ class SurveyPage extends Component {
 			currentStep: currentStep,
 			disabled: true,
 			surveyDateTime: surveyDateTime,
-			responses: responses
+			responses: responses,
+			papgeid: pageid + 1
 		});
-	}
-
-	_prev = () => {
-		let currentStep = this.state.currentStep;
-		currentStep = currentStep <= 1 ? 1 : currentStep - 1;
-		this.setState({ currentStep: currentStep, disabled: true });
-	}
-
-	previousButton() {
-		const currentStep = this.state.currentStep;
-		if (currentStep !== 1) {
-			return (
-				<Button
-					type="secondary" style={{ float: "right" }} onClick={this._prev}>
-					Previous
-				</Button>
-			);
-		}
-		return null;
 	}
 
 	nextButton() {
 		const currentStep = this.state.currentStep;
-		if (currentStep < 6) {
+		let isFinalPage = this.props.finalPage || false;
+		let buttonVariant = this.state.disabled ? 'secondary' : 'primary';
+		if (currentStep < this.state.surveyPageCount || !isFinalPage) {
 			return (
-				<Button disabled={this.state.disabled}
-					style={{ float: "right" }} type="primary" onClick={this.updateSurvey}>
-					Next
+				<Button disabled={this.state.disabled && !this.state.loading}
+					className="footer-btn"
+					variant={buttonVariant} size="lg" onClick={this.updateSurvey}>
+					{!this.state.loading ? 'Next'
+						:
+						<>
+							<Spinner
+								as="span"
+								animation="grow"
+								size="sm"
+								role="status"
+								aria-hidden="true"
+							/>
+							Loading...
+						</>
+					}
 				</Button>
 			);
 		} else {
 			return (
 				<Button disabled={this.state.disabled}
-					style={{ float: "right" }} type="primary" onClick={this.updateSurvey}>
+					className="footer-btn"
+					variant={buttonVariant} size="lg" onClick={this.updateSurvey}>
 					Submit
 				</Button>
 			);
 		}
 	}
 
-	submitButton() {
-		const currentStep = this.state.currentStep;
-		if (currentStep === 6) {
-			return (
-				<button disabled={this.state.disabled}
-					className="btn btn-primary float-right"
-					size="lg" type="submit">
-					Submit
-				</button>
-			);
-		}
-		return null;
-	}
-
 	getQuestions(idx) {
-		return qBank[idx];
+		return this.props.questionBank[idx];
 	};
 
 	render() {
@@ -164,36 +181,74 @@ class SurveyPage extends Component {
 		let currentStep = this.state.currentStep;
 		let userid = this.state.userid;
 		let done = this.state.done;
+		let qSet = this.getQuestions(currentStep);
+		let recs = this.state.recs;
+
+		let selectedmovie = this.state.selectedmovie;
 
 		if (done) {
 			return (
 				<Redirect to={{
-					pathname: "/exit",
+					pathname: this.props.dest,
 					state: {
-						completed: done,
-						userid: userid
+						userid: userid,
+						pageid: this.state.pageid + currentStep - 1
 					}
 				}} />
 			)
 		}
 
 		return (
-			<div className="contentWrapper">
-				<div style={{ margin: "0 3em" }}>
-					<ProgressBarComponent percentComplete={90} />
-					<div className="survey-page">
-						<h2>Post-task survey</h2>
-						<SurveyPane
-							maxPanes={maxPanes}
-							key={currentStep}
-							currentStep={currentStep}
-							handleChange={this.handleChange}
-							stepFlag={currentStep}
-							questions={this.getQuestions(currentStep)} />;
+			<>
+				<div className="jumbotron sticky-top surveytronShadow">
+					<h4>{qSet.title}</h4>
+					<p style={{ marginBottom: "0" }}>{parse(qSet.instruction)}</p>
+					{qSet.displayRecs ? (
+						<div style={{ display: "flex" }}>
+							{
+								recs.map((currentMovie) => (
+									<div key={"TN_" + currentMovie.movie_id} id={"TN_" + currentMovie.movie_id}
+										className={"grid-item"} style={{
+											width: "135px",
+											height: "171px",
+											margin: "0 3px",
+											backgroundImage: "url(" + currentMovie.poster + "), url('" + defaultMovieIco + "')",
+										}}>
+										<div className="grid-item-label" style={{ position: "absolute" }}>
+											{currentMovie.title + " (" + currentMovie.year + ")"}
+										</div>
+									</div>
+								))
+							}
+						</div>
+					) : qSet.showSelected ? (
+						<div id={"TN_" + selectedmovie.id}
+							className={"grid-item"} style={{
+								width: "135px",
+								height: "171px",
+								margin: "0 3px",
+								backgroundImage: "url(" + selectedmovie.poster + "), url('" + defaultMovieIco + "')",
+							}}>
+							<div className="grid-item-label" style={{ position: "absolute" }}>
+								{selectedmovie.title + " (" + selectedmovie.year + ")"}
+							</div>
+						</div>
+					) : <></>}
+				</div>
+				<div className="survey-page">
+					<SurveyPane
+						maxPanes={maxPanes}
+						key={currentStep}
+						currentStep={currentStep}
+						handleChange={this.handleChange}
+						stepFlag={currentStep}
+						questions={qSet}
+						recList={recs} />
+					<div className="jumbotron jumbotron-footer">
 						{this.nextButton()}
 					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
 }

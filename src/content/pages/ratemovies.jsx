@@ -1,14 +1,11 @@
-import 'intro.js/introjs.css';
-import "react-step-progress-bar/styles.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect } from "react-router-dom";
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import { Steps } from "intro.js-react";
-import MovieGrid from "../widgets/movieGrid";
-import ProgressBarComponent from "../widgets/progressBar";
-import {API} from "../utils/constants";
 import axios from "axios";
+import React, { Component } from 'react';
+import { Steps } from "intro.js-react";
+import 'intro.js/introjs.css';
+import { Button, Container, Spinner } from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
+import { API } from "../utils/constants";
+import MovieGrid from "../widgets/movieGrid";
 
 class RatingPage extends Component {
 
@@ -17,31 +14,38 @@ class RatingPage extends Component {
     constructor(props) {
         super(props);
         this.rateMoviesHandler = this.rateMovies.bind(this);
+        this.hoverTrackingHandler = this.trackHover.bind(this);
+        this.actionTrackingHandler = this.updateActionHistory.bind(this);
 
         this.state = {
             raterDateTime: undefined,
             userid: this.props.location.state.userid,
-            pageid: 4,
+            pageid: this.props.location.state.pageid + 1,
             stepsEnabled: true,
             initialStep: 0,
             steps: [
                 {
                     element: ".jumbotron",
-                    intro: "Select a movie that you are familiar with and provide a rating. You can use the slider " +
-                        "to the side to find more options."
+                    intro: "Find a movie that you have watched and rate it on a 5-point scale."
+                },
+                {
+                    element: "#gallery-right-btn",
+                    intro: "Click this button to scroll through the gallery of movies.",
+                    position: "left"
                 },
                 {
                     element: ".rankHolder",
-                    intro: "Rate a total of 15 movies to proceed to the next stage. "
+                    intro: "You must rate at least " + this.moviesRatingCount + " movies to proceed."
                 },
                 {
                     element: ".next-button",
-                    intro: "Click the Next button to proceed to the next stage."
+                    intro: "Once you have rated enough movies, you can click here to continue."
                 }
             ],
             count: 0,
             ratedLst: [],
-            updateSuccess: false
+            updateSuccess: false,
+            loading: false
         };
         this.updateSurvey = this.updateSurveyResponse.bind(this);
     }
@@ -53,45 +57,85 @@ class RatingPage extends Component {
     }
 
     updateSurveyResponse() {
+        this.setState({
+            loading: true
+        });
+
         let raterDateTime = this.state.raterDateTime;
         let raterEndTime = new Date();
         let pageid = this.state.pageid;
         let userid = this.state.userid;
         let ratedLst = this.state.ratedLst;
+        let ratingHistory = this.state.ratingHistory;
+        let hoverHistory = this.state.hoverHistory;
+        let actionHistory = this.state.actionHistory;
 
         axios.put(API + 'add_survey_response', {
             pageid: pageid,
             userid: userid,
             starttime: raterDateTime.toUTCString(),
             endtime: raterEndTime.toUTCString(),
-            response: {ratings: ratedLst}
-        })
-        .then(response => {
-            if (response.status === 200) {
-                this.setState({
-                    updateSuccess: true
-                });
+            response: {
+                ratings: ratedLst,
+                rating_history: ratingHistory,
+                hover_history: hoverHistory,
+                action_history: actionHistory
             }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({
+                        updateSuccess: true,
+                        loading: false
+                    });
+                    this.props.progressUpdater(10);
+                }
+            })
+    }
+
+    rateMovies(ratedLst, isNew, ratingHistory) {
+        this.setState({
+            count: isNew ? this.state.count + 1 : this.state.count,
+            ratedLst: ratedLst,
+            ratingHistory: ratingHistory
+        });
+    }
+
+    trackHover(hoverHistory) {
+        this.setState({
+            hoverHistory: hoverHistory
+        });
+    }
+
+    onBeforeChange = nextStepIndex => {
+        if (nextStepIndex === 1) {
+            this.steps.updateStepElement(nextStepIndex);
+        }
+    }
+
+    updateActionHistory(actionHistory) {
+        this.setState({
+            actionHistory: actionHistory
         })
     }
 
-    rateMovies(ratedLst, isNew) {
-        this.setState({
-            count: isNew ? this.state.count + 1 : this.state.count,
-            ratedLst: ratedLst
-        });
-    }
+    onExit = () => {
+        this.setState(() => ({ stepsEnabled: false }));
+    };
 
     render() {
         let userid = this.state.userid;
         let ratings = this.state.ratedLst;
-        if (this.state.updateSuccess){
+        let pageid = this.state.pageid;
+
+        if (this.state.updateSuccess) {
             return (
                 <Redirect to={{
-                    pathname: "/raterecommendations1",
-                    state:{
+                    pathname: this.props.dest,
+                    state: {
                         userid: userid,
-                        ratings: ratings
+                        ratings: ratings,
+                        pageid: pageid
                     }
                 }} />
             );
@@ -102,55 +146,66 @@ class RatingPage extends Component {
             steps,
             initialStep,
         } = this.state;
-        let disabled = true;
-        if (this.state.count >= this.moviesRatingCount) {
-            disabled = false;
-        }
+        let disabled = this.state.count < this.moviesRatingCount;
+        let buttonVariant = disabled ? 'secondary' : 'primary';
 
         return (
-            <div className="contentWrapper">
-                <div style={{ margin: "0 3em" }}>
-                    <br />
-                    <Steps
-                        enabled={stepsEnabled}
-                        steps={steps}
-                        initialStep={initialStep}
-                        onExit={this.onExit}
-                        options={{
-                            showStepNumbers: true,
-                            scrollToElement: true,
-                            hideNext: false,
-                            nextToDone: true
-                        }}
-                        ref={steps => (this.steps = steps)}
-                    />
-                    <ProgressBarComponent percentComplete={50} />
-                    <br />
-                    <div className="jumbotron">
-                        <p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
-                    </div>
-                    <MovieGrid handler={this.rateMoviesHandler} />
-                    <div id="footer-container" style={{ display: "flex" }}>
-                        <div className="rankHolder">
-                            <span> Ranked Movies: </span>
-                            <span><i>{this.state.count}</i></span>
-                            <span><i>of {this.moviesRatingCount}</i></span>
-                        </div>
-                        <div style={{ marginTop: "18px" }}>
-                            <Button className="next-button" disabled={disabled}
-                                variant="primary" onClick={this.updateSurvey}>
-                                Next
-                            </Button>
-                        </div>
-                    </div>
+            <>
+                <Steps
+                    enabled={stepsEnabled}
+                    steps={steps}
+                    initialStep={initialStep}
+                    onExit={this.onExit}
+                    options={{
+                        showStepNumbers: true,
+                        scrollToElement: true,
+                        hideNext: false,
+                        nextToDone: true
+                    }}
+                    ref={steps => (this.steps = steps)}
+                    onBeforeChange={this.onBeforeChange}
+                />
+                <div className="jumbotron">
+                    <h1 className="header">Indicate your preferences</h1>
+                    <p>Use the blue button on the right to scroll through
+                        the gallery of movies and rate at least 10 movies
+                        that you have already watched. Once you have rated 10
+                        movies, the system will be able to give you
+                        recommendations.
+                        Keep in mind, you can click on the blue button on the
+                        right to get more movies to rate!</p>
                 </div>
-            </div>
+                <Container>
+                    <MovieGrid ratingHandler={this.rateMoviesHandler} userid={userid} pageid={pageid}
+                        hoverHandler={this.hoverTrackingHandler} actionHandler={this.actionTrackingHandler} />
+                </Container>
+                <div className="jumbotron jumbotron-footer" style={{ display: "flex" }}>
+                    <div className="rankHolder">
+                        <span> Ranked Movies: </span>
+                        <span><i>{this.state.count}</i></span>
+                        <span><i>of {this.moviesRatingCount}</i></span>
+                    </div>
+                    <Button variant={buttonVariant} size="lg" style={{ height: "fit-content", marginTop: "1em" }}
+                        className="next-button footer-btn" disabled={disabled && !this.state.loading}
+                        onClick={this.updateSurvey}>
+                        {!this.state.loading ? 'Next'
+                            :
+                            <>
+                                <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                                Loading...
+                            </>
+                        }
+                    </Button>
+                </div>
+            </>
         );
     }
-
-    onExit = () => {
-        this.setState(() => ({ stepsEnabled: false }));
-    };
 }
 
 export default RatingPage;
