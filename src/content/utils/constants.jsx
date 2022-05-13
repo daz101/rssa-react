@@ -106,9 +106,9 @@ export const qBank = {
 				qId: 'q2', text: 'The movies that were recommended did' +
 					' <u><strong>not</strong></u> reflect my diverse taste in movies.', flag: false
 			},
+			{ qId: 'q3', text: 'The movie recommender seemed to target only a small subset of my interests.', flag: false },
 			{ qId: 'q4', text: 'The movie recommender treated me as a one-dimensional person.', flag: false },
 			{ qId: 'q5', text: 'The lists of recommendations matched a diversity of my preferences.', flag: false },
-			{ qId: 'q3', text: 'The movie recommender seemed to target only a small subset of my interests.', flag: false },
 			{ qId: 'q6', text: 'The recommended movies were a perfect fit for me on many different levels.', flag: false },
 			{ qId: 'q7', text: 'The movie recommender seemed to stereotype me in a particular category of viewers.', flag: false }
 		]
