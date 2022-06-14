@@ -128,6 +128,49 @@ export const qBank = {
 			{ qId: 'q5', text: 'I would quickly abandon using the system.', flag: false },
 			{ qId: 'q6', text: 'I would use the system more often if possible.', flag: false }
 		]
+	},
+	8: {
+		title: 'Questions about the movie recommnender system as a whole',
+		instruction: '',
+		qType: 'selfAct',
+		displayRecs: false,
+		showSelected: false,
+		qData: [
+			{ qId: 'q1', text: 'The movie recommender taught me something about myself.', flag: false },
+			{ qId: 'q2', text: 'The movie recommender helped me get a new perspective on life.', flag: false },
+			{ qId: 'q3', text: 'The movie recommender helped me reflect on who I want to be.'},
+			{ qId: 'q4', text: 'The movie recommender helped me reflect on who I am as a person.', flag: false},
+			{ qId: 'q5', text: 'The movie recommender would improve my quality of life.', flag: false }
+		]
+	},
+	9: {
+		title: 'Questions about the movie recommender system as a whole',
+		instruction: '',
+		qType: 'tasteClar',
+		displayRecs: false,
+		showSelected: false,
+		qData : [
+			{ qId: 'q1', text: 'Thanks to the movie recommender, I now know what kinds of movies I like.', flag: false },
+			{ qId: 'q2', text: 'After using the movie recommender, I have no better idea about what different types of movies I like.', flag: false },
+			{ qId: 'q3', text: 'The movie recommender made me more uncertain about my own preferences.', flag: false },
+			{ qId: 'q4', text: 'The movie recommender helped me understand what kind of movies I like.', flag: false },
+			{ qId: 'q5', text: 'Thanks to the movie recommender, I can now better express my preferences in terms of movies.', flag: false },
+			{ qId: 'q6', text: 'The movie recommender helped me figure out what kind of movies I like.', flag: false }
+		]
+	},
+	10: {
+		title: 'Quations about the movie recommender system as a whole',
+		instruction: '',
+		qType: 'tasteDev',
+		displayRecs: false,
+		showSelected: false,
+		qData : [
+			{ qId: 'q1', text: 'The movie recommender made me aware of movie preferences I didn\'t know I had.', flag: false },
+			{ qId: 'q2', text: 'I don\'t think I learned anything new about myself by using the movie recommender.', flag: false },
+			{ qId: 'q3', text: 'The movie recommender helped me develop a unique taste in movies.', flag: false },
+			{ qId: 'q4', text: 'Thanks to the movie recommender, I selected movies I otherwise wouldn\'t think of watching.', flag: false },
+			{ qId: 'q5', text: 'It feels like the movie recommender serves as an educational purpose.', flag: false }
+		]
 	}
 };
 
