@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Image, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import StarRatings from 'react-star-ratings';
 
-class SidePanelItem extends Component {
+class SidePanelItemRate extends Component {
 
 	render() {
 		const movie = this.props.movie;
@@ -11,20 +12,26 @@ class SidePanelItem extends Component {
 				className={"d-flex justify-content-between align-items-center"}
 				onMouseEnter={(evt) => this.props.hoverHandler(evt, true, movie, "enter")}
 			>
-				<div>
-					<Image className="sidePanelThumbnail" src={movie.poster} />
-				</div>
 				<div style={{
-					position: "relative", boxSizing: "border-box", width: "87%",
+					position: "relative", boxSizing: "border-box", width: "63%",
 					display: "inline-block", verticalAlign: "middle"
 				}}>
 					<p style={{ marginBottom: "0", marginTop: "0.25rem" }}>
 						{movie.title + " (" + movie.year + ")"}
 					</p>
 				</div>
+				<StarRatings
+					starRatedColor="rgb(252,229,65)"
+					rating={movie.rating}
+					starHoverColor="rgb(252,229,65)"
+					starDimension="1.25em"
+					starSpacing="0.25px"
+					changeRating={this.props.ratingsHandler}
+					numberOfStars={5}
+					name={movie.movie_id} />
 			</ListGroup.Item>
 		</>;
 	}
 }
 
-export default SidePanelItem;
+export default SidePanelItemRate;

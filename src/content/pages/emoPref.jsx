@@ -1,23 +1,25 @@
 import axios from "axios";
 import React, { Component } from 'react';
-import { Button, Card, Container, Spinner } from "react-bootstrap";
+import { Button, Card, Container, ListGroup, ListGroupItem, Spinner } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
+import SidePanelItem from "../widgets/movieSidePanelItem";
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
+import EmotionToggle from "../widgets/emotionToggle";
+import EmotionStats from "../widgets/emoStats";
 
 
-class RecommendationPage extends Component {
+class EmotionPref extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             ready: false,
-            leftPanel: { items: [], condition: '', byline: '', tag: '', vstd: [] },
-            rightPanel: { items: [], condition: '', byline: '', tag: '', vstd: [] },
+            movies: [],
             visited: [],
             ratingHistory: [],
             setIsShown: false,
@@ -81,10 +83,10 @@ class RecommendationPage extends Component {
         let userid = this.state.userid;
         let ratings = this.state.ratings;
 
-        axios.post(API + 'recommendations', {
+        axios.post(API + 'ersrecommendations', {
             userid: userid,
             ratings: ratings,
-            count: 7
+            count: 100
         },
             {
                 headers: {
@@ -94,21 +96,9 @@ class RecommendationPage extends Component {
             })
             .then(response => {
                 if (response.status === 200) {
+                    console.log(response.data)
                     this.setState({
-                        leftPanel: {
-                            tag: response.data['recommendations']['left']['tag'],
-                            condition: response.data['recommendations']['left']['label'],
-                            byline: response.data['recommendations']['left']['byline'],
-                            items: response.data['recommendations']['left']['items'],
-                            vstd: []
-                        },
-                        rightPanel: {
-                            tag: response.data['recommendations']['right']['tag'],
-                            condition: response.data['recommendations']['right']['label'],
-                            byline: response.data['recommendations']['left']['byline'],
-                            items: response.data['recommendations']['right']['items'],
-                            vstd: []
-                        }
+                        movies: response.data['recommendations']
                     });
                 }
             });
@@ -165,12 +155,11 @@ class RecommendationPage extends Component {
 
     handleHover(isShown, activeMovie, action, panelid) {
         let history = [...this.state.hoverHistory];
-        let panel = this.state[panelid];
         history.push({
             'item_id': activeMovie.movie_id,
             time: new Date().toUTCString(),
             action: action,
-            loc: panel.tag,
+            loc: panelid,
             level: this.props.level
 
         });
@@ -267,19 +256,13 @@ class RecommendationPage extends Component {
         let userid = this.state.userid;
         let pageid = this.state.pageid;
 
-        let leftItems = this.state.leftPanel.items;
-        let leftCondition = this.state.leftPanel.condition;
-        let leftbyline = this.state.leftPanel.byline;
-        let leftvstd = this.state.leftPanel.vstd;
+        let movies = this.state.movies;
 
-        let rightItems = this.state.rightPanel.items;
-        let rightCondition = this.state.rightPanel.condition;
-        let rightbyline = this.state.rightPanel.byline;
-        let rightvstd = this.state.rightPanel.vstd;
+
         if (this.state.updateSuccess) {
 
             let ratings = this.state.visited.concat(this.state.ratings);
-            let selectedmovie = [...leftItems, ...rightItems].find((movie) => (
+            let selectedmovie = [...movies].find((movie) => (
                 movie.movie_id === selectedid
             ));
             return (
@@ -288,7 +271,7 @@ class RecommendationPage extends Component {
                     state: {
                         userid: userid,
                         ratings: ratings,
-                        recs: leftItems,
+                        recs: movies.slice(0, 10),
                         pageid: pageid,
                         selectedmovie: selectedmovie
                     }
@@ -296,8 +279,7 @@ class RecommendationPage extends Component {
             );
         }
 
-        let buttonDisabled = ((leftItems.length + rightItems.length) !==
-            leftvstd.length + rightvstd.length) && selectedid === undefined;
+        let buttonDisabled = selectedid === undefined;
 
         let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
@@ -330,49 +312,60 @@ class RecommendationPage extends Component {
                 </div>
 
                 <div className="row g-0">
-                    <MovieSidePanel id="leftPanel" 
-                        movieList={leftItems} 
+                    <div className="col-sm-4 gx-sm-4" id="emotionPanel">
+                        <div className="emoPrefControlPanel">
+                            <div style={{ marginTop: "2rem" }}>
+                                <ol>
+                                    <li>
+                                        <p>
+                                            Among the movies in your system, we predict that you will like these 7 movies the best based on your ratings.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            You can hover over movies to see a preview of the poster, a short synopsis, and a radar graph depicting the movie's emotional feature in 8 emotions: joy, trust, fear, surprise, surprise, sadness, disgust, anger, and anticipation.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            You can specify your preference of movies from the perspective of movie emotions in the following panel. Please adjust the emotion strength indicators bellow so we could fine-tune the recommendations for you.
+                                        </p>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div style={{ marginTop: "4em" }}>
+                                <EmotionToggle />
+                            </div>
+                        </div>
+                    </div>
+                    <MovieSidePanel id="leftPanel" movieList={movies.slice(0, 10)}
+                        panelTitle={'Movies you may like'}
+                        panelByline={''}
+                        render={(props) => <SidePanelItem {...props} />}
                         hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} 
-                        panelTitle={leftCondition} 
-                        pick={pick}
-                        selectionHandler={this.handleSelect} 
-                        selectedid={selectedid}
-                        panelByline={leftbyline} 
                     />
                     <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
-                            <Card bg="dark" text="white" style={{
-                                backgroundColor: '#333', borderColor: '#333'
-                            }}>
-                                <Card.Body style={{ height: '700px' }}>
+                            <Card bg="light" text="black">
+                                <Card.Body style={{ height: '900px' }}>
                                     <Card.Img variant="top" className="d-flex mx-auto d-block img-thumbnail"
                                         src={this.state.activeMovie.poster} alt={"Poster of the movie " +
                                             this.state.activeMovie.title}
-                                        style={{ maxHeight: "63%", minHeight: "63%", width: "auto" }} />
+                                        style={{ maxHeight: "36%", minHeight: "36%", width: "auto" }} />
                                     <Card.Title style={{ marginTop: "0.5rem" }}>
                                         {this.state.activeMovie.title}
                                     </Card.Title>
-                                    <Container className="overflow-auto" style={{ height: "30%" }}>
+                                    <Container className="overflow-auto" style={{ height: "27%" }}>
                                         <Card.Text>
                                             {this.state.activeMovie.description}
                                         </Card.Text>
                                     </Container>
+                                    <EmotionStats movie={this.state.activeMovie} />
                                 </Card.Body>
                             </Card>
-                        ) : (<div style={{ height: "700px" }} />)
+                        ) : (<div style={{ height: "900px" }} />)
                         }
                     </div>
-                    <MovieSidePanel id="rightPanel" 
-                        movieList={rightItems} 
-                        hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} 
-                        panelTitle={rightCondition} 
-                        pick={pick}
-                        selectionHandler={this.handleSelect} 
-                        selectedid={selectedid}
-                        panelByline={rightbyline} 
-                    />
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="next-button footer-btn" variant={buttonVariant} size="lg"
@@ -403,4 +396,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default RecommendationPage;
+export default EmotionPref;

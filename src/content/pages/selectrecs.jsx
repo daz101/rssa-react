@@ -331,15 +331,15 @@ class RecommendationPage extends Component {
 
                 <div className="row g-0">
                     <MovieSidePanel id="leftPanel" 
-                        movieList={leftItems} 
-                        hoverHandler={this.handleHover}
+						movieList={leftItems} 
+						hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} 
-                        panelTitle={leftCondition} 
-                        pick={pick}
+						panelTitle={leftCondition} 
+						pick={pick}
                         selectionHandler={this.handleSelect} 
-                        selectedid={selectedid}
+						selectedid={selectedid}
                         panelByline={leftbyline} 
-                    />
+					/>
                     <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
                             <Card bg="dark" text="white" style={{
@@ -364,15 +364,15 @@ class RecommendationPage extends Component {
                         }
                     </div>
                     <MovieSidePanel id="rightPanel" 
-                        movieList={rightItems} 
-                        hoverHandler={this.handleHover}
+						movieList={rightItems} 
+						hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} 
-                        panelTitle={rightCondition} 
-                        pick={pick}
+						panelTitle={rightCondition} 
+						pick={pick}
                         selectionHandler={this.handleSelect} 
-                        selectedid={selectedid}
+						selectedid={selectedid}
                         panelByline={rightbyline} 
-                    />
+					/>
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="next-button footer-btn" variant={buttonVariant} size="lg"

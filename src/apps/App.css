@@ -346,3 +346,63 @@ div .card {
 .RSPBprogressBar .RSPBstep {
 	z-index: 2049 !important;
 }
+
+.sidePanelThumbnail{
+	width: 45px;
+}
+
+.emoPrefControlPanel{
+	background-color: #e9ecef;
+	border-radius: 0.3em;
+	padding: 1em 1em;
+	height: 900px;
+}
+
+.btn-secondary {
+	background-color: #e0e0e0;
+	border-color: #707070;
+	font-weight: 400;
+	color: #4a4b4b;
+	font-size: small;
+}
+
+.btn-info {
+	background-color: #c9ccd5;
+	border-color: #c9ccd5;
+}
+
+.btn-info:hover {
+	background-color: #8b8b8b;
+	border-color: #8b8b8b;
+}
+
+.btn-secondary:hover {
+	background-color: #f9b05c;
+	color: #4a4b4b;
+}
+
+.btn-secondary:focus{
+	background-color: #f9b05c;
+	color: #4a4b4b;
+}
+
+.progress{
+	width: 144px;
+	height: 0.9em;
+	border-width: 1px;
+	border-color: #8b8b8b;
+	border-style: solid;
+	border-radius: 0.5em;
+}
+
+.progress-bar{
+	background-color: #c9ccd5;
+	border-color: #8b8b8b;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 0.5em;
+}
+
+.emoStatbars > div:nth-child(even) .progress-bar{
+	background-color: #e4d8dc;
+}
