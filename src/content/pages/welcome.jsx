@@ -1,8 +1,7 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Button, Card, Form, Modal, Spinner } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
-import { withMousePositionHook } from "../hooks/useMousePosition";
 import { API } from '../utils/constants';
 
 class WelcomePage extends Component {
@@ -94,7 +93,7 @@ class WelcomePage extends Component {
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
 		if (userCreated) {
-			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
+			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Redirect to={{
 					pathname: this.props.dest,
@@ -241,4 +240,4 @@ class WelcomePage extends Component {
 	}
 }
 
-export default withMousePositionHook(WelcomePage);
+export default WelcomePage;

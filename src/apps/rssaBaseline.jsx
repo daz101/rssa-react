@@ -105,7 +105,7 @@ class RSSABaseline extends Component {
                         <div className={progBarVisibility} style={{ zIndex: "2048" }}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
-                        <Router basename='/rssa'>
+                        <Router basename='/rssabase'>
                             <Switch>
                                 <Route exact path="/" render={(props) => <WelcomePage {...props}
                                     activitySync={this.activitySync}

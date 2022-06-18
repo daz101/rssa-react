@@ -7,6 +7,7 @@ import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
+import SidePanelItemRate from "../widgets/movieSidePanelItemRate";
 
 
 class RecommendationPageBaseline extends Component {
@@ -318,10 +319,17 @@ class RecommendationPageBaseline extends Component {
                 </div>
 
                 <div className="row g-0 justify-content-md-center">
-                    <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
+                    {/* <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
                         ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
                         selectionHandler={this.handleSelect} selectedid={selectedid}
-                        panelByline={leftbyline} />
+                        panelByline={leftbyline} /> */}
+                    <MovieSidePanel id="leftPanel" movieList={leftItems}
+                        panelTitle={leftCondition}
+                        panelByline={leftbyline}
+                        render={(props) => <SidePanelItemRate {...props} />}
+                        hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating}
+                    />
                     <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
                             <Card bg="dark" text="white" style={{

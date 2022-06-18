@@ -16,6 +16,7 @@ import ProgressBarComponent from "../content/widgets/progressBar";
 import ClosingRecommendationPage from '../content/pages/closingRecs';
 import DemographicInfoPage from '../content/pages/demography';
 import axios from 'axios';
+import RecommendationPageSelect from '../content/pages/selectrecs';
 
 class RSSA extends Component {
 
@@ -59,21 +60,21 @@ class RSSA extends Component {
         });
     }
 
-    syncMouseActivity(posData, pageWidth, pageHeight, userid, pageid) {
-        const url = API + 'sync_movement';
-        axios.put(url, {
-            userid: userid,
-            pageid: pageid,
-            pageWidth: pageWidth,
-            pageHeight: pageHeight,
-            mouseActivity: posData
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                }
-            })
-    }
+    // syncMouseActivity(posData, pageWidth, pageHeight, userid, pageid) {
+    //     const url = API + 'sync_movement';
+    //     axios.put(url, {
+    //         userid: userid,
+    //         pageid: pageid,
+    //         pageWidth: pageWidth,
+    //         pageHeight: pageHeight,
+    //         mouseActivity: posData
+    //     })
+    //         .then(response => {
+    //             if (response.status === 200) {
+    //                 console.log(response.data);
+    //             }
+    //         })
+    // }
 
     render() {
         let loaderActive = this.state.loaderActive;
@@ -136,9 +137,9 @@ class RSSA extends Component {
                                     pageHeader={"Refine your recommendations: Step 2 of 2"}
                                     headerSubtitle={"Please rate the following recommendations and alternative items to help us finalize our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
                                     finalhint={"Once you are done rating all the movies, click next to see the final list of recommendations."}
-                                    dest="/raterecommendations3" key={2} level={2} />} 
+                                    dest="/selectrecommendation" key={2} level={2} />} 
                                     />
-                                <Route path="/raterecommendations3" render={(props) => <RecommendationPage {...props}
+                                <Route path="/selectrecommendation" render={(props) => <RecommendationPageSelect {...props}
                                     progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
                                     waitMsg={"Please hang on while we build your final recommendations."}
                                     pageHeader={"Select a movie to watch"}

@@ -358,7 +358,7 @@ div .card {
 	height: 900px;
 }
 
-.btn-secondary {
+.btn-ersToggle {
 	background-color: #e0e0e0;
 	border-color: #707070;
 	font-weight: 400;
@@ -366,14 +366,22 @@ div .card {
 	font-size: small;
 }
 
-.btn-info {
-	background-color: #c9ccd5;
-	border-color: #c9ccd5;
+.btn-ersToggle:hover {
+	background-color: #f9b05c;
+	color: #4a4b4b;
 }
 
-.btn-info:hover {
-	background-color: #8b8b8b;
-	border-color: #8b8b8b;
+.btn-ersToggle:focus {
+	background-color: #f9b05c;
+	color: #4a4b4b;
+}
+
+/* .btn-secondary {
+	background-color: #e0e0e0;
+	border-color: #707070;
+	font-weight: 400;
+	color: #4a4b4b;
+	font-size: small;
 }
 
 .btn-secondary:hover {
@@ -384,7 +392,28 @@ div .card {
 .btn-secondary:focus{
 	background-color: #f9b05c;
 	color: #4a4b4b;
+} */
+
+.btn-ersControl {
+	background-color: #c9ccd5;
+	border-color: #c9ccd5;
 }
+
+.btn-ersControl:hover {
+	background-color: #8b8b8b;
+	border-color: #8b8b8b;
+}
+
+/* .btn-info {
+	background-color: #c9ccd5;
+	border-color: #c9ccd5;
+}
+
+.btn-info:hover {
+	background-color: #8b8b8b;
+	border-color: #8b8b8b;
+} */
+
 
 .progress{
 	width: 144px;

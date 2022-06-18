@@ -42,7 +42,7 @@ class MovieSidePanel extends Component {
 						this.props.render({
 							key: movie.movie_id,
 							movie: movie,
-							selectdid: this.props.selectedid,
+							selectedid: this.props.selectedid,
 							hoverHandler: this.onHover,
 							ratingsHandler: this.changeRating,
 							selectStateHandler: this.onValueChange

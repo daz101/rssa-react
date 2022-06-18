@@ -1,16 +1,16 @@
 import axios from "axios";
-import React, { Component } from 'react';
+import { Steps } from "intro.js-react";
+import 'intro.js/introjs.css';
+import { Component } from 'react';
 import { Button, Card, Container, Spinner } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
-import { Steps } from "intro.js-react";
-import 'intro.js/introjs.css';
-import SidePanelItemRate from "../widgets/movieSidePanelItemRate";
+import SidePanelItemSelect from "../widgets/movieSidePanelItemSelect";
 
 
-class RecommendationPage extends Component {
+class RecommendationPageSelectBaseline extends Component {
 
     constructor(props) {
         super(props);
@@ -43,11 +43,6 @@ class RecommendationPage extends Component {
                     element: "#leftPanel",
                     intro: "These are your movie recommendations.",
                     position: "right"
-                },
-                {
-                    element: "#rightPanel",
-                    intro: "This list contains movies based on a different criterion.",
-                    position: "left"
                 },
                 {
                     element: "#moviePosterPreview",
@@ -101,13 +96,6 @@ class RecommendationPage extends Component {
                             condition: response.data['recommendations']['left']['label'],
                             byline: response.data['recommendations']['left']['byline'],
                             items: response.data['recommendations']['left']['items'],
-                            vstd: []
-                        },
-                        rightPanel: {
-                            tag: response.data['recommendations']['right']['tag'],
-                            condition: response.data['recommendations']['right']['label'],
-                            byline: response.data['recommendations']['left']['byline'],
-                            items: response.data['recommendations']['right']['items'],
                             vstd: []
                         }
                     });
@@ -330,23 +318,18 @@ class RecommendationPage extends Component {
                     </p>
                 </div>
 
-                <div className="row g-0">
-                    {/* <MovieSidePanel id="leftPanel"
-                        movieList={leftItems}
-                        hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating}
-                        panelTitle={leftCondition}
-                        pick={pick}
-                        selectionHandler={this.handleSelect}
-                        selectedid={selectedid}
-                        panelByline={leftbyline}
-                    /> */}
+                <div className="row g-0 justify-content-md-center">
+                    {/* <MovieSidePanel id="leftPanel" movieList={leftItems} hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating} panelTitle={leftCondition} pick={pick}
+                        selectionHandler={this.handleSelect} selectedid={selectedid}
+                        panelByline={leftbyline} /> */}
                     <MovieSidePanel id="leftPanel" movieList={leftItems}
                         panelTitle={leftCondition}
                         panelByline={leftbyline}
-                        render={(props) => <SidePanelItemRate {...props} />}
+                        render={(props) => <SidePanelItemSelect {...props} />}
                         hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating}
+                        selectedid={selectedid}
+                        selectionHandler={this.handleSelect}
                     />
                     <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
@@ -371,23 +354,6 @@ class RecommendationPage extends Component {
                         ) : (<div style={{ height: "700px" }} />)
                         }
                     </div>
-                    {/* <MovieSidePanel id="rightPanel"
-                        movieList={rightItems}
-                        hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating}
-                        panelTitle={rightCondition}
-                        pick={pick}
-                        selectionHandler={this.handleSelect}
-                        selectedid={selectedid}
-                        panelByline={rightbyline}
-                    /> */}
-                    <MovieSidePanel id="rightPanel" movieList={rightItems}
-                        panelTitle={rightCondition}
-                        panelByline={rightbyline}
-                        render={(props) => <SidePanelItemRate {...props} />}
-                        hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating}
-                    />
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="next-button footer-btn" variant={buttonVariant} size="lg"
@@ -418,4 +384,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default RecommendationPage;
+export default RecommendationPageSelectBaseline;

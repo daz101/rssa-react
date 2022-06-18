@@ -19,9 +19,9 @@ class EmotionToggle extends Component {
 									</Col>
 									<Col md={{ span: 3, offset: 2 }}>
 										<ButtonGroup>
-											<Button variant="secondary">Low</Button>
-											<Button variant="secondary">High</Button>
-											<Button variant="secondary">Ignore</Button>
+											<Button variant="ersToggle">Low</Button>
+											<Button variant="ersToggle">High</Button>
+											<Button variant="ersToggle">Ignore</Button>
 										</ButtonGroup>
 									</Col>
 								</Row>
@@ -29,7 +29,7 @@ class EmotionToggle extends Component {
 						}
 					</div>
 					<div className='d-flex'>
-						<Button variant="info" style={{margin: "2em auto 0"}}>
+						<Button variant="ersControl" style={{margin: "2em auto 0"}}>
 							Reset
 						</Button>
 					</div>

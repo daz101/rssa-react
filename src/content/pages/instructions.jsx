@@ -1,10 +1,8 @@
 import axios from 'axios';
-import React, { Component } from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Component } from 'react';
+import { Button, Card, Spinner } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
-import { withMousePositionHook } from '../hooks/useMousePosition';
 import { API } from '../utils/constants';
-import { Card } from 'react-bootstrap';
 
 const prefRssa = require("../res/rssa-preferences.png");
 const recommendationRssa = require("../res/rssa-ratingrecs.png");
@@ -73,7 +71,7 @@ class InstructionPage extends Component {
 		const pageWidth = document.body.scrollWidth;
 
 		if (this.state.updateSuccess) {
-			this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
+			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
 				<Redirect to={{
 					pathname: this.props.dest,
@@ -169,4 +167,4 @@ class InstructionPage extends Component {
 	}
 }
 
-export default withMousePositionHook(InstructionPage);
+export default InstructionPage;

@@ -237,6 +237,8 @@ export const preSurveyBank = {
 	}
 };
 
+//MADE CHANGES
+
 // 						max					min
 // anger		0.182929272690844	0.0161596958174905
 // anticipation	0.251623376623377	0.0645546921697549

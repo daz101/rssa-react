@@ -7,9 +7,10 @@ import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
+import SidePanelItemSelect from "../widgets/movieSidePanelItemSelect";
 
 
-class RecommendationPage extends Component {
+class RecommendationPageSelect extends Component {
 
     constructor(props) {
         super(props);
@@ -330,16 +331,24 @@ class RecommendationPage extends Component {
                 </div>
 
                 <div className="row g-0">
-                    <MovieSidePanel id="leftPanel" 
-						movieList={leftItems} 
-						hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} 
-						panelTitle={leftCondition} 
-						pick={pick}
-                        selectionHandler={this.handleSelect} 
-						selectedid={selectedid}
-                        panelByline={leftbyline} 
-					/>
+                    {/* <MovieSidePanel id="leftPanel"
+                        movieList={leftItems}
+                        hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating}
+                        panelTitle={leftCondition}
+                        pick={pick}
+                        selectionHandler={this.handleSelect}
+                        selectedid={selectedid}
+                        panelByline={leftbyline}
+                    /> */}
+                    <MovieSidePanel id="leftPanel" movieList={leftItems}
+                        panelTitle={leftCondition}
+                        panelByline={leftbyline}
+                        render={(props) => <SidePanelItemSelect {...props} />}
+                        hoverHandler={this.handleHover}
+                        selectedid={selectedid}
+                        selectionHandler={this.handleSelect}
+                    />
                     <div className="col-sm-4 gx-sm-4" id="moviePosterPreview">
                         {this.state.setIsShown && (this.state.activeMovie != null) ? (
                             <Card bg="dark" text="white" style={{
@@ -363,16 +372,24 @@ class RecommendationPage extends Component {
                         ) : (<div style={{ height: "700px" }} />)
                         }
                     </div>
-                    <MovieSidePanel id="rightPanel" 
-						movieList={rightItems} 
-						hoverHandler={this.handleHover}
-                        ratingHandler={this.handleRating} 
-						panelTitle={rightCondition} 
-						pick={pick}
-                        selectionHandler={this.handleSelect} 
-						selectedid={selectedid}
-                        panelByline={rightbyline} 
-					/>
+                    {/* <MovieSidePanel id="rightPanel"
+                        movieList={rightItems}
+                        hoverHandler={this.handleHover}
+                        ratingHandler={this.handleRating}
+                        panelTitle={rightCondition}
+                        pick={pick}
+                        selectionHandler={this.handleSelect}
+                        selectedid={selectedid}
+                        panelByline={rightbyline}
+                    /> */}
+                    <MovieSidePanel id="rightPanel" movieList={rightItems}
+                        panelTitle={rightCondition}
+                        panelByline={rightbyline}
+                        render={(props) => <SidePanelItemSelect {...props} />}
+                        hoverHandler={this.handleHover}
+                        selectedid={selectedid}
+                        selectionHandler={this.handleSelect}
+                    />
                 </div>
                 <div className="jumbotron jumbotron-footer">
                     <Button className="next-button footer-btn" variant={buttonVariant} size="lg"
@@ -403,4 +420,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default RecommendationPage;
+export default RecommendationPageSelect;
