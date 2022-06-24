@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from 'react';
 import { Button, Card, Container, ListGroup, ListGroupItem, Spinner } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Navigate, Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
@@ -10,6 +10,7 @@ import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
 import EmotionToggle from "../widgets/emotionToggle";
 import EmotionStats from "../widgets/emoStats";
+import withRouter from "../hooks/withRouter";
 
 
 class EmotionPref extends Component {
@@ -26,9 +27,9 @@ class EmotionPref extends Component {
             activeMovie: null,
             pick: this.props.pick || false,
             recDateTime: new Date(),
-            pageid: this.props.location.state.pageid + 1,
-            ratings: this.props.location.state.ratings,
-            userid: this.props.location.state.userid,
+            pageid: this.props.router.location.state.pageid + 1,
+            ratings: this.props.router.location.state.ratings,
+            userid: this.props.router.location.state.userid,
             updateSuccess: false,
             selection: {},
             hoverHistory: [],
@@ -257,7 +258,7 @@ class EmotionPref extends Component {
         let pageid = this.state.pageid;
 
         let movies = this.state.movies;
-
+        const dest = this.props.dest;
 
         if (this.state.updateSuccess) {
 
@@ -266,16 +267,16 @@ class EmotionPref extends Component {
                 movie.movie_id === selectedid
             ));
             return (
-                <Redirect to={{
-                    pathname: this.props.dest,
-                    state: {
+                <Navigate to={dest} state={
+                    {
                         userid: userid,
                         ratings: ratings,
                         recs: movies.slice(0, 10),
                         pageid: pageid,
                         selectedmovie: selectedmovie
                     }
-                }} />
+                }
+                />
             );
         }
 
@@ -315,6 +316,10 @@ class EmotionPref extends Component {
                     <div className="col-sm-4 gx-sm-4" id="emotionPanel">
                         <div className="emoPrefControlPanel">
                             <div style={{ marginTop: "2rem" }}>
+                                <p style={{ fontWeight: "800" }}>
+                                    Please inspect the recommendations and adjust them to your preference.
+                                </p>
+
                                 <ol>
                                     <li>
                                         <p>
@@ -332,6 +337,9 @@ class EmotionPref extends Component {
                                         </p>
                                     </li>
                                 </ol>
+                                <p style={{ fontWeight: "800" }}>
+                                    Adjust the recommendations until they best fit your preferences.
+                                </p>
                             </div>
                             <div style={{ marginTop: "4em" }}>
                                 <EmotionToggle />
@@ -396,4 +404,4 @@ class EmotionPref extends Component {
     }
 }
 
-export default EmotionPref;
+export default withRouter(EmotionPref);

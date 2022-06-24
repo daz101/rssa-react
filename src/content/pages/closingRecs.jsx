@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Button, Card, Form, Spinner } from 'react-bootstrap';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
 
 class ClosingRecommendationPage extends Component {
@@ -9,11 +10,11 @@ class ClosingRecommendationPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recs: props.location.state.recs,
-			ratings: props.location.state.ratings,
-			userid: props.location.state.userid,
-			pageid: props.location.state.pageid + 1,
-			selectedmovie: props.location.state.selectedmovie,
+			recs: this.props.router.location.state.recs,
+			ratings: this.props.router.location.state.ratings,
+			userid: this.props.router.location.state.userid,
+			pageid: this.props.router.location.state.pageid + 1,
+			selectedmovie: this.props.router.location.state.selectedmovie,
 			starttime: undefined,
 			userText: '',
 			userResponded: false,
@@ -84,18 +85,20 @@ class ClosingRecommendationPage extends Component {
 
 		let buttonVariant = buttonDisabled ? 'secondary' : 'primary';
 
+		const dest = this.props.dest;
+
 		if (this.state.updateSuccess) {
 			return (
-				<Redirect to={{
-					pathname: this.props.dest,
-					state: {
+				<Navigate to={dest} state={
+					{
 						userid: userid,
 						ratings: ratings,
 						recs: recs,
 						pageid: pageid,
 						selectedmovie: selectedmovie
 					}
-				}} />
+				}
+				/>
 			);
 		}
 
@@ -141,4 +144,4 @@ class ClosingRecommendationPage extends Component {
 	}
 }
 
-export default ClosingRecommendationPage;
+export default withRouter(ClosingRecommendationPage);

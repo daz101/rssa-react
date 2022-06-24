@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
 import { Button, Container, Spinner } from 'react-bootstrap';
-import { Redirect } from "react-router-dom";
+import { Navigate, Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import MovieGrid from "../widgets/movieGrid";
+import withRouter from "../hooks/withRouter";
 
 class RatingPage extends Component {
 
@@ -19,8 +20,8 @@ class RatingPage extends Component {
 
         this.state = {
             raterDateTime: undefined,
-            userid: this.props.location.state.userid,
-            pageid: this.props.location.state.pageid + 1,
+            userid: this.props.router.location.state.userid,
+            pageid: this.props.router.location.state.pageid + 1,
             stepsEnabled: true,
             initialStep: 0,
             steps: [
@@ -127,17 +128,17 @@ class RatingPage extends Component {
         let userid = this.state.userid;
         let ratings = this.state.ratedLst;
         let pageid = this.state.pageid;
-
+        const dest = this.props.dest;
         if (this.state.updateSuccess) {
             return (
-                <Redirect to={{
-                    pathname: this.props.dest,
-                    state: {
+                <Navigate to={dest} state={
+                    {
                         userid: userid,
                         ratings: ratings,
                         pageid: pageid
                     }
-                }} />
+                }
+                />
             );
         }
 
@@ -208,4 +209,4 @@ class RatingPage extends Component {
     }
 }
 
-export default RatingPage;
+export default withRouter(RatingPage);

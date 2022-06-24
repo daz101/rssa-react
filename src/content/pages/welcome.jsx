@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Component } from 'react';
 import { Button, Card, Form, Modal, Spinner } from 'react-bootstrap';
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate, Redirect } from "react-router-dom";
+import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
 
 class WelcomePage extends Component {
@@ -85,9 +86,13 @@ class WelcomePage extends Component {
 
 	render() {
 
+		// console.log('hello');
+
 		const mousePos = this.props.mousePositionHook;
 		const pageHeight = document.body.scrollHeight;
 		const pageWidth = document.body.scrollWidth;
+
+		const dest = this.props.dest;
 
 		const show = this.state.show;
 		let userid = this.state.userid;
@@ -95,13 +100,11 @@ class WelcomePage extends Component {
 		if (userCreated) {
 			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
-				<Redirect to={{
-					pathname: this.props.dest,
-					state: {
-						userid: userid,
-						pageid: 2
-					}
-				}} />
+				<Navigate to={dest} state={
+					{
+						userid: userid, 
+						pageid: 2}
+				} />
 			);
 		}
 
@@ -240,4 +243,4 @@ class WelcomePage extends Component {
 	}
 }
 
-export default WelcomePage;
+export default withRouter(WelcomePage);

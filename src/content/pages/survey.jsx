@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { Component } from 'react';
-import { Button, Spinner } from 'react-bootstrap';
 import parse from 'html-react-parser';
-import { Redirect } from 'react-router-dom';
+import { Component } from 'react';
+import { Button, Spinner } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
+import withRouter from '../hooks/withRouter';
 import { API, likertVals } from '../utils/constants';
 import SurveyPane from '../widgets/surveyPanes';
 const defaultMovieIco = require("../res/default_movie_icon.svg");
@@ -13,10 +14,10 @@ class SurveyPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userid: props.location.state.userid,
-			pickid: props.location.state.selectedid,
-			finalRecommendations: props.location.state.recs,
-			pageid: props.location.state.pageid + 1,
+			userid: this.props.router.location.state.userid,
+			pickid: this.props.router.location.state.selectedid,
+			finalRecommendations: this.props.router.location.state.recs,
+			pageid: this.props.router.location.state.pageid + 1,
 			surveyPageCount: Object.getOwnPropertyNames(this.props.questionBank).length,
 			currentStep: 1,
 			prevStep: 1,
@@ -24,9 +25,9 @@ class SurveyPage extends Component {
 			disabled: true,
 			responses: [],
 			seen_set: [],
-			selectedmovie: props.location.state.selectedmovie,
+			selectedmovie: this.props.router.location.state.selectedmovie,
 			done: false,
-			recs: props.location.state.recs,
+			recs: this.props.router.location.state.recs,
 			loading: false
 		};
 		this.handleChange = this.handleChange.bind(this);
@@ -186,15 +187,17 @@ class SurveyPage extends Component {
 
 		let selectedmovie = this.state.selectedmovie;
 
+		const dest = this.props.dest;
+
 		if (done) {
 			return (
-				<Redirect to={{
-					pathname: this.props.dest,
-					state: {
+				<Navigate to={dest} state={
+					{
 						userid: userid,
 						pageid: this.state.pageid + currentStep - 1
 					}
-				}} />
+				}
+				/>
 			)
 		}
 
@@ -253,4 +256,4 @@ class SurveyPage extends Component {
 	}
 }
 
-export default SurveyPage;
+export default withRouter(SurveyPage);

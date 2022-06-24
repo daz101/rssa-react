@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { Component } from 'react';
 import { Button, Card, Container, Spinner } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Navigate, Redirect } from "react-router-dom";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
 import SidePanelItemRate from "../widgets/movieSidePanelItemRate";
+import withRouter from "../hooks/withRouter";
 
 
 class RecommendationPage extends Component {
@@ -25,9 +26,9 @@ class RecommendationPage extends Component {
             activeMovie: null,
             pick: this.props.pick || false,
             recDateTime: new Date(),
-            pageid: this.props.location.state.pageid + 1,
-            ratings: this.props.location.state.ratings,
-            userid: this.props.location.state.userid,
+            pageid: this.props.router.location.state.pageid + 1,
+            ratings: this.props.router.location.state.ratings,
+            userid: this.props.router.location.state.userid,
             updateSuccess: false,
             selection: {},
             hoverHistory: [],
@@ -277,6 +278,9 @@ class RecommendationPage extends Component {
         let rightCondition = this.state.rightPanel.condition;
         let rightbyline = this.state.rightPanel.byline;
         let rightvstd = this.state.rightPanel.vstd;
+
+        const dest = this.props.dest;
+
         if (this.state.updateSuccess) {
 
             let ratings = this.state.visited.concat(this.state.ratings);
@@ -284,16 +288,16 @@ class RecommendationPage extends Component {
                 movie.movie_id === selectedid
             ));
             return (
-                <Redirect to={{
-                    pathname: this.props.dest,
-                    state: {
+                <Navigate to={dest} state={
+                    {
                         userid: userid,
                         ratings: ratings,
                         recs: leftItems,
                         pageid: pageid,
                         selectedmovie: selectedmovie
                     }
-                }} />
+                }
+                />
             );
         }
 
@@ -418,4 +422,4 @@ class RecommendationPage extends Component {
     }
 }
 
-export default RecommendationPage;
+export default withRouter(RecommendationPage);

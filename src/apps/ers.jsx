@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { API, qBank, preSurveyBank } from '../content/utils/constants';
 import { Navbar } from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import WelcomePage from '../content/pages/welcome';
 import InstructionPage from '../content/pages/instructions';
@@ -28,7 +28,6 @@ class ERS extends Component {
         };
         this.loaderToggler = this.toggleLoader.bind(this);
         this.progressUpdater = this.updateProgress.bind(this);
-        this.activitySync = this.syncMouseActivity.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
@@ -57,22 +56,6 @@ class ERS extends Component {
         this.setState({
             progress: prog > 100 ? 100 : prog
         });
-    }
-
-    syncMouseActivity(posData, pageWidth, pageHeight, userid, pageid) {
-        const url = API + 'sync_movement';
-        axios.put(url, {
-            userid: userid,
-            pageid: pageid,
-            pageWidth: pageWidth,
-            pageHeight: pageHeight,
-            mouseActivity: posData
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                }
-            })
     }
 
     render() {
@@ -105,37 +88,36 @@ class ERS extends Component {
                         <div className={progBarVisibility} style={{ zIndex: "2048" }}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
-                        <Router basename='/ers'>
-                            <Switch>
+                        {/* <Router basename='/ers'> */}
+                            <Routes>
                                 {/* <Route exact path="/" render={(props) => <WelcomePage {...props}
                                     activitySync={this.activitySync}
                                     progressUpdater={this.progressUpdater} dest="/presurvey" />} /> */}
 								
-								<Route exact path="/" render={(props) => <WelcomePage {...props}
+								<Route exact path="/" element={<WelcomePage
                                     activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest="/instructions" />} />
+                                    progressUpdater={this.progressUpdater} dest={"/ers/instructions"} />} />
 
                                 {/* <Route path="/presurvey" render={(props) => <SurveyPage {...props}
                                     questionBank={preSurveyBank}
                                     progressUpdater={this.progressUpdater} dest="/instructions" />} key={1} /> */}
 
-                                <Route path="/instructions" render={(props) => <InstructionPage {...props}
+                                <Route path="/instructions" element={<InstructionPage
                                     activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest="/ratemovies" />} />
+                                    progressUpdater={this.progressUpdater} dest={"/ers/ratemovies"} />} />
 
-                                <Route path="/ratemovies" render={(props) => <RatingPage {...props}
-                                    progressUpdater={this.progressUpdater} dest="/emoprefs" />}
+                                <Route path="/ratemovies" element={<RatingPage
+                                    progressUpdater={this.progressUpdater} dest={"/ers/emoprefs"} />}
 									subset={'ers'}
 									/>
 
-                                <Route path="/emoprefs" render={(props) => 
-									<EmotionPref {...props}
+                                <Route path="/emoprefs" element={<EmotionPref
 										progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
 										waitMsg={"Please hang on while we find the recommendations for you."}
 										pageHeader={"Refine your recommendations: Step 1 of 2"}
 										headerSubtitle={"Please rate the following recommendations and alternative items to help us fine-tune our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
 										finalhint={"Once you are done rating all the movies, click next to get a refined set of recommendations."} 
-										dest="/exit" key={1} level={1} 
+										dest="/ers/exit" key={1} level={1} 
 									/>}
                                 />
 
@@ -150,9 +132,9 @@ class ERS extends Component {
                                 <Route path="/demographicinfo" render={(props) => <DemographicInfoPage {...props}
                                     progressUpdater={this.progressUpdater} finalPage={true}
                                     dest="/exit" />} /> */}
-                                <Route path="/exit" component={ExitPage} />
-                            </Switch>
-                        </Router>
+                                {/* <Route path="/ers/exit" component={ExitPage} /> */}
+                            </Routes>
+                        {/* </Router> */}
                     </div>
                 </div>
             </div>

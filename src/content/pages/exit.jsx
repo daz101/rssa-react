@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Nav } from "react-bootstrap";
 import axios from "axios";
 import { API } from "../utils/constants";
+import withRouter from '../hooks/withRouter';
 
 class ExitPage extends Component {
 
@@ -9,12 +10,12 @@ class ExitPage extends Component {
 		super(props);
 		let userid = undefined;
 		let completed = false;
-		if (this.props.location.state !== undefined) {
-			userid = this.props.location.state.userid;
-			completed = this.props.location.state.completed;
+		if (this.props.router.location.state !== undefined) {
+			userid = this.props.router.location.state.userid;
+			completed = this.props.router.location.state.completed;
 		}
 		this.state = {
-			pageid: props.location.state.pageid + 1,
+			pageid: this.props.router.location.state.pageid + 1,
 			userid: userid,
 			starttime: new Date(),
 			completed: completed,
@@ -103,4 +104,4 @@ class ExitPage extends Component {
 	}
 }
 
-export default ExitPage;
+export default withRouter(ExitPage);

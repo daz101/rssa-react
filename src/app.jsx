@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ERS from "./apps/ers";
+import PrefViz from "./apps/prefviz";
 import RSSA from "./apps/rssa";
 import RSSABaseline from "./apps/rssaBaseline";
 import LandingPage from "./landing";
@@ -12,20 +13,18 @@ class SurveyPortal extends Component {
 		return (
 			<>
 				<Router basename='/'>
-					<Switch>
-						<Route exact path="/">
-							<LandingPage />
+					<Routes>
+						<Route exact path="/" element={<LandingPage />}>
 						</Route>
-						<Route exact path="/rssa">
-							<RSSA />
+						<Route path="/rssa/*" element={<RSSA />}>
 						</Route>
-						<Route exact path="/ers">
-							<ERS />
+						<Route path="/rssabase/*" element={<RSSABaseline />}>
 						</Route>
-						<Router exact path="/rssabase">
-							<RSSABaseline />
-						</Router>
-					</Switch>
+						<Route exact path="/ers/*" element={<ERS />}>
+						</Route>
+						<Route exact path="/prefviz/*" element={<PrefViz />}>
+						</Route>
+					</Routes>
 				</Router>
 			</>
 		)

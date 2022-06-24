@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Component } from 'react';
 import { Button, Card, Spinner } from 'react-bootstrap';
-import { Redirect } from "react-router-dom";
+import { Navigate, Redirect } from "react-router-dom";
+import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
 
 const prefRssa = require("../res/rssa-preferences.png");
@@ -14,8 +15,8 @@ class InstructionPage extends Component {
 		super(props);
 		this.state = {
 			instructionDateTime: undefined,
-			pageid: props.location.state.pageid + 1,
-			userid: props.location.state.userid,
+			pageid: this.props.router.location.state.pageid + 1,
+			userid: this.props.router.location.state.userid,
 			updateSuccess: false,
 			loading: false
 		}
@@ -70,16 +71,17 @@ class InstructionPage extends Component {
 		const pageHeight = document.body.scrollHeight;
 		const pageWidth = document.body.scrollWidth;
 
+		const dest = this.props.dest;
+
 		if (this.state.updateSuccess) {
 			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
-				<Redirect to={{
-					pathname: this.props.dest,
-					state: {
+				<Navigate to={dest} state={
+					{
 						userid: userid,
 						pageid: pageid
 					}
-				}} />
+				} />
 			);
 		}
 
@@ -167,4 +169,4 @@ class InstructionPage extends Component {
 	}
 }
 
-export default InstructionPage;
+export default withRouter(InstructionPage);

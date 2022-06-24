@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Button, Card, Form, Spinner } from 'react-bootstrap';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { CountrySelect, RegionSelect } from '../widgets/countryregionselect';
 
 
 class DemographicInfoPage extends Component {
@@ -11,11 +12,11 @@ class DemographicInfoPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recs: props.location.state.recs,
-			ratings: props.location.state.ratings,
-			userid: props.location.state.userid,
-			pageid: props.location.state.pageid + 1,
-			selectedmovie: props.location.state.selectedmovie,
+			recs: this.props.router.location.state.recs,
+			ratings: this.props.router.location.state.ratings,
+			userid: this.props.router.location.state.userid,
+			pageid: this.props.router.location.state.pageid + 1,
+			selectedmovie: this.props.router.location.state.selectedmovie,
 			starttime: undefined,
 			userResponded: false,
 			age: -1,
@@ -65,7 +66,7 @@ class DemographicInfoPage extends Component {
 			response: {
 				demography: {
 					age: age,
-					country: country + ':' + region,
+					country: country.name + ':' + region.name,
 					gender: gender,
 					race: race,
 					education: education,
@@ -129,16 +130,18 @@ class DemographicInfoPage extends Component {
 		let customRace = this.state.customRace;
 		let race = this.state.race;
 
+		const dest = this.props.dest;
+
 		if (this.state.updateSuccess) {
 			return (
-				<Redirect to={{
-					pathname: this.props.dest,
-					state: {
+				<Navigate to={dest} state={
+					{
 						completed: true,
 						userid: userid,
 						pageid: pageid
 					}
-				}} />
+				}
+				/>
 			);
 		}
 
@@ -215,12 +218,10 @@ class DemographicInfoPage extends Component {
 							</Form.Select>
 							<br />
 							<Form.Label>In which country do you currently reside?</Form.Label>
-							<CountryDropdown className="form-select" variant="outline-secondary"
-								value={this.state.country} onChange={(country) => this.updateParam(country, "country")}
-								style={{ cursor: "pointer" }} />
-							<RegionDropdown className="form-select" variant="outline-secondary" country={this.state.country}
-								value={this.state.region} onChange={(region) => this.updateParam(region, "region")}
-								style={{ cursor: "pointer", marginTop: "9px" }} />
+							<CountrySelect onChange={(country) => this.updateParam(country, "country")} />
+							<RegionSelect country={this.state.country}
+								onChange={(region) => this.updateParam(region, "region")}
+								style={{ marginTop: "9px" }} />
 						</Form.Group>
 					</Card.Body>
 				</Card>
@@ -248,4 +249,4 @@ class DemographicInfoPage extends Component {
 	}
 }
 
-export default DemographicInfoPage;
+export default withRouter(DemographicInfoPage);
