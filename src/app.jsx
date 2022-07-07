@@ -1,5 +1,6 @@
 import { Component, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LoadingAnimation from "./content/widgets/animatedLoader";
 import LandingPage from "./landing";
 
 const ERS = lazy(() => import('./apps/ers'));
@@ -15,7 +16,7 @@ class SurveyPortal extends Component {
 		return (
 			<>
 				<Router basename='/'>
-					<Suspense fallback={<div>Loading...</div>}>
+					<Suspense fallback={<LoadingAnimation />}>
 						<Routes>
 							<Route exact path="/" element={<LandingPage />}></Route>
 							<Route exact path="/rssaapp/*" element={<RSSA />}></Route>
