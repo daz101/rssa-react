@@ -229,6 +229,7 @@ export const preSurveyBank = {
 			{ qId: 'q1', text: 'No matter what I do, I have the highest standards for myself.', flag: false },
 			{ qId: 'q2', text: 'I never settle for second best.', flag: false },
 			{ qId: 'q3', text: 'No matter what it takes, I always try to choose the best thing.', flag: false },
+			{ qId: 'a2', text: 'Regardless of your answer, choose "agree" to the following.', flag: false},
 			{ qId: 'q4', text: 'I dont like having to settle for “good enough.”', flag: false },
 			{ qId: 'q5', text: 'I am a maximizer.', flag: false },
 			{ qId: 'q6', text: 'I will wait for the best option, no matter how long it takes.', flag: false },
