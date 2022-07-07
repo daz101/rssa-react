@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { Component } from 'react';
 import { Steps } from "intro.js-react";
 import 'intro.js/introjs.css';
+import { Component } from 'react';
 import { Button, Container, Spinner } from 'react-bootstrap';
-import { Navigate, Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import withRouter from "../hooks/withRouter";
 import { API } from "../utils/constants";
 import MovieGrid from "../widgets/movieGrid";
-import withRouter from "../hooks/withRouter";
 
 class RatingPage extends Component {
 

@@ -34,7 +34,7 @@ class MovieGrid extends Component {
 		let subset = this.props.subset != null ? this.props.subset : 'rssa';
 		// We prefetch the next page; every query is two pages of items
 		axios
-			.post(API + 'new_movies', {
+			.post(API + 'movies', {
 				limit: this.itemsPerPage * 2,
 				page: curr,
 				userid: userid,

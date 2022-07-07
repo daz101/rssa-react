@@ -11,6 +11,7 @@ import 'intro.js/introjs.css';
 import EmotionToggle from "../widgets/emotionToggle";
 import EmotionStats from "../widgets/emoStats";
 import withRouter from "../hooks/withRouter";
+import EmotionSlider from "../widgets/emotionslider";
 
 
 class EmotionPref extends Component {
@@ -65,6 +66,7 @@ class EmotionPref extends Component {
         this.handleRating = this.handleRating.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.updateSurvey = this.updateSurveyResponse.bind(this);
+        this.sortmovies = this.sortmovies.bind(this);
     }
 
     componentDidMount() {
@@ -105,6 +107,24 @@ class EmotionPref extends Component {
             });
     }
 
+    sortmovies(emotion) {
+        let movies = this.state.movies;
+        // console.log(movies.slice(0, 10));
+        movies.sort((a, b) => {
+            if(emotion === "anger"){
+                return b.anger > a.anger;
+            } else {
+                return b.joy > a.joy;
+            }
+        }
+        );
+        // console.log(movies.slice(0, 10));
+        // console.log('this');
+        this.setState({
+            movies: movies
+        });
+    }
+    
     async startTimer() {
         await this.wait(10000);
         this.setState({
@@ -342,8 +362,11 @@ class EmotionPref extends Component {
                                 </p>
                             </div>
                             <div style={{ marginTop: "4em" }}>
-                                <EmotionToggle />
+                                {/* <EmotionToggle /> */}
+                                <EmotionSlider />
                             </div>
+                            <Button variant="info" onClick={evt => this.sortmovies('anger')}>Anger</Button>
+                            <Button variant="info" onClick={evt => this.sortmovies('joy')}>Joy</Button>
                         </div>
                     </div>
                     <MovieSidePanel id="leftPanel" movieList={movies.slice(0, 10)}

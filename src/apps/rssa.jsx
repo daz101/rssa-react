@@ -16,32 +16,18 @@ import RecommendationPageSelect from '../content/pages/selectrecs';
 import SurveyPage from '../content/pages/survey';
 import WelcomePage from '../content/pages/welcome';
 import ProgressBarComponent from "../content/widgets/progressBar";
+import SizeWarningDialog from '../content/widgets/sizewarnigdialog';
 
-class RSSA extends Component {
+class RSSAStudy extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             loaderActive: false,
-            progress: 0,
-            screenWidth: undefined
+            progress: 0
         };
         this.loaderToggler = this.toggleLoader.bind(this);
         this.progressUpdater = this.updateProgress.bind(this);
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    componentDidMount() {
-        window.addEventListener("resize", this.updateWindowDimensions);
-        this.setState({ screenWidth: window.innerWidth });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWindowDimensions)
-    }
-
-    updateWindowDimensions() {
-        this.setState({ screenWidth: window.innerWidth });
     }
 
     toggleLoader(toggle) {
@@ -62,7 +48,6 @@ class RSSA extends Component {
         let loaderActive = this.state.loaderActive;
         let prog = this.state.progress;
         let progBarVisibility = loaderActive ? "pb_invisible" : "pb_visible";
-        let show = this.state.screenWidth < 1260;
 
         return (
             <div className="App">
@@ -70,27 +55,14 @@ class RSSA extends Component {
                     <Navbar.Brand style={{ marginLeft: "1em", fontWeight: "450" }}>Movie Recommender Study</Navbar.Brand>
                 </Navbar>
                 <div className="contentWrapper">
-                    <div style={{
-                        position: "absolute", display: "flex", flexDirection: "column", height: "360px",
-                        width: "1300px", pointerEvents: "auto", backgroundColor: "#fff", backgroundClip: "padding-box",
-                        border: "9px solid rgba(90, 180, 90, 0.7)", borderRadius: ".3rem", outline: "0", zIndex: "2080",
-                        margin: "0 0 0 9px", visibility: show ? "unset" : "hidden"
-                    }}>
-                        <p style={{ margin: "9px auto 0", fontSize: "2em", lineHeight: "1.2", fontWeight: "500" }}>
-                            Window Dimension Too Small
-                        </p>
-                        <hr />
-                        <p style={{ fontSize: "1.5em", margin: "0 auto" }}>
-                            For optimal viewing please increase your browser width that the green border is inside the viewing area.
-                        </p>
-                    </div>
+                    <SizeWarningDialog />
                     <div style={{ margin: "0 3em" }}>
                         <div className={progBarVisibility} style={{ zIndex: "2048" }}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
                         <Routes>
                             <Route exact path="/" element={<WelcomePage
-                                activitySync={this.activitySync}
+                                userType={'rssa_survey'}
                                 progressUpdater={this.progressUpdater} dest="/rssa/presurvey" />} />
 
                             <Route path="/presurvey" element={<SurveyPage
@@ -149,4 +121,4 @@ class RSSA extends Component {
     }
 }
 
-export default RSSA;
+export default RSSAStudy;

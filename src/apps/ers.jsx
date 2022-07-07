@@ -1,10 +1,12 @@
 import './App.css';
+import './ers.css';
 import "react-step-progress-bar/styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { API, qBank, preSurveyBank } from '../content/utils/constants';
 import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SizeWarningDialog from '../content/widgets/sizewarnigdialog';
 
 import WelcomePage from '../content/pages/welcome';
 import InstructionPage from '../content/pages/instructions';
@@ -28,20 +30,6 @@ class ERS extends Component {
         };
         this.loaderToggler = this.toggleLoader.bind(this);
         this.progressUpdater = this.updateProgress.bind(this);
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    componentDidMount() {
-        window.addEventListener("resize", this.updateWindowDimensions);
-        this.setState({ screenWidht: window.innerWidth });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWindowDimensions)
-    }
-
-    updateWindowDimensions() {
-        this.setState({ screenWidth: window.innerWidth });
     }
 
     toggleLoader(toggle) {
@@ -62,7 +50,6 @@ class ERS extends Component {
         let loaderActive = this.state.loaderActive;
         let prog = this.state.progress;
         let progBarVisibility = loaderActive ? "pb_invisible" : "pb_visible";
-        let show = this.state.screenWidth < 1260;
 
         return (
             <div className="App">
@@ -70,58 +57,45 @@ class ERS extends Component {
                     <Navbar.Brand style={{ marginLeft: "1em", fontWeight: "450" }}>Movie Recommender Study</Navbar.Brand>
                 </Navbar>
                 <div className="contentWrapper">
-                    <div style={{
-                        position: "absolute", display: "flex", flexDirection: "column", height: "360px",
-                        width: "1300px", pointerEvents: "auto", backgroundColor: "#fff", backgroundClip: "padding-box",
-                        border: "9px solid rgba(90, 180, 90, 0.7)", borderRadius: ".3rem", outline: "0", zIndex: "2080",
-                        margin: "0 0 0 9px", visibility: show ? "unset" : "hidden"
-                    }}>
-                        <p style={{ margin: "9px auto 0", fontSize: "2em", lineHeight: "1.2", fontWeight: "500" }}>
-                            Window Dimension Too Small
-                        </p>
-                        <hr />
-                        <p style={{ fontSize: "1.5em", margin: "0 auto" }}>
-                            For optimal viewing please increase your browser width that the green border is inside the viewing area.
-                        </p>
-                    </div>
+                    <SizeWarningDialog />
                     <div style={{ margin: "0 3em" }}>
                         <div className={progBarVisibility} style={{ zIndex: "2048" }}>
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
                         {/* <Router basename='/ers'> */}
-                            <Routes>
-                                {/* <Route exact path="/" render={(props) => <WelcomePage {...props}
+                        <Routes>
+                            {/* <Route exact path="/" render={(props) => <WelcomePage {...props}
                                     activitySync={this.activitySync}
                                     progressUpdater={this.progressUpdater} dest="/presurvey" />} /> */}
-								
-								<Route exact path="/" element={<WelcomePage
-                                    activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest={"/ers/instructions"} />} />
 
-                                {/* <Route path="/presurvey" render={(props) => <SurveyPage {...props}
+                            <Route exact path="/" element={<WelcomePage
+                                activitySync={this.activitySync}
+                                progressUpdater={this.progressUpdater} dest={"/ers/instructions"} />} />
+
+                            {/* <Route path="/presurvey" render={(props) => <SurveyPage {...props}
                                     questionBank={preSurveyBank}
                                     progressUpdater={this.progressUpdater} dest="/instructions" />} key={1} /> */}
 
-                                <Route path="/instructions" element={<InstructionPage
-                                    activitySync={this.activitySync}
-                                    progressUpdater={this.progressUpdater} dest={"/ers/ratemovies"} />} />
+                            <Route path="/instructions" element={<InstructionPage
+                                activitySync={this.activitySync}
+                                progressUpdater={this.progressUpdater} dest={"/ers/ratemovies"} />} />
 
-                                <Route path="/ratemovies" element={<RatingPage
-                                    progressUpdater={this.progressUpdater} dest={"/ers/emoprefs"} />}
-									subset={'ers'}
-									/>
+                            <Route path="/ratemovies" element={<RatingPage
+                                progressUpdater={this.progressUpdater} dest={"/ers/emoprefs"} />}
+                                subset={'ers'}
+                            />
 
-                                <Route path="/emoprefs" element={<EmotionPref
-										progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
-										waitMsg={"Please hang on while we find the recommendations for you."}
-										pageHeader={"Refine your recommendations: Step 1 of 2"}
-										headerSubtitle={"Please rate the following recommendations and alternative items to help us fine-tune our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
-										finalhint={"Once you are done rating all the movies, click next to get a refined set of recommendations."} 
-										dest="/ers/exit" key={1} level={1} 
-									/>}
-                                />
+                            <Route path="/emoprefs" element={<EmotionPref
+                                progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
+                                waitMsg={"Please hang on while we find the recommendations for you."}
+                                pageHeader={"Refine your recommendations: Step 1 of 2"}
+                                headerSubtitle={"Please rate the following recommendations and alternative items to help us fine-tune our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
+                                finalhint={"Once you are done rating all the movies, click next to get a refined set of recommendations."}
+                                dest="/ers/exit" key={1} level={1}
+                            />}
+                            />
 
-                                {/* <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}
+                            {/* <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}
                                     progressUpdater={this.progressUpdater}
                                     dest="/survey" />} />
 
@@ -132,8 +106,8 @@ class ERS extends Component {
                                 <Route path="/demographicinfo" render={(props) => <DemographicInfoPage {...props}
                                     progressUpdater={this.progressUpdater} finalPage={true}
                                     dest="/exit" />} /> */}
-                                {/* <Route path="/ers/exit" component={ExitPage} /> */}
-                            </Routes>
+                            {/* <Route path="/ers/exit" component={ExitPage} /> */}
+                        </Routes>
                         {/* </Router> */}
                     </div>
                 </div>

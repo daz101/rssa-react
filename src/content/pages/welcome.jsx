@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Component } from 'react';
 import { Button, Card, Form, Modal, Spinner } from 'react-bootstrap';
-import { Link, Navigate, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
 
@@ -16,7 +16,6 @@ class WelcomePage extends Component {
 			consentStartTime: undefined,
 			userid: undefined,
 			userCreated: false,
-			mousePosHist: [],
 			loading: false
 		};
 		this.displaySurvey = this.showSurvey.bind(this);
@@ -26,9 +25,9 @@ class WelcomePage extends Component {
 	componentDidMount() {
 		const windowUrl = window.location.search;
 		const query = new URLSearchParams(windowUrl);
-		const prolific_pid = query.get('PROLIFIC_PID') || '';
-		const study_id = query.get('STUDY_ID') || '';
-		const session_id = query.get('SESSION_ID') || '';
+		const prolific_pid = query.get('PROLIFIC_PID') || 'undefined';
+		const study_id = query.get('STUDY_ID') || 'undefined';
+		const session_id = query.get('SESSION_ID') || 'undefined';
 		const surveyStartTime = new Date();
 
 		let platform_info = {
@@ -55,15 +54,17 @@ class WelcomePage extends Component {
 			loading: true
 		});
 
-		let consentEndTime = new Date();
-		let welcomeDateTime = this.state.welcomeDateTime;
-		let consentStartTime = this.state.consentStartTime;
-		let platformInfo = this.state.platformInfo;
+		const consentEndTime = new Date();
+		const welcomeDateTime = this.state.welcomeDateTime;
+		const consentStartTime = this.state.consentStartTime;
+		const platformInfo = this.state.platformInfo;
+		const userType = this.props.userType;
 
 		axios.post(API + 'new_user', {
 			welcomeTime: welcomeDateTime.toUTCString(),
 			consentStartTime: consentStartTime.toUTCString(),
 			consentEndTime: consentEndTime.toUTCString(),
+			userType: userType,
 			platformInfo: platformInfo
 		},
 			{
@@ -85,25 +86,18 @@ class WelcomePage extends Component {
 	}
 
 	render() {
-
-		// console.log('hello');
-
-		const mousePos = this.props.mousePositionHook;
-		const pageHeight = document.body.scrollHeight;
-		const pageWidth = document.body.scrollWidth;
-
 		const dest = this.props.dest;
 
 		const show = this.state.show;
 		let userid = this.state.userid;
 		let userCreated = this.state.userCreated
 		if (userCreated) {
-			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, 1);
 			return (
 				<Navigate to={dest} state={
 					{
-						userid: userid, 
-						pageid: 2}
+						userid: userid,
+						pageid: 2
+					}
 				} />
 			);
 		}

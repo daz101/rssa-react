@@ -12,19 +12,19 @@ import ExitPage from '../content/pages/exit';
 import InstructionPage from '../content/pages/instructions';
 import RatingPage from '../content/pages/ratemovies';
 import RecommendationPage from '../content/pages/raterecs';
+import RecommendationPageSelect from '../content/pages/selectrecs';
 import SurveyPage from '../content/pages/survey';
 import WelcomePage from '../content/pages/welcome';
 import ProgressBarComponent from "../content/widgets/progressBar";
 import SizeWarningDialog from '../content/widgets/sizewarnigdialog';
-import CommunityPreference from '../content/pages/communitypref';
 
-class PrefViz extends Component {
+class RSSA extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             loaderActive: false,
-            progress: 0,
+            progress: 0
         };
         this.loaderToggler = this.toggleLoader.bind(this);
         this.progressUpdater = this.updateProgress.bind(this);
@@ -61,35 +61,17 @@ class PrefViz extends Component {
                             <ProgressBarComponent className={progBarVisibility} percentComplete={prog} />
                         </div>
                         <Routes>
-                            <Route exact path="/" element={<WelcomePage
-                                progressUpdater={this.progressUpdater} dest="/prefviz/ratemovies" />} />
+                            <Route path="/" element={<RatingPage
+                                progressUpdater={this.progressUpdater} dest="/rssaapp/recommendations" />} />
 
-                            {/* <Route path="/presurvey" render={(props) => <SurveyPage {...props}
-                                questionBank={preSurveyBank}
-                                progressUpdater={this.progressUpdater} dest="/instructions" />} key={1} /> */}
-
-                            {/* <Route path="/instructions" render={(props) => <InstructionPage {...props}
-                                activitySync={this.activitySync}
-                                progressUpdater={this.progressUpdater} dest="/ratemovies" />} /> */}
-
-                            <Route path="/ratemovies" element={<RatingPage
-                                progressUpdater={this.progressUpdater} dest="/prefviz/commpref" />} />
-
-                            <Route path="/commpref" element={<CommunityPreference 
-                                progressUpdater={this.progressUpdater} dest="/prefviz/exit" />} />
-
-                            {/* <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}
-                                progressUpdater={this.progressUpdater}
-                                dest="/survey" />} />
-
-                            <Route path="/survey" render={(props) => <SurveyPage {...props}
-                                questionBank={qBank} progressUpdater={this.progressUpdater}
-                                dest="/demographicinfo" />} key={2} />
-
-                            <Route path="/demographicinfo" render={(props) => <DemographicInfoPage {...props}
-                                progressUpdater={this.progressUpdater} finalPage={true}
-                                dest="/exit" />} /> */}
-                            <Route path="/exit" component={ExitPage} />
+                            <Route path="/raterecommendations1" element={<RecommendationPage
+                                progressUpdater={this.progressUpdater} toggleLoader={this.loaderToggler}
+                                waitMsg={"Please hang on while we find the recommendations for you."}
+                                pageHeader={"Refine your recommendations: Step 1 of 2"}
+                                headerSubtitle={"Please rate the following recommendations and alternative items to help us fine-tune our recommendations to you. Please rate all movies, even the ones you haven’t watched (read the description and then guess how you’d rate it.)"}
+                                finalhint={"Once you are done rating all the movies, click next to get a refined set of recommendations."}
+                                dest="/rssa/raterecommendations2" key={1} level={1} />}
+                            />
                         </Routes>
                     </div>
                 </div>
@@ -98,4 +80,4 @@ class PrefViz extends Component {
     }
 }
 
-export default PrefViz;
+export default RSSA;
