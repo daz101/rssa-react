@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-// import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import MoviePosterIcon from './moviePosterIcon';
-import * as d3 from 'd3';
 import axios from "axios";
+import * as d3 from 'd3';
 import { API } from '../utils/constants';
 
-class PreferenceGraphD3 extends Component {
+class ContinuousCoupled extends Component {
 
 	constructor(props) {
 		super(props)
@@ -71,18 +69,8 @@ class PreferenceGraphD3 extends Component {
 		axios
 			.get(API + 'disc_cont_coupled')
 			.then(response => {
-				let dataWidth = Math.max.apply(Math, response.data.map(d => d.user_score));
-				let dataHeight = Math.max.apply(Math, response.data.map(d => d.community_score));
-				// const width = dataWidth * 180 + 200;
-				// const height = dataHeight * 140 + 200;
 				const width = 900;
 				const height = 700;
-				// let xdiff = (900 - width) / 100;
-				// let ydiff = (900 - height) / 100;
-				// console.log(xdiff, ydiff);
-				// console.log(width);
-				// console.log(response.data);
-				// console.log(response.data.map(d => ({ ...d, user_score: d.user_score - xdiff, community_score: d.community_score - ydiff })));
 				this.setState({
 					data: response.data,
 					width: width,
@@ -99,27 +87,16 @@ class PreferenceGraphD3 extends Component {
 	drawGraph(data, width, height) {
 		const logoBasedim = 54;
 		const logoZoomDim = 270;
-		const axesOffset = 200;
-		const xScaleFactor = 180; // projecting [0, 5] to svg width -> 900/5
-		const yScaleFactor = 140; // projecting [0, 5] to svg height -> 700/5
 
 
 
 		const xScale = d3.scaleLinear()
 			.domain([
-				// d3.min(data, (d) => d.user_score * xScaleFactor) - axesOffset,
-				// d3.min(data, (d) => d.user_score),
-				// d3.max(data, (d) => d.user_score * xScaleFactor) + axesOffset
-				// d3.max(data, (d) => d.user_score)
 				0, 6
 			])
 			.range([0, width]);
 		const yScale = d3.scaleLinear()
 			.domain([
-				// d3.min(data, (d) => d.community_score * yScaleFactor) - axesOffset,
-				// d3.min(data, (d) => d.community_score),
-				// d3.max(data, (d) => d.community_score * yScaleFactor) + axesOffset
-				// d3.max(data, (d) => d.community_score)
 				0, 6
 			])
 			.range([height, 0]);
@@ -140,13 +117,11 @@ class PreferenceGraphD3 extends Component {
 			.tickPadding(9)
 			.tickSizeOuter(3)
 			.tickSize(-height);
-		// .tickFormat((val) => `${val / 100}`);
 
 		const xAxisGroup = svg.append("g")
 			.attr("transform", `translate(36, ${height + 18})`)
 			.call(xAxis);
 
-		// xAxisGroup.select(".domain").remove();
 		xAxisGroup.selectAll("line").attr("stroke", "rgba(90, 90, 90, 0.5)");
 		xAxisGroup.selectAll("text")
 			.attr("opacity", 0.5)
@@ -160,13 +135,11 @@ class PreferenceGraphD3 extends Component {
 			.tickPadding(9)
 			.tickSizeOuter(3)
 			.tickSize(-width);
-		// .tickFormat((val) => if(val in [1, 2, 3, 4, 5]) return ));
 
 		const yAxisGroup = svg.append("g")
 			.attr('transform', `translate(36, 18)`)
 			.call(yAxis);
 
-		// yAxisGroup.select(".domain").remove();
 		yAxisGroup.selectAll("line").attr("stroke", "rgba(90, 90, 90, 0.5)");
 		yAxisGroup.selectAll("text")
 			.attr("opacity", 0.5)
@@ -184,7 +157,6 @@ class PreferenceGraphD3 extends Component {
 		logoMarkers
 			.enter()
 			.append('rect')
-			// .attr('transform', d => `translate(${xScale(d.user_score * xScaleFactor)}, ${yScale(d.community_score * yScaleFactor)})`)
 			.attr('transform', d => `translate(${xScale(d.user_score)}, ${yScale(d.community_score)})`)
 			.attr('x', 0).attr('y', 0)
 			// .attr('cx', logoRadius / 4).attr('cy', logoRadius / 4)
@@ -258,4 +230,4 @@ class PreferenceGraphD3 extends Component {
 	}
 }
 
-export default PreferenceGraphD3;
+export default ContinuousCoupled;

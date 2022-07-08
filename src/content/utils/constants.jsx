@@ -131,7 +131,8 @@ export const qBank = {
 	},
 	8: {
 		title: 'Questions about the movie recommnender system as a whole',
-		instruction: '',
+		instruction: 'Please rate your agreement with the statements about your' +
+		' <strong>overall</strong> experience with the movie recommender:',
 		qType: 'selfAct',
 		displayRecs: false,
 		showSelected: false,
@@ -145,7 +146,8 @@ export const qBank = {
 	},
 	9: {
 		title: 'Questions about the movie recommender system as a whole',
-		instruction: '',
+		instruction: 'Please rate your agreement with the statements about your' +
+		' <strong>overall</strong> experience with the movie recommender:',
 		qType: 'tasteClar',
 		displayRecs: false,
 		showSelected: false,
@@ -159,8 +161,9 @@ export const qBank = {
 		]
 	},
 	10: {
-		title: 'Quations about the movie recommender system as a whole',
-		instruction: '',
+		title: 'Questions about the movie recommender system as a whole',
+		instruction: 'Please rate your agreement with the statements about your' +
+		' <strong>overall</strong> experience with the movie recommender:',
 		qType: 'tasteDev',
 		displayRecs: false,
 		showSelected: false,
@@ -238,8 +241,8 @@ export const preSurveyBank = {
 	}
 };
 
-//MADE CHANGES
 
+//MADE CHANGES
 // 						max					min
 // anger		0.182929272690844	0.0161596958174905
 // anticipation	0.251623376623377	0.0645546921697549
@@ -249,4 +252,3 @@ export const preSurveyBank = {
 // sadness		0.188492063492063	0.025706940874036
 // surprise		0.166202984427503	0.0256678889470927
 // trust		0.253994490358127	0.0817610062893082
-

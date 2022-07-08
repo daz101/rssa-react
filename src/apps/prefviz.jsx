@@ -62,6 +62,7 @@ class PrefViz extends Component {
                         </div>
                         <Routes>
                             <Route exact path="/" element={<WelcomePage
+                                userType={'prefviz_survey'}
                                 progressUpdater={this.progressUpdater} dest="/prefviz/ratemovies" />} />
 
                             {/* <Route path="/presurvey" render={(props) => <SurveyPage {...props}
@@ -75,7 +76,7 @@ class PrefViz extends Component {
                             <Route path="/ratemovies" element={<RatingPage
                                 progressUpdater={this.progressUpdater} dest="/prefviz/commpref" />} />
 
-                            <Route path="/commpref" element={<CommunityPreference 
+                            <Route path="/commpref/*" element={<CommunityPreference 
                                 progressUpdater={this.progressUpdater} dest="/prefviz/exit" />} />
 
                             {/* <Route path="/endrecommendations" render={(props) => <ClosingRecommendationPage {...props}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Component } from 'react';
 import { Button, Card, Spinner } from 'react-bootstrap';
-import { Navigate, Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import withRouter from '../hooks/withRouter';
 import { API } from '../utils/constants';
 
@@ -67,14 +67,9 @@ class InstructionPage extends Component {
 		let userid = this.state.userid;
 		let pageid = this.state.pageid;
 
-		const mousePos = this.props.mousePositionHook;
-		const pageHeight = document.body.scrollHeight;
-		const pageWidth = document.body.scrollWidth;
-
 		const dest = this.props.dest;
 
 		if (this.state.updateSuccess) {
-			// this.props.activitySync(mousePos, pageHeight, pageWidth, userid, pageid);
 			return (
 				<Navigate to={dest} state={
 					{

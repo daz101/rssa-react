@@ -1,9 +1,13 @@
 import { Component } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Nav, Navbar, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import withRouter from '../hooks/withRouter';
-import PreferenceGraphD3 from '../widgets/PreferenceGraphD3';
+import ContinuousCoupled from '../widgets/continuousCoupled';
+import ContinuousDecoupled from '../widgets/continuousDecoupled';
+import DiscreteCoupled from '../widgets/discreteCoupled';
+import DiscreteDecoupled from '../widgets/discreteDecoupled';
 import PreferenceSidebar from '../widgets/preferenceSideBar';
+
 
 
 class CommunityPreference extends Component {
@@ -12,7 +16,8 @@ class CommunityPreference extends Component {
 		super(props);
 		this.state = {
 			activeMovie: undefined,
-			show: false
+			show: false,
+			activetag: ''
 		}
 		this.handleClickEvent = this.handleClickEvent.bind(this);
 	}
@@ -25,6 +30,13 @@ class CommunityPreference extends Component {
 		})
 	}
 
+	updatePanel = (evt, activetag) => {
+		console.log(activetag);
+		this.setState({
+			activetag: activetag
+		});
+	}
+
 	render() {
 		let movies = this.props.router.location.state.movies;
 		let ratings = this.props.router.location.state.ratings;
@@ -35,11 +47,35 @@ class CommunityPreference extends Component {
 					<h1 className="header">Rating Movies</h1>
 					<p> Rate {this.moviesRatingCount} movies from the gallery below.</p>
 				</div>
+				<Navbar bg="light">
+					<Navbar.Brand style={{ marginLeft: "1.3em" }}>
+						Pref Viz
+					</Navbar.Brand>
+					<Nav>
+						<Nav.Link onClick={evt => this.updatePanel(evt, 'cc')}>Continuous Coupled</Nav.Link>
+						<Nav.Link onClick={evt => this.updatePanel(evt, 'cd')}>Continuous Decoupled</Nav.Link>
+						<Nav.Link onClick={evt => this.updatePanel(evt, 'dc')}>Discrete Coupled</Nav.Link>
+						<Nav.Link onClick={evt => this.updatePanel(evt, 'dd')}>Discrete Decoupled</Nav.Link>
+					</Nav>
+				</Navbar>
 				<div>
 					<Row className="g-0">
 						<Col sm={8}>
-							<PreferenceGraphD3 ratings={ratings} movies={movies}
-								onClickHandler={this.handleClickEvent} />
+							{this.state.activetag === 'cc' && <ContinuousCoupled ratings={ratings} movies={movies}
+								onClickHandler={this.handleClickEvent} />}
+							{this.state.activetag === 'cd' && <ContinuousDecoupled ratings={ratings} movies={movies}
+								onClickHandler={this.handleClickEvent} />}
+							{this.state.activetag === 'dc' && <DiscreteCoupled ratings={ratings} movies={movies}
+								onClickHandler={this.handleClickEvent} />}
+							{this.state.activetag === 'dd' && <DiscreteDecoupled ratings={ratings} movies={movies}
+								onClickHandler={this.handleClickEvent} />}
+							{this.state.activetag === '' && (
+								<div style={{ height: "700px", width: "900px", backgroundColor: "gray", margin: "1.8em" }}>
+									<h3 style={{ textAlign: "center", padding: "3em" }}>
+										Please select a preference visualization
+									</h3>
+								</div>
+							)}
 						</Col>
 						<Col sm={4}>
 							<PreferenceSidebar activeMovie={this.state.activeMovie}

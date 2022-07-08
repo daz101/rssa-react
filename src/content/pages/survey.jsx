@@ -142,7 +142,7 @@ class SurveyPage extends Component {
 		const currentStep = this.state.currentStep;
 		let isFinalPage = this.props.finalPage || false;
 		let buttonVariant = this.state.disabled ? 'secondary' : 'primary';
-		if (currentStep < this.state.surveyPageCount || !isFinalPage) {
+		if (currentStep <= this.state.surveyPageCount || !isFinalPage) {
 			return (
 				<Button disabled={this.state.disabled && !this.state.loading}
 					className="footer-btn"

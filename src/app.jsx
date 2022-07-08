@@ -21,8 +21,8 @@ class SurveyPortal extends Component {
 							<Route exact path="/" element={<LandingPage />}></Route>
 							<Route exact path="/rssaapp/*" element={<RSSA />}></Route>
 							<Route exact path="/cybered/*" element={<CyberEd />}></Route>
-							<Route path="/rssa/*" element={<RSSAStudy />}></Route>
-							<Route path="/rssabase/*" element={<RSSABaseline />}></Route>
+							<Route exact path="/rssa/*" element={<RSSAStudy />}></Route>
+							<Route exact path="/rssabase/*" element={<RSSABaseline />}></Route>
 							<Route exact path="/ers/*" element={<ERS />}></Route>
 							<Route exact path="/prefviz/*" element={<PrefViz />}></Route>
 						</Routes>

@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { Component } from 'react';
+import { Steps } from "intro.js-react";
+import 'intro.js/introjs.css';
+import { Component } from 'react';
 import { Button, Card, Container, Spinner } from "react-bootstrap";
-import { Navigate, Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import withRouter from "../hooks/withRouter";
 import { API } from "../utils/constants";
 import LoadingAnimation from '../widgets/loadingView';
 import MovieSidePanel from "../widgets/movieSidePanel";
-import { Steps } from "intro.js-react";
-import 'intro.js/introjs.css';
 import SidePanelItemRate from "../widgets/movieSidePanelItemRate";
-import withRouter from "../hooks/withRouter";
 
 
 class RecommendationPageBaseline extends Component {
@@ -251,7 +251,6 @@ class RecommendationPageBaseline extends Component {
     };
 
     render() {
-        let pick = this.state.pick;
         let selectedid = this.state.selectedid;
 
         let userid = this.state.userid;
@@ -263,8 +262,6 @@ class RecommendationPageBaseline extends Component {
         let leftvstd = this.state.leftPanel.vstd;
 
         let rightItems = this.state.rightPanel.items;
-        let rightCondition = this.state.rightPanel.condition;
-        let rightbyline = this.state.rightPanel.byline;
         let rightvstd = this.state.rightPanel.vstd;
 
         const dest = this.props.dest;
