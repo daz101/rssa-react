@@ -1,0 +1,31 @@
+.cellblock {
+	border-style: solid;
+	border-width: 0.1em;
+}
+
+.cellLabelLeft {
+	text-align: right;
+}
+
+.cellLabelTop {
+	text-align: center;
+}
+
+.cellLabelBottom {
+	text-align: center;
+}
+
+.cellRow {
+	margin-top: 0.3em;
+	height: 45%;
+}
+
+.viewdiv {
+	height: 700px; 
+	width: 900px;
+	margin: 1.8em;
+}
+
+.viewdiv.empty {
+	background-color: gray;
+}

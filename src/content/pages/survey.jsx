@@ -118,6 +118,7 @@ class SurveyPage extends Component {
 			responses: responses,
 			disabled: !(responses.length === numQuestions)
 		})
+
 	}
 
 	/*

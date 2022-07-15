@@ -69,8 +69,8 @@ class ContinuousCoupled extends Component {
 		axios
 			.get(API + 'disc_cont_coupled')
 			.then(response => {
-				const width = 900;
-				const height = 700;
+				const width = 800;
+				const height = 630;
 				this.setState({
 					data: response.data,
 					width: width,
@@ -102,14 +102,6 @@ class ContinuousCoupled extends Component {
 			.range([height, 0]);
 
 		let svg = d3.select('#mySvg');
-
-		var tooltip = d3.select("body")
-			.append("div")
-			.style("position", "absolute")
-			.style("z-index", "10")
-			.style("visibility", "hidden")
-			.style("background", "#e9ecef")
-			.text("a simple tooltip");
 
 		// Add X gridlines with labels
 		const xAxis = d3.axisBottom(xScale)
@@ -192,9 +184,6 @@ class ContinuousCoupled extends Component {
 				imgContainer.select('image').attr('height', logoZoomDim).attr('width', logoZoomDim);
 				d3Rect.style('fill', d => `url(#teamlogo-${d.item_id})`).attr('width', logoZoomDim)
 					.attr('height', logoZoomDim).style('filter', 'url(#drop-shadow)').raise();
-				tooltip.style("visibility", "visible");
-				tooltip.style("top", evt.pageY + "px").style("left", evt.pageX + "px");
-				tooltip.text(data.team_name);
 			})
 			.on('mouseout', (evt, data) => {
 				if ((toRemove !== evt.target) && (toRemoveId !== data.item_id)) {
@@ -205,7 +194,6 @@ class ContinuousCoupled extends Component {
 					imgContainer.select('image').attr('height', logoBasedim).attr('width', logoBasedim);
 					d3Rect.style('fill', d => `url(#teamlogo-${d.item_id})`).attr('width', logoBasedim)
 						.attr('height', logoBasedim).lower();
-					tooltip.style("visibility", "hidden");
 				}
 			});
 	}
@@ -219,8 +207,8 @@ class ContinuousCoupled extends Component {
 		let height = this.state.height + 54;
 
 		return (
-			<div>
-				<svg id="mySvg" width={width} height={height} style={{ margin: "0.5em" }}>
+			<div className="viewdiv">
+				<svg id="mySvg" width={width} height={height}>
 					<defs className='logoDefs' />
 					<g className="points" />
 				</svg>

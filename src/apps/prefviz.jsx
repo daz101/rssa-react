@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { preSurveyBank, qBank } from '../content/utils/constants';
 import './App.css';
+import './prefviz.css';
 
 import ClosingRecommendationPage from '../content/pages/closingRecs';
 import DemographicInfoPage from '../content/pages/demography';

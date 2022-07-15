@@ -31,7 +31,6 @@ class CommunityPreference extends Component {
 	}
 
 	updatePanel = (evt, activetag) => {
-		console.log(activetag);
 		this.setState({
 			activetag: activetag
 		});
@@ -70,8 +69,8 @@ class CommunityPreference extends Component {
 							{this.state.activetag === 'dd' && <DiscreteDecoupled ratings={ratings} movies={movies}
 								onClickHandler={this.handleClickEvent} />}
 							{this.state.activetag === '' && (
-								<div style={{ height: "700px", width: "900px", backgroundColor: "gray", margin: "1.8em" }}>
-									<h3 style={{ textAlign: "center", padding: "3em" }}>
+								<div className="viewdiv empty">
+									<h3 style={{ textAlign: "center", padding: "3em"}}>
 										Please select a preference visualization
 									</h3>
 								</div>
