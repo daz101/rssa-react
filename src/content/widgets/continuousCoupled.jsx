@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
 import axios from "axios";
 import * as d3 from 'd3';
+import React, { Component } from 'react';
 import { API } from '../utils/constants';
 
 class ContinuousCoupled extends Component {

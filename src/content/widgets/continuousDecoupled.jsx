@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as d3 from 'd3';
 import React, { Component } from 'react';
-import { Col, Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import { API } from '../utils/constants';
 
 class ContinuousDecoupled extends Component {
@@ -11,7 +11,7 @@ class ContinuousDecoupled extends Component {
 		this.state = {
 			data: [],
 			width: 900,
-			height: 800
+			height: 0
 		}
 	}
 
@@ -65,17 +65,17 @@ class ContinuousDecoupled extends Component {
 		axios
 			.get(API + 'disc_cont_coupled')
 			.then(response => {
-				const width = 900-54;
-				const height = 300-54;
+				const width = 900 - 54;
+				const height = 270;
 				this.setState({
 					data: response.data,
 					width: width,
 					height: height
 				});
 				this.createLogoDefs(response.data, { svgID: 'mySvg', logoID: 'myLogo' });
-				this.drawGraph(response.data, width, height, 'user_score', { svgID: 'mySvg', logoID: 'myLogo' });
+				this.drawGraph(response.data, width, height - 129, 'user_score', { svgID: 'mySvg', logoID: 'myLogo' });
 				this.createLogoDefs(response.data, { svgID: 'commSvg', logoID: 'commLogo' });
-				this.drawGraph(response.data, width, height, 'community_score', { svgID: 'commSvg', logoID: 'commLogo' });
+				this.drawGraph(response.data, width, height - 129, 'community_score', { svgID: 'commSvg', logoID: 'commLogo' });
 			})
 			.catch(error => {
 				console.log(error);
@@ -134,7 +134,8 @@ class ContinuousDecoupled extends Component {
 					const activeImgContainer = logoDefs.select(`#${entity.logoID}-${toRemoveId}`);
 					activeImgContainer.attr('width', logoBasedim).attr('height', logoBasedim);
 					activeImgContainer.select('image').attr('height', logoBasedim).attr('width', logoBasedim);
-					d3.select(toRemove).attr('width', logoBasedim).attr('height', logoBasedim).lower();
+					d3.select(toRemove).attr('width', logoBasedim).attr('height', logoBasedim)
+						.style('filter', '').lower();
 				}
 				imgContainer.attr('width', logoZoomDim).attr('height', logoZoomDim);
 				imgContainer.select('image').attr('height', logoZoomDim).attr('width', logoZoomDim);
@@ -176,27 +177,35 @@ class ContinuousDecoupled extends Component {
 
 	render() {
 		let width = this.state.width + 54;
-		let height = this.state.height + 54;
-
+		let height = this.state.height - 63;
+		console.log(height);
 		return (
 			<div className="viewdiv">
-				<Row>
-					<h3>Me</h3>
-					<div>
-						<svg id="mySvg" width={width} height={height}>
-							<defs className='logoDefs' />
-							<g className="points" />
-						</svg>
-					</div>
+				<Row style={{ height: "45%" }}>
+					<Card bg="light" style={{ padding: "0" }}>
+						<Card.Header>
+							<h3>Me</h3>
+						</Card.Header>
+						<Card.Body>
+							<svg id="mySvg" width={width} height={height}>
+								<defs className='logoDefs' />
+								<g className="points" />
+							</svg>
+						</Card.Body>
+					</Card>
 				</Row>
-				<Row>
-					<h3>Community</h3>
-					<div>
-						<svg id="commSvg" width={width} height={height}>
-							<defs className='logoDefs' />
-							<g className="points" />
-						</svg>
-					</div>
+				<Row style={{ height: "45%" }}>
+					<Card bg="light" style={{ padding: "0" }}>
+						<Card.Header>
+							<h3>Community</h3>
+						</Card.Header>
+						<Card.Body>
+							<svg id="commSvg" width={width} height={height}>
+								<defs className='logoDefs' />
+								<g className="points" />
+							</svg>
+						</Card.Body>
+					</Card>
 				</Row>
 			</div>
 		)

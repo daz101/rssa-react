@@ -2,6 +2,7 @@ import axios from "axios";
 import { Component } from "react";
 import { Col, Row } from "react-bootstrap";
 import { API } from "../utils/constants";
+import GridRow from "./gridRow";
 
 class DiscreteCoupled extends Component {
 
@@ -49,54 +50,18 @@ class DiscreteCoupled extends Component {
 					<Col className="cellLabelLeft" sm={{ span: 2 }}>
 						<h4 style={{ marginTop: "100%" }}>Community Likes</h4>
 					</Col>
-					<Col className="cellblock" sm={{ span: 5 }}>
-						{
-							ulcl.map(movie => (
-								<img src={movie.poster} alt={movie.title} key={movie.item_id}
-									width={54} height={54}
-									style={{ margin: "0.3em", cursor: "pointer" }}
-									onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/default_movie_icon.svg"; }}
-									onClick={evt => this.props.onClickHandler(true, movie)} />
-							))
-						}
-					</Col>
-					<Col className="cellblock" sm={{ span: 5 }}>
-						{
-							udcl.map(movie => (
-								<img src={movie.poster} alt={movie.title} key={movie.item_id}
-									width={54} height={54}
-									style={{ margin: "0.3em", cursor: "pointer" }}
-									onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/default_movie_icon.svg"; }}
-									onClick={evt => this.props.onClickHandler(true, movie)} />
-							))
-						}
+					<Col sm={{ span: 10 }}>
+						<GridRow data1={ulcl} data2={udcl} limit={20}
+							onClickHandler={this.props.onClickHandler} />
 					</Col>
 				</Row>
 				<Row className="cellRow">
 					<Col className="cellLabelLeft" sm={{ span: 2 }}>
 						<h4 style={{ marginTop: "100%" }}>Community Dislikes</h4>
 					</Col>
-					<Col className="cellblock" sm={{ span: 5 }}>
-						{
-							ulcd.map(movie => (
-								<img src={movie.poster} alt={movie.title} key={movie.item_id}
-									width={54} height={54}
-									style={{ margin: "0.3em", cursor: "pointer" }}
-									onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/default_movie_icon.svg"; }}
-									onClick={evt => this.props.onClickHandler(true, movie)} />
-									))
-						}
-					</Col>
-					<Col className="cellblock" sm={{ span: 5 }}>
-						{
-							udcd.map(movie => (
-								<img src={movie.poster} alt={movie.title} key={movie.item_id}
-									width={54} height={54}
-									style={{ margin: "0.3em", cursor: "pointer" }}
-									onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/default_movie_icon.svg"; }}
-									onClick={evt => this.props.onClickHandler(true, movie)} />
-							))
-						}
+					<Col sm={{ span: 10 }}>
+						<GridRow data1={ulcd} data2={udcd} limit={20}
+							onClickHandler={this.props.onClickHandler} />
 					</Col>
 				</Row>
 			</div>)

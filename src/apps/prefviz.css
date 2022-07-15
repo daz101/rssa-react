@@ -1,6 +1,6 @@
 .cellblock {
-	border-style: solid;
-	border-width: 0.1em;
+	border: 1px solid rgba(0, 0, 0, .125);
+	/* height: 100%; */
 }
 
 .cellLabelLeft {
@@ -21,9 +21,11 @@
 }
 
 .viewdiv {
-	height: 700px; 
-	width: 900px;
+	height: 700px;
+	/* width: 900px; */
 	margin: 1.8em;
+	align-content: space-around;
+	display: grid;
 }
 
 .viewdiv.empty {
